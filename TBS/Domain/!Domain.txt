@@ -1,0 +1,34 @@
+﻿Namespace: TBS.Domain
+
+Used by Service layer
+Uses Repository and Infrastructure layers
+
+Domain Objects (DO's)
+
+This layer contains information about the business domain. The state of business objects is held here. 
+Persistence of the business objects and possibly their state is delegated to the infrastructure layer.
+
+Domain layer is responsible for the concepts of business domain, information about the business use case and the business rules. 
+Domain objects encapsulate the state and behavior of business entities. 
+Examples of business entities in a loan processing application are Mortgage, Property, and Borrower.
+
+Can also manage the state (session) of a business use case if the use case spans multiple user requests 
+(e.g. loan registration process which consists of multiple steps: user entering the loan details, system returning the products and rates based on the loan parameters, 
+user selecting a specific product/rate combination, and finally the system locking the loan for that rate).
+
+Contains service objects that only have a defined operational behavior which is not part of any domain object. 
+Services encapsulate behavior of the business domain that doesn't fit in the domain objects themselves.
+The domain layer is the heart of the business application and should be well isolated from the other layers of the application. 
+Also, it should not be dependent on the application frameworks used in the other layers.
+
+--
+-- DI
+-- Use Dependency Injection to inject objects like Repositories and Services into Domain objects
+--
+-- In the sample application, the service object (FundingServiceImpl) uses DI to inject the Entity objects (Loan, Borrower and FundingRequest). 
+-- Also, Entities reference Repositories via DI. Similarly, other Java EE resources like DataSource, Hibernate Session Factory and Transaction Manager 
+-- are injected into Service and Repository objects.
+--
+
+Aspect Oriented Programming?
+

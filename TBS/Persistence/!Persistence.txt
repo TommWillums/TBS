@@ -1,0 +1,9 @@
+﻿Namespace: TBS.Persistence
+
+Calls database via Dapper
+Repository -> PERSISTENCE -> database
+
+Lowest layer
+ORM <-> SQL 
+Uses Dapper to call database server
+

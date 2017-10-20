@@ -1,0 +1,9 @@
+﻿Namespace: TBS.Infrastructure
+
+Not a layer
+Accessed from all layers, EXCEPT Domain and DTO
+
+Logging, Exception handling, Transaction management, Security, etc.
+
+This layer acts as a supporting library for all the other layers. 
+It provides communication between layers, implements persistence for business objects, contains supporting libraries for the user interface layer, etc.

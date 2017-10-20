@@ -1,0 +1,4 @@
+﻿Namespace: Service
+
+Used for performing operations on DO's that don't belong to a particular DO
+
