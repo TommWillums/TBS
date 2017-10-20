@@ -1,0 +1,7 @@
+﻿Namespace: Repository
+
+Calls Persistence layer
+Service -> REPOSITORY -> Persistence
+
+Data Access Objects (DAO), 
+Interfaces/Implementations
