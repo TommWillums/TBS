@@ -11,3 +11,5 @@ Can perform the basic (non-business related) validation on the user input data b
 It does not hold the state of business objects, but it can hold the state of an application task's progress.
 Doesn't contain any business or domain related logic or data access logic.
 Doesn't have any state reflecting a business use case but it can manage the state of the user session or the progress of a task.
+
+GIT?
