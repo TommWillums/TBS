@@ -10,7 +10,7 @@ namespace TBS.Persistence
 {
     public class ClubsDb
     {
-        public async Task<Club> Get(int id)
+        public static async Task<Club> Get(int id)
         {
             Club club = null;
 
@@ -18,14 +18,13 @@ namespace TBS.Persistence
             {
                 try { 
                     conn.Open();
-                    club = await conn.QuerySingleAsync<Club>("select * from Clubs where Id = @Id", new { Id = id });
+                    club = await conn.QuerySingleOrDefaultAsync<Club>("select * from Clubs where Id = @Id", new { Id = id });
                 }
                 finally
                 {
                     conn.Close();
                 }
             }
-
             return club;
         }
 

@@ -23,9 +23,9 @@ namespace TBS.Controllers
 
         // GET: api/Clubs
         [HttpGet]
-        public IEnumerable<Club> GetClub()
+        public IEnumerable<Club> GetClubs()
         {
-            return _context.Club;
+            return _context.Clubs;
         }
 
         // GET: api/Clubs/5
@@ -37,7 +37,7 @@ namespace TBS.Controllers
                 return BadRequest(ModelState);
             }
 
-            var club = await _context.Club.SingleOrDefaultAsync(m => m.Id == id);
+            var club = await _context.Clubs.SingleOrDefaultAsync(m => m.Id == id);
 
             if (club == null)
             {

@@ -18,7 +18,7 @@ namespace TBS.Test
         [TestMethod]
         public async Task Get_Club_100_From_Db()
         {
-            Club club = await new ClubsDb().Get(100);
+            Club club = await ClubsDb.Get(100);
             Assert.AreEqual(club.Id, 100);
         }
     }

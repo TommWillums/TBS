@@ -13,6 +13,6 @@ namespace TBS.Persistence
         {
         }
 
-        public DbSet<Domain.Club> Club { get; set; }
+        public DbSet<Domain.Club> Clubs { get; set; }
     }
 }
