@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Dapper;
+using System.Data.Common;
 using System.Threading.Tasks;
-using Dapper;
 using TBS.Domain;
-using System.Data.SqlClient;
+using TBS.Service;
 
 namespace TBS.Persistence
 {
@@ -14,7 +12,7 @@ namespace TBS.Persistence
         {
             Club club = null;
 
-            using (SqlConnection conn = new SqlConnection("Server=.;Database=TBS;Integrated Security=True"))
+            using (DbConnection conn = My.ConnectionFactory())
             {
                 try { 
                     await conn.OpenAsync();
