@@ -17,7 +17,7 @@ namespace TBS.Persistence
             using (SqlConnection conn = new SqlConnection("Server=.;Database=TBS;Integrated Security=True"))
             {
                 try { 
-                    conn.Open();
+                    await conn.OpenAsync();
                     club = await conn.QuerySingleOrDefaultAsync<Club>("select * from Clubs where Id = @Id", new { Id = id });
                 }
                 finally

@@ -16,7 +16,7 @@ create table Clubs (
 	CourtCount		int			 not null default 0,
 	Subscription	varchar(20)	 null,
 	Price			money		 not null default 0.0,
-	AutoRenewal		bit			 not null default 1,
+	AutoRenewal		bit			 not null default 0,
 	NextRenewalDate	DateTime2	 null,
 	Created			DateTime2	 not null default GetDate(),
 )

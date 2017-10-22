@@ -8,7 +8,7 @@ using TBS.Persistence;
 
 namespace TBS.Repository
 {
-    class GenericRepository<T> : IRepository<T> where T : class
+    public class GenericRepository<T> : IRepository<T> where T : class
     {
         private TBSContext entities = null;
         DbSet<T> _objectSet;

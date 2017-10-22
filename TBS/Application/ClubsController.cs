@@ -91,7 +91,7 @@ namespace TBS.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Club.Add(club);
+            _context.Clubs.Add(club);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetClub", new { id = club.Id }, club);
@@ -106,13 +106,13 @@ namespace TBS.Controllers
                 return BadRequest(ModelState);
             }
 
-            var club = await _context.Club.SingleOrDefaultAsync(m => m.Id == id);
+            var club = await _context.Clubs.SingleOrDefaultAsync(m => m.Id == id);
             if (club == null)
             {
                 return NotFound();
             }
 
-            _context.Club.Remove(club);
+            _context.Clubs.Remove(club);
             await _context.SaveChangesAsync();
 
             return Ok(club);
@@ -120,7 +120,7 @@ namespace TBS.Controllers
 
         private bool ClubExists(int id)
         {
-            return _context.Club.Any(e => e.Id == id);
+            return _context.Clubs.Any(e => e.Id == id);
         }
     }
 }
