@@ -2,20 +2,6 @@
 
 namespace TBS.Domain
 {
-    public class Club
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Contact { get; set; }
-        public string Address { get; set; }
-        public int Courts { get; set; }
-        public string SubscriptionType { get; set; }
-        public bool AutomaticRenewal { get; set; }
-        public DateTime NextRenewalDate { get; set; }
-        public decimal Price { get; set; }
-        public DateTime Created { get; set; }
-    }
-
     public class ClubPayment
     {
         public int Id { get; set; }

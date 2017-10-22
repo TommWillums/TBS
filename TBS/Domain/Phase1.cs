@@ -28,7 +28,6 @@ namespace TBS.Domain
         public bool Active { get; set; }
         public string CourtType { get; set; }   // Hardcourt
         public string Location { get; set; }    // Bjørntvedt / Tennishallen
-        //public SqlGeography MapCoordinates { get; set; }
         public string VisibleFor { get; set; }  // Klubb, Årskort, Member, Non-Member
         public DateTime Created { get; set; }
     }
