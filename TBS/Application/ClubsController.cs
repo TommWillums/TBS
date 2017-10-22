@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TBS.Domain;
-using TBS.Persistence;
+using TBS.Repository;
 
 namespace TBS.Controllers
 {
@@ -14,9 +14,9 @@ namespace TBS.Controllers
     [Route("api/Clubs")]
     public class ClubsController : Controller
     {
-        private readonly TBSContext _context;
+        private readonly IRepository<Club> _context;
 
-        public ClubsController(TBSContext context)
+        public ClubsController(IRepository<Club> context)
         {
             _context = context;
         }
@@ -25,7 +25,7 @@ namespace TBS.Controllers
         [HttpGet]
         public IEnumerable<Club> GetClubs()
         {
-            return _context.Clubs;
+            return _context.GetAll();
         }
 
         // GET: api/Clubs/5
@@ -37,7 +37,7 @@ namespace TBS.Controllers
                 return BadRequest(ModelState);
             }
 
-            var club = await _context.Clubs.SingleOrDefaultAsync(m => m.Id == id);
+            var club = await _context.GetAll().SingleOrDefaultAsync(m => m.Id == id);
 
             if (club == null)
             {
@@ -61,11 +61,11 @@ namespace TBS.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(club).State = EntityState.Modified;
+            //_context.Entry(club).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChanges(club);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -91,8 +91,8 @@ namespace TBS.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Clubs.Add(club);
-            await _context.SaveChangesAsync();
+            _context.Add(club);
+            await _context.SaveChanges(club);
 
             return CreatedAtAction("GetClub", new { id = club.Id }, club);
         }
@@ -106,21 +106,23 @@ namespace TBS.Controllers
                 return BadRequest(ModelState);
             }
 
-            var club = await _context.Clubs.SingleOrDefaultAsync(m => m.Id == id);
+            var club = _context.Get(m => m.Id == id);
             if (club == null)
             {
                 return NotFound();
             }
+            else
+                _context.Delete(club);
 
-            _context.Clubs.Remove(club);
-            await _context.SaveChangesAsync();
+            //_context.Remove(club);
+            //await _context.SaveChangesAsync();
 
             return Ok(club);
         }
 
         private bool ClubExists(int id)
         {
-            return _context.Clubs.Any(e => e.Id == id);
+            return _context.GetAll(m => m.Id == id).Count() > 0;
         }
     }
 }

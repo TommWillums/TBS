@@ -27,8 +27,8 @@ namespace TBS
         {
             services.AddMvc();
 
-            services.AddDbContext<TBSContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("TBSContext")));
+            //services.AddDbContext<TBSContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("TBSContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

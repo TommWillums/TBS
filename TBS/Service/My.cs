@@ -19,5 +19,10 @@ namespace TBS.Service
             //ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;
         }
 
+        public static class Database
+        {
+
+        }
+
     }
 }

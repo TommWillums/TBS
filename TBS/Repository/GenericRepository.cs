@@ -10,10 +10,10 @@ namespace TBS.Repository
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        private TBSContext entities = null;
+        private DbContext entities = null;
         DbSet<T> _objectSet;
 
-        public GenericRepository(TBSContext _entities)
+        public GenericRepository(DbContext _entities)
         {
             entities = _entities;
             _objectSet = entities.Set<T>();
@@ -47,5 +47,11 @@ namespace TBS.Repository
         {
             _objectSet.Remove(entity);
         }
+
+        public Task SaveChanges(T entity)
+        {
+            return null;
+        }
+
     }
 }

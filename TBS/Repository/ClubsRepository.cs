@@ -7,6 +7,7 @@ using TBS.Persistence;
 
 namespace TBS.Repository
 {
+    /*
     public class ClubsRepository : GenericRepository<Club>
     {
         // Call Persistence layer
@@ -17,4 +18,5 @@ namespace TBS.Repository
         {
         }
     }
+    */
 }

@@ -13,6 +13,7 @@ namespace TBS.Repository
         void Add(T entity);
         void Attach(T entity);
         void Delete(T entity);
+        Task SaveChanges(T entity);
     }
 }
 

@@ -1,18 +1,21 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TBS.Persistence;
+using TBS.Service;
 
 namespace TBS.Repository
 {
+    
     public class GenericUnitOfWork : IDisposable
     {
-        private TBSContext entities = null;
+        private DbContext entities = null;
 
         public GenericUnitOfWork()
         {
-            entities = new TBSContext();
+            //entities = new TBSContext();
         }
 
         public Dictionary<Type, object> repositories = new Dictionary<Type, object>();
@@ -53,4 +56,5 @@ namespace TBS.Repository
             GC.SuppressFinalize(this);
         }
     }
+    
 }
