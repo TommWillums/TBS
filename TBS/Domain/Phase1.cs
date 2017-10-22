@@ -5,16 +5,31 @@ namespace TBS.Domain
     public enum Weekday { Mon, Tue, Wed, Thu, Fri, Sat, Sun }
     public enum Sex { Male, Female }
 
+    public class Club
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Contact { get; set; }
+        public string Address { get; set; }
+        public int Courts { get; set; }
+        public string SubscriptionType { get; set; }
+        public bool AutomaticRenewal { get; set; }
+        public DateTime NextRenewalDate { get; set; }
+        public decimal Price { get; set; }
+        public DateTime Created { get; set; }
+    }
+
     public class Court
     {
         public int Id { get; set; }
         public string Name { get; set; }        // Bane 2 Ute
-        public string Type { get; set; }        // Hardcourt
-        public Club Club { get; set; }          //PTK
+        public int ClubId { get; set; }         // 100-PTK
         public int CourtGroup { get; set; }     // Ute, Inne
-        public string Location { get; set; }    // Bjørntvedt / Tennishallen
-        public string VisibleFor { get; set; }  // Klubb, Årskort, Member, Non-Member
         public bool Active { get; set; }
+        public string CourtType { get; set; }   // Hardcourt
+        public string Location { get; set; }    // Bjørntvedt / Tennishallen
+        //public SqlGeography MapCoordinates { get; set; }
+        public string VisibleFor { get; set; }  // Klubb, Årskort, Member, Non-Member
         public DateTime Created { get; set; }
     }
 

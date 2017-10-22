@@ -4,6 +4,8 @@
 use TBS
 go
 
+/* Club */
+
 if (exists(select * from sys.tables where name = 'Clubs'))
 	drop table Clubs;
 
@@ -22,6 +24,36 @@ create table Clubs (
 )
 create unique index ix_ShortName on Clubs (ShortName)
 go
+
+/* Courts */
+
+if (exists(select * from sys.tables where name = 'Courts'))
+	drop table Courts;
+
+create table Courts (
+	Id				int			not null identity primary key,
+	Name			varchar(20) not null,       
+    ClubId			int			not null references Clubs(Id),         
+    CourtGroup		int			not null default 0,    
+    Active			bit			not null default 1,
+    CourtType		varchar(20) null,       
+    Location		varchar(20) null,
+	MapCoordinates	geography	null,
+    VisibleFor		varchar(50)	null, 
+	Created			DateTime2	not null default GetDate(),
+)
+go
+
+if (exists(select * from sys.views where name = 'Courts_v'))
+	drop view Courts_v;
+go
+
+create view Courts_v as 
+  select c.Id, c.Name, c.ClubId, k.ShortName Club, c.CourtGroup, c.Active, c.CourtType 
+  from Courts c join Clubs k on c.ClubId = k.Id 
+go
+
+/* Users */
 
 if (exists(select * from sys.tables where name = 'Users'))
 	drop table Users;
