@@ -1,7 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using TBS.Domain;
+using TBS.Repository;
 using TBS.Persistence;
 
 namespace TBS.Test
@@ -26,9 +28,17 @@ namespace TBS.Test
         [TestMethod]
         public async Task Get_Courts_For_Club_100_From_Db()
         {
-            Club club = await ClubsDb.Get(100);
             List<Court> courts = await CourtsDb.Get(100);
             Assert.AreEqual(courts.Count, 8);
         }
+
+        [TestMethod]
+        public void Get_Courts_For_Club_100_From_Repository()
+        {
+            var repo = new GenericRepository<Court>(null);
+            var courts = repo.GetAll().ToList();
+            Assert.AreEqual(courts.Count(), 8);
+        }
+
     }
 }
