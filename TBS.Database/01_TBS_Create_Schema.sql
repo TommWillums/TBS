@@ -4,10 +4,16 @@
 use TBS
 go
 
-/* Club */
+if (exists(select * from sys.tables where name = 'Users'))
+	drop table Users;
+
+if (exists(select * from sys.tables where name = 'Courts'))
+	drop table Courts;
 
 if (exists(select * from sys.tables where name = 'Clubs'))
 	drop table Clubs;
+
+/* Club */
 
 create table Clubs (
 	Id				int			 not null identity primary key,
@@ -20,16 +26,12 @@ create table Clubs (
 	Price			money		 not null default 0.0,
 	AutoRenewal		bit			 not null default 0,
 	NextRenewalDate	DateTime2	 null,
-	Active			bit			 not null default 1,
 	Created			DateTime2	 not null default GetDate(),
 )
 create unique index ix_ShortName on Clubs (ShortName)
 go
 
 /* Courts */
-
-if (exists(select * from sys.tables where name = 'Courts'))
-	drop table Courts;
 
 create table Courts (
 	Id				int			not null identity primary key,
@@ -56,12 +58,8 @@ go
 
 /* Users */
 
-if (exists(select * from sys.tables where name = 'Users'))
-	drop table Users;
-
 create table Users (
 	Id			int			not null identity primary key,
-	Name		varchar(50)	not null,
-	ClubId		int not null references Clubs (Id),
+	Name		varchar(50)	not null
 )
 go
