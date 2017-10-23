@@ -14,25 +14,20 @@ namespace TBS.Controllers
     [Route("api/Clubs")]
     public class ClubsController : Controller
     {
-        private readonly IRepository<Club> _repository;
-
-        public ClubsController(IRepository<Club> repository)
-        {
-            _repository = repository;
-        }
+        public ClubsController() { }
 
         // GET: api/Clubs
         [HttpGet]
         public IEnumerable<Club> GetClubs()
         {
-            return _repository.GetAll();
+            return null; // _repository.GetAll();
         }
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
-        public IActionResult GetClub([FromRoute] int id)
+        public async Task<IActionResult> GetClub([FromRoute] int id)
         {
-            var club = _repository.GetAll(m => m.Id == id);
+            var club = await new ClubsQuery().Get(id);
             if (club == null)
             {
                 return NotFound();
@@ -52,7 +47,7 @@ namespace TBS.Controllers
 
             try
             {
-                _repository.SaveChanges(club);
+                //await new ClubsCommand().Save(club);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -72,8 +67,8 @@ namespace TBS.Controllers
         [HttpPost]
         public IActionResult PostClub([FromBody] Club club)
         {
-            _repository.Add(club);
-            _repository.SaveChanges(club);
+            //_repository.Add(club);
+            //_repository.SaveChanges(club);
             return CreatedAtAction("GetClub", new { id = club.Id }, club);
         }
 
@@ -81,15 +76,17 @@ namespace TBS.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClub([FromRoute] int id)
         {
-            var club = _repository.Get(m => m.Id == id);
-            if (club == null)
-            {
-                return NotFound();
-            }
-            else
-                _repository.Delete(club);
+            //var club = _repository.Get(m => m.Id == id);
+            //if (club == null)
+            //{
+            //    return NotFound();
+            //}
+            //else
+            //    _repository.Delete(club);
             //await _repository.SaveChanges();
 
+            var club = await new ClubsQuery().Get(id);
+            // Delete(club.Id);
             return Ok(club);
         }
 

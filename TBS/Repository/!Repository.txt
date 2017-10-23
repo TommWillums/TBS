@@ -1,7 +1,10 @@
 ﻿Namespace: Repository
 
+Called from Service and/or Application layer
 Calls Persistence layer
-Service -> REPOSITORY -> Persistence
 
-Data Access Objects (DAO), 
-Interfaces/Implementations
+Service|Application -> REPOSITORY -> Persistence
+
+CQRS implementation
+CQRS classes use Command or Query suffix
+
