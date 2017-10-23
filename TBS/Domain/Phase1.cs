@@ -9,13 +9,15 @@ namespace TBS.Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ShortName { get; set; }
         public string Contact { get; set; }
         public string Address { get; set; }
-        public int Courts { get; set; }
-        public string SubscriptionType { get; set; }
-        public bool AutomaticRenewal { get; set; }
-        public DateTime NextRenewalDate { get; set; }
+        public int CourtCount { get; set; }
+        public string Subscription { get; set; }
         public decimal Price { get; set; }
+        public bool AutoRenewal { get; set; }
+        public DateTime NextRenewalDate { get; set; }
+        public bool Active { get; set; }
         public DateTime Created { get; set; }
     }
 
@@ -52,6 +54,7 @@ namespace TBS.Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int ClubId { get; set; }
         public string LoginName { get; set; }
         public string Password { get; set; }
         public Membership Membership { get; set; }  // Senior+Årskort

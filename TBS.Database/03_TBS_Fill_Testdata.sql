@@ -31,10 +31,10 @@ insert into Courts (ClubId, Name, CourtGroup, Active) values (100, 'Bane 4 Ute',
 delete from Users
 DBCC CheckIdent (Users, RESEED, 10000);
 
-insert into Users (Name) values ('Tomm Willums')
-insert into Users (Name) values ('Tomas Karell')
-insert into Users (Name) values ('Urban')
-insert into Users (Name) values ('Martin Kristoffersen')
+insert into Users (Name, ClubId) values ('Tomm Willums', 100)
+insert into Users (Name, ClubId) values ('Tomas Karell', 100)
+insert into Users (Name, ClubId) values ('Urban', 100)
+insert into Users (Name, ClubId) values ('Martin Kristoffersen', 100)
 go
 
 /*
