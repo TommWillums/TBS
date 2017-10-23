@@ -35,8 +35,9 @@ namespace TBS.Test
         [TestMethod]
         public async Task Get_Club_PTK_From_Repository_Via_GetAll()
         {
-            var clubs = await new ClubsQuery().GetAll(c => c.ShortName == "PTK");
-            Assert.AreEqual(1, 100);
+            List<Club> clubs = await new ClubsQuery().GetAll();
+            Club club = clubs.Find(c => c.ShortName == "PTK");
+            Assert.AreEqual(club.ShortName, "PTK");
         }
     }
 }
