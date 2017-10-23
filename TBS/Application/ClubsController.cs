@@ -14,31 +14,25 @@ namespace TBS.Controllers
     [Route("api/Clubs")]
     public class ClubsController : Controller
     {
-        private readonly IRepository<Club> _context;
+        private readonly IRepository<Club> _repository;
 
-        public ClubsController(IRepository<Club> context)
+        public ClubsController(IRepository<Club> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Clubs
         [HttpGet]
         public IEnumerable<Club> GetClubs()
         {
-            return _context.GetAll();
+            return _repository.GetAll();
         }
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetClub([FromRoute] int id)
+        public IActionResult GetClub([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var club = await _context.GetAll().SingleOrDefaultAsync(m => m.Id == id);
-
+            var club = _repository.GetAll(m => m.Id == id);
             if (club == null)
             {
                 return NotFound();
@@ -49,51 +43,37 @@ namespace TBS.Controllers
 
         // PUT: api/Clubs/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClub([FromRoute] int id, [FromBody] Club club)
+        public IActionResult PutClub([FromRoute] int id, [FromBody] Club club)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != club.Id)
             {
                 return BadRequest();
             }
 
-            //_context.Entry(club).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChanges(club);
+                _repository.SaveChanges(club);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClubExists(id))
-                {
-                    return NotFound();
-                }
-                else
+                //if (!ClubExists(id))
+                //{
+                //    return NotFound();
+                //}
+                //else
                 {
                     throw;
                 }
             }
-
             return NoContent();
         }
 
         // POST: api/Clubs
         [HttpPost]
-        public async Task<IActionResult> PostClub([FromBody] Club club)
+        public IActionResult PostClub([FromBody] Club club)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Add(club);
-            await _context.SaveChanges(club);
-
+            _repository.Add(club);
+            _repository.SaveChanges(club);
             return CreatedAtAction("GetClub", new { id = club.Id }, club);
         }
 
@@ -101,28 +81,21 @@ namespace TBS.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClub([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var club = _context.Get(m => m.Id == id);
+            var club = _repository.Get(m => m.Id == id);
             if (club == null)
             {
                 return NotFound();
             }
             else
-                _context.Delete(club);
-
-            //_context.Remove(club);
-            //await _context.SaveChangesAsync();
+                _repository.Delete(club);
+            //await _repository.SaveChanges();
 
             return Ok(club);
         }
 
-        private bool ClubExists(int id)
-        {
-            return _context.GetAll(m => m.Id == id).Count() > 0;
-        }
+        //private bool ClubExists(int id)
+        //{
+        //    return _repository.GetAll(m => m.Id == id).Count() > 0;
+        //}
     }
 }

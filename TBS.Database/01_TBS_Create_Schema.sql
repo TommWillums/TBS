@@ -20,6 +20,7 @@ create table Clubs (
 	Price			money		 not null default 0.0,
 	AutoRenewal		bit			 not null default 0,
 	NextRenewalDate	DateTime2	 null,
+	Active			bit			 not null default 1,
 	Created			DateTime2	 not null default GetDate(),
 )
 create unique index ix_ShortName on Clubs (ShortName)
@@ -60,6 +61,7 @@ if (exists(select * from sys.tables where name = 'Users'))
 
 create table Users (
 	Id			int			not null identity primary key,
-	Name		varchar(50)	not null
+	Name		varchar(50)	not null,
+	ClubId		int not null references Clubs (Id),
 )
 go
