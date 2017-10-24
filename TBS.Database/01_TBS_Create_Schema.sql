@@ -4,10 +4,17 @@
 use TBS
 go
 
-/* Club */
+if (exists(select * from sys.tables where name = 'Users'))
+	drop table Users;
+
+if (exists(select * from sys.tables where name = 'Courts'))
+	drop table Courts;
 
 if (exists(select * from sys.tables where name = 'Clubs'))
 	drop table Clubs;
+
+
+/* Club */
 
 create table Clubs (
 	Id				int			 not null identity primary key,
@@ -27,9 +34,6 @@ create unique index ix_ShortName on Clubs (ShortName)
 go
 
 /* Courts */
-
-if (exists(select * from sys.tables where name = 'Courts'))
-	drop table Courts;
 
 create table Courts (
 	Id				int			not null identity primary key,
@@ -55,9 +59,6 @@ create view Courts_v as
 go
 
 /* Users */
-
-if (exists(select * from sys.tables where name = 'Users'))
-	drop table Users;
 
 create table Users (
 	Id			int			not null identity primary key,
