@@ -8,5 +8,3 @@ Service|Application -> REPOSITORY -> Persistence
 CQRS implementation
 CQRS classes use Command or Query suffix
 
-THIS TEXT IS COMMITTED TO THE NO REPO BRANCH
-THIS TEXT IS COMMITTED TO THE NO REPO BRANCH
