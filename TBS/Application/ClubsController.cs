@@ -17,17 +17,17 @@ namespace TBS.Controllers
         public ClubsController() { }
 
         // GET: api/Clubs
-        [HttpGet]
-        public async Task<List<Club>> GetClubs()
-        {
-            return await new ClubsQuery().GetAll();
-        }
+        //[HttpGet]
+        //public async Task<List<Club>> GetClubs()
+        //{
+        //    return await new ClubsQuery().GetAll();
+        //}
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClub([FromRoute] int id)
         {
-            var club = await new ClubsQuery().Get(id);
+            Club club = null;// = await new ClubsQuery().Get(id);
             if (club == null)
             {
                 return NotFound();
@@ -85,7 +85,8 @@ namespace TBS.Controllers
             //    _repository.Delete(club);
             //await _repository.SaveChanges();
 
-            var club = await new ClubsQuery().Get(id);
+            //var club = await new ClubsQuery().Get(id);
+            Club club = null;
             // Delete(club.Id);
             return Ok(club);
         }
