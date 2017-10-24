@@ -8,7 +8,7 @@ namespace TBS.Domain
     public class Club
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string ClubName { get; set; }
         public string ShortName { get; set; }
         public string Contact { get; set; }
         public string Address { get; set; }
@@ -68,6 +68,7 @@ namespace TBS.Domain
         public string Contact1 { get; set; }    // Name, Phone, Email 
         public string Contact2 { get; set; }    // Name, Phone, Email 
         public DateTime Created { get; set; }
+        public bool Deleted { get; set; }
     }
 
     public class Membership

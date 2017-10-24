@@ -1,0 +1,55 @@
+﻿!TODO.txt
+
+CQRS - Query side
+Use a "Thin Read Layer" (TRL) in or right above the database. 
+// Maybe even sprocs, views, convention based simple ORM etc.
+Db -> TRL -> Remote Facade (Controllers?)
+Create DTO's that match what the client wants to see
+NO DO's!
+Could be in 1NF
+
+CQRS - Command side
+DO's reside above database layer // DO -> Dapper | DO -> RepoCmd -> Dapper?
+Likely to be in 3NF
+
+------------------------------------------------------------------------------
+
+WebAPI/http layer
+Test that objects are returned as json
+Test exception handling including proper info to user
+Test simple messages returned to user (same as exception handling?)
+
+------------------------------------------------------------------------------
+
+Domain Events
+An event is something that has happened in the past
+Always represent verbs in past tense, e.g. CargoShipped, CustomerRelocated
+
+------------------------------------------------------------------------------
+
+SOA & MicroServices
+
+Events, Messaging
+Notification when "something" has changed
+
+Messaging
+Turn on journaling?
+Use NServiceBus to forward all messages to a specific queue?
+RabbitMQ?
+
+Logging
+
+Business logic in DO's
+
+Transactions
+
+Domain Event centric - Use events as a storage mechanism
+Additive only architecture? (No deletes - or even updates?)
+Aggregate Id
+Ask for list of changes to the aggregate (How to implement?)
+Loading Objects - Load the events for an aggregate and replay them
+Use rolling snapshots to denormalize the current state of an aggregate
+
+
+
+
