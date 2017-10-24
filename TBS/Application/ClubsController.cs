@@ -18,9 +18,9 @@ namespace TBS.Controllers
 
         // GET: api/Clubs
         [HttpGet]
-        public IEnumerable<Club> GetClubs()
+        public async Task<List<Club>> GetClubs()
         {
-            return null; // _repository.GetAll();
+            return await new ClubsQuery().GetAll();
         }
 
         // GET: api/Clubs/5

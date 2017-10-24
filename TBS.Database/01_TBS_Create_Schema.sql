@@ -13,7 +13,6 @@ if (exists(select * from sys.tables where name = 'Courts'))
 if (exists(select * from sys.tables where name = 'Clubs'))
 	drop table Clubs;
 
-
 /* Club */
 
 create table Clubs (
@@ -27,7 +26,6 @@ create table Clubs (
 	Price			money		 not null default 0.0,
 	AutoRenewal		bit			 not null default 0,
 	NextRenewalDate	DateTime2	 null,
-	Active			bit			 not null default 1,
 	Created			DateTime2	 not null default GetDate(),
 )
 create unique index ix_ShortName on Clubs (ShortName)
@@ -49,6 +47,16 @@ create table Courts (
 )
 go
 
+/* Users */
+
+create table Users (
+	Id			int			not null identity primary key,
+	Name		varchar(50)	not null
+)
+go
+
+/* VIEWS */
+
 if (exists(select * from sys.views where name = 'Courts_v'))
 	drop view Courts_v;
 go
@@ -58,11 +66,3 @@ create view Courts_v as
   from Courts c join Clubs k on c.ClubId = k.Id 
 go
 
-/* Users */
-
-create table Users (
-	Id			int			not null identity primary key,
-	Name		varchar(50)	not null,
-	ClubId		int not null references Clubs (Id),
-)
-go

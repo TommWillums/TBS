@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 using TBS.Domain;
@@ -24,6 +25,23 @@ namespace TBS.Persistence
                 }
             }
             return club;
+        }
+
+        public static async Task<List<Club>> GetAll()
+        {
+            using (DbConnection conn = My.ConnectionFactory())
+            {
+                try
+                {
+                    await conn.OpenAsync();
+                    var clubs = await conn.QueryAsync<Club>("select * from Clubs");
+                    return clubs.AsList();
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
         }
 
     }
