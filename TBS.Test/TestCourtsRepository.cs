@@ -17,5 +17,12 @@ namespace TBS.Test
             List<Court> courts = await new CourtsQuery().GetAll(100);
             Assert.AreEqual(courts.Count, 8);
         }
+
+        [TestMethod]
+        public async Task Get_Active_Courts_For_Club_100_From_Repository()
+        {
+            List<Court> courts = await new CourtsQuery().GetActive(100);
+            Assert.AreEqual(courts.Count, 4);
+        }
     }
 }
