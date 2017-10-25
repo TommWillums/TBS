@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TBS.Data
+﻿namespace TBS.Data
 {
     public interface IDatabase
     {
-        Task<T> Query<T>(IQuery<T> query);
+        T Query<T>(IQuery<T> query);
         void Execute(ICommand command);
     }
 
@@ -21,9 +15,9 @@ namespace TBS.Data
             _session = session;
         }
 
-        public async Task<T> Query<T>(IQuery<T> query)
+        public T Query<T>(IQuery<T> query)
         {
-            return await query.Execute(_session);
+            return query.Execute(_session);
         }
 
         public void Execute(ICommand command)

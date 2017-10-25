@@ -18,16 +18,16 @@ namespace TBS.Controllers
 
         // GET: api/Clubs
         //[HttpGet]
-        //public async Task<List<Club>> GetClubs()
+        //public List<Club> GetClubs()
         //{
-        //    return await new ClubsQuery().GetAll();
+        //    return new ClubsQuery().GetAll();
         //}
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
         public IActionResult GetClub([FromRoute] int id)
         {
-            Club club = null;// = await new ClubsQuery().Get(id);
+            Club club = null;// = new ClubsQuery().Get(id);
             if (club == null)
             {
                 return NotFound();
