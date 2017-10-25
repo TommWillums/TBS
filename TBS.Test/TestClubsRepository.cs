@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using TBS.Domain;
-using TBS.Repository;
-using TBS.Persistence;
+using TBS.Data;
 using TBS.Service;
 using System.Data.Common;
 
@@ -13,6 +12,7 @@ namespace TBS.Test
     [TestClass]
     public class TestClubsRepository
     {
+        /*
         [TestMethod]
         public async Task Get_Club_100_From_Db()
         {
@@ -23,8 +23,8 @@ namespace TBS.Test
         [TestMethod]
         public async Task Get_Club_100_From_Repository()
         {
-//            var club = await new ClubsQuery().Get(100);
-//            Assert.AreEqual(club.Id, 100);
+            var club = await new ClubsQuery().Get(100);
+            Assert.AreEqual(club.Id, 100);
         }
 
         [TestMethod]
@@ -36,13 +36,13 @@ namespace TBS.Test
             Assert.AreEqual(club.Id, 100);
         }
 
-        //[TestMethod]
-        //public async Task Get_Club_PTK_From_Repository_Via_GetAll()
-        //{
-        //    List<Club> clubs = await new ClubsQuery().GetAll();
-        //    Club club = clubs.Find(c => c.ShortName == "PTK");
-        //    Assert.AreEqual(club.ShortName, "PTK");
-        //}
-
+        [TestMethod]
+        public async Task Get_Club_PTK_From_Repository_Via_GetAll()
+        {
+            List<Club> clubs = await new ClubsQuery().GetAll();
+            Club club = clubs.Find(c => c.ShortName == "PTK");
+            Assert.AreEqual(club.ShortName, "PTK");
+        }
+*/
     }
 }

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace TBS.Persistence
+namespace TBS.Data
 {
-    public interface ICommand
+    public interface IQuery<T>
     {
-        void Execute(IDbConnection db);
+        Task<T> Execute(ISession db);
     }
 }
-
-

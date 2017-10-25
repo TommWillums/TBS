@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TBS.Domain;
-using TBS.Repository;
+using TBS.Data;
 
 namespace TBS.Controllers
 {
@@ -25,7 +25,7 @@ namespace TBS.Controllers
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetClub([FromRoute] int id)
+        public IActionResult GetClub([FromRoute] int id)
         {
             Club club = null;// = await new ClubsQuery().Get(id);
             if (club == null)
@@ -74,7 +74,7 @@ namespace TBS.Controllers
 
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClub([FromRoute] int id)
+        public IActionResult DeleteClub([FromRoute] int id)
         {
             //var club = _repository.Get(m => m.Id == id);
             //if (club == null)
