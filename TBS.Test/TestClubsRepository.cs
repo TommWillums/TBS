@@ -1,49 +1,62 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
 using TBS.Domain;
-using TBS.Data;
 using TBS.Service;
-using System.Data.Common;
+using TBS.Data;
 
 namespace TBS.Test
 {
     [TestClass]
     public class TestClubsRepository
     {
-        /*
-                [TestMethod]
-                public async Task Get_Club_100_From_CQRS_Query()
-                {
-                    DbConnection conn = My.ConnectionFactory();
-                    IDatabase db = new Database(conn);
-                    var club = await db.Query(new ClubsQuery(100));
-                    Assert.AreEqual(club.Id, 100);
-                }
-/*
+        ClubService _service;
+        const string LA_TENIS = "LA_TENIS";
 
-                [TestMethod]
-                public async Task Get_Club_100_From_Db()
-                {
-                    Club club = await ClubsDb.Get(100);
-                    Assert.AreEqual(club.Id, 100);
-                }
+        [TestInitialize]
+        public void Init()
+        {
+            // session = new Mock<ISession>();
+            // database = new Database(session.Object);
+            var session = new Session(Database.TestDBConnectionString);
+            var database = new Database(session);
 
-                [TestMethod]
-                public async Task Get_Club_100_From_Repository()
-                {
-                    var club = await new ClubsQuery().Get(100);
-                    Assert.AreEqual(club.Id, 100);
-                }
+            _service = new ClubService(database);
+        }
 
-                [TestMethod]
-                public async Task Get_Club_PTK_From_Repository_Via_GetAll()
-                {
-                    List<Club> clubs = await new ClubsQuery().GetAll();
-                    Club club = clubs.Find(c => c.ShortName == "PTK");
-                    Assert.AreEqual(club.ShortName, "PTK");
-                }
-        */
+        [TestMethod]
+        public void get_club_100_from_database()
+        {
+            var club = _service.GetClub(100);
+            Assert.AreEqual(club.Id, 100);
+        }
+
+        [TestMethod]
+        public void get_club_PTK_via_GetClubs()
+        {
+            var clubs = _service.GetClubs().ToList();
+            Club club = clubs.FirstOrDefault(c => c.ShortName == "PTK");
+            Assert.AreEqual(club.ShortName, "PTK");
+        }
+
+        [TestMethod]
+        public void add_club_to_database()
+        {
+            TBS_Test_Helper.TestPrepareDBToAddClub();
+            Club club = new Club() { ClubName = "Mijas Club de Tenis", ShortName = LA_TENIS, Contact = "José" };
+            _service.Save(club);
+            var clubs = _service.GetClubs().Where(c => c.ShortName == LA_TENIS);
+            Assert.AreEqual(clubs.Count(), 1);
+        }
+
+        [TestMethod]
+        public void delete_club_from_database()
+        {
+            TBS_Test_Helper.TestPrepareDBToDeleteClub();
+            var club = _service.GetClubs().Where(c => c.ShortName == LA_TENIS).FirstOrDefault();
+            club.Deleted = true;
+            _service.Save(club);
+            var club2 = _service.GetClubs().Where(c => c.ShortName == LA_TENIS).FirstOrDefault();
+            Assert.AreEqual(1, 1);
+        }
     }
 }

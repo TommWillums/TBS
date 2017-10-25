@@ -19,6 +19,7 @@ namespace TBS.Domain
         public DateTime NextRenewalDate { get; set; }
         public bool Active { get; set; }
         public DateTime Created { get; set; }
+        public bool Deleted { get; set; }
     }
 
     public class Court

@@ -4,11 +4,11 @@ using TBS.Domain;
 
 namespace TBS.Data.Queries.Courts
 {
-    public class GetCourtsByClub : IQuery<IList<Court>>
+    public class GetClub : IQuery<IList<Court>>
     {
         private readonly int _clubId;
 
-        public GetCourtsByClub(int clubId)
+        public GetClub(int clubId)
         {
             _clubId = clubId;
         }

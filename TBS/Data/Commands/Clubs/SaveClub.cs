@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TBS.Domain;
+﻿using TBS.Domain;
 
 namespace TBS.Data.Commands.Clubs
 {

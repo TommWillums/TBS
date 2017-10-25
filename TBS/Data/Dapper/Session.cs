@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Dapper;
+using TBS.Data.Dapper;
 
-namespace TBS.Data.Dapper
+namespace TBS.Data
 {
     public class Session : ISession
     {

@@ -1,4 +1,6 @@
-﻿namespace TBS.Data
+﻿using TBS.Data.Dapper;
+
+namespace TBS.Data
 {
     public interface IDatabase
     {
@@ -9,6 +11,15 @@
     public class Database : IDatabase
     {
         private ISession _session { get; set; }
+
+        //TODO: Get connection string from appsettings.json
+        public static string DefaultConnectionString = "Server=.;Database=TBS;Integrated Security=True;";
+        public static string TestDBConnectionString = "Server=.;Database=TBS;Integrated Security=True;";
+
+        public Database()
+        {
+            _session = new Session(DefaultConnectionString);
+        }
 
         public Database(ISession session)
         {

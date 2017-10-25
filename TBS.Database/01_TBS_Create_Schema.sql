@@ -25,9 +25,10 @@ create table Clubs (
 	Subscription	varchar(20)	 null,
 	Price			money		 not null default 0.0,
 	AutoRenewal		bit			 not null default 0,
-	NextRenewalDate	DateTime2	 null,
+	NextRenewalDate	datetime2	 null,
 	Active			bit			 not null default 1,
-	Created			DateTime2	 not null default GetDate(),
+	Created			datetime2	 not null default GetDate(),
+	Deleted			bit			 not null default 0,
 )
 create unique index ix_ShortName on Clubs (ShortName)
 go
@@ -44,7 +45,8 @@ create table Courts (
     Location		varchar(20) null,
 	MapCoordinates	geography	null,
     VisibleFor		varchar(50)	null, 
-	Created			DateTime2	not null default GetDate(),
+	Created			datetime2	not null default GetDate(),
+	Deleted			bit			not null default 0,
 )
 go
 

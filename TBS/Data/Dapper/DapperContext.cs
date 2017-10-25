@@ -70,10 +70,9 @@ namespace TBS.Data.Dapper
                     {
                         var result = query(transaction);
                         transaction.Commit();
-
                         return result;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         transaction.Rollback();
                         throw;
