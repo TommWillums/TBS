@@ -14,7 +14,7 @@ namespace TBS.Data.Queries.Clubs
 
         public Club Execute(ISession session)
         {
-            return session.Query<Club>("select * from Clubs where Id = @Id", new { Id = _clubId }).SingleOrDefault();
+            return session.Query<Club>("select * from Clubs_v where Id = @Id", new { Id = _clubId }).SingleOrDefault();
         }
     }
 
