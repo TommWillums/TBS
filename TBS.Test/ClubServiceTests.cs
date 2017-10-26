@@ -3,11 +3,12 @@ using System.Linq;
 using TBS.Domain;
 using TBS.Service;
 using TBS.Data;
+using TBS.Util;
 
 namespace TBS.Test
 {
     [TestClass]
-    public class TestClubsRepository
+    public class ClubServiceTests
     {
         ClubService _service;
         const string LA_TENIS = "LA_TENIS";
@@ -17,7 +18,7 @@ namespace TBS.Test
         {
             // session = new Mock<ISession>();
             // database = new Database(session.Object);
-            var session = new Session(Database.TestDBConnectionString);
+            var session = new Session(AppSettings.TestDatabaseConnection);
             var database = new Database(session);
 
             _service = new ClubService(database);
