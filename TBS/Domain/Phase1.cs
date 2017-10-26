@@ -11,13 +11,13 @@ namespace TBS.Domain
         public string ClubName { get; set; }
         public string ShortName { get; set; }
         public string Contact { get; set; }
-        public string Address { get; set; }
-        public int CourtCount { get; set; }
-        public string Subscription { get; set; }
-        public decimal Price { get; set; }
-        public bool AutoRenewal { get; set; }
-        public DateTime NextRenewalDate { get; set; }
-        public bool Active { get; set; }
+        //public string Address { get; set; }
+        //public int CourtCount { get; set; }
+        //public string Subscription { get; set; }
+        //public decimal Price { get; set; }
+        //public bool AutoRenewal { get; set; }
+        //public DateTime NextRenewalDate { get; set; }
+        //public bool Active { get; set; }
         public DateTime Created { get; set; }
         public bool Deleted { get; set; }
     }

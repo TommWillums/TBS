@@ -10,7 +10,7 @@ namespace TBS.Data.Queries.Clubs
     {
         public IList<Club> Execute(ISession session)
         {
-            return session.Query<Club>("select * from Clubs").ToList();
+            return session.Query<Club>("select * from Clubs_Tbl").ToList();
         }
     }
 }
