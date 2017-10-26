@@ -17,8 +17,8 @@ if (exists(select * from sys.tables where name = 'Clubs_Tbl'))
 
 create table Clubs_Tbl (
 	Id				int			 not null identity primary key,
-	ClubName		varchar(50)  not null,
-	ShortName		varchar(10)  not null,
+	ClubName		varchar(100) not null,
+	ShortName		varchar(20)  not null,
 	Contact			varchar(50)	 not null,
 --	Address			varchar(100) null,
 --	CourtCount		int			 not null default 0,

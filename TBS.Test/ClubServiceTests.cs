@@ -11,7 +11,7 @@ namespace TBS.Test
     public class ClubServiceTests
     {
         ClubService _service;
-        const string LA_TENIS = "LA_TENIS";
+        const string LA_CALA = "LA_CALA_TENIS";
 
         [TestInitialize]
         public void Init()
@@ -43,9 +43,9 @@ namespace TBS.Test
         public void add_club_to_database()
         {
             TBS_Test_Helper.TestPrepareDBToAddClub();
-            Club club = new Club() { ClubName = "Mijas Club de Tenis", ShortName = LA_TENIS, Contact = "José" };
+            Club club = new Club() { ClubName = "Mijas Club de Tenis", ShortName = LA_CALA, Contact = "José" };
             _service.Save(club);
-            var clubs = _service.GetClubs().Where(c => c.ShortName == LA_TENIS);
+            var clubs = _service.GetClubs().Where(c => c.ShortName == LA_CALA);
             Assert.AreEqual(clubs.Count(), 1);
         }
 
@@ -53,10 +53,10 @@ namespace TBS.Test
         public void delete_club_from_database()
         {
             TBS_Test_Helper.TestPrepareDBToDeleteClub();
-            var club = _service.GetClubs().Where(c => c.ShortName == LA_TENIS).FirstOrDefault();
+            var club = _service.GetClubs().Where(c => c.ShortName == LA_CALA).FirstOrDefault();
             club.Deleted = true;
             _service.Save(club);
-            var club2 = _service.GetClubs().Where(c => c.ShortName == LA_TENIS).FirstOrDefault();
+            var club2 = _service.GetClubs().Where(c => c.ShortName == LA_CALA).FirstOrDefault();
             Assert.AreEqual(1, 1);
         }
     }
