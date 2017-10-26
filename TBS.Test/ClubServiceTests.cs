@@ -16,8 +16,6 @@ namespace TBS.Test
         [TestInitialize]
         public void Init()
         {
-            // session = new Mock<ISession>();
-            // database = new Database(session.Object);
             var session = new Session(AppSettings.TestDatabaseConnection);
             var database = new Database(session);
 
