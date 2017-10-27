@@ -41,7 +41,6 @@ namespace TBS.Controllers
         {
             if (id != club.Id)
                 return BadRequest();
-
             try
             {
                 _service.Save(club);
@@ -68,17 +67,14 @@ namespace TBS.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteClub([FromRoute] int id)
         {
-            var club = _service.GetClub(id);
-            if (club == null)
-            {
-                return NotFound();
-            }
-            else
+            Club club = _service.GetClub(id);
+            if (club != null)
             {
                 club.Deleted = true;
+                _service.Save(club);
+                return Ok();
             }
-            _service.Save(club);
-            return Ok(club);
+            return NotFound();
         }
 
         private bool ClubExists(int id)

@@ -1,4 +1,3 @@
 ﻿Namespace: Service
 
-Used for performing operations on DO's that don't belong to a particular DO
-
+Used to aggregate the commands and queries in objects that are separated out through CQRS.

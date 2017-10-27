@@ -9,6 +9,7 @@ namespace TBS.Service
 {
     public interface IClubService
     {
+        Club GetClub(int id);
         IEnumerable<Club> GetAllClubs();
         IEnumerable<Club> GetClubs();
         void Save(Club club);
