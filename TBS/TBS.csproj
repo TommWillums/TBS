@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Commands\Courts\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
