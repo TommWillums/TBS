@@ -33,6 +33,7 @@ namespace TBS.Domain
         public string Location { get; set; }    // Bjørntvedt / Tennishallen
         public string VisibleFor { get; set; }  // Klubb, Årskort, Member, Non-Member
         public DateTime Created { get; set; }
+        public bool Deleted { get; set; }
     }
 
     /* 
