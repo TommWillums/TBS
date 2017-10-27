@@ -3,7 +3,6 @@ using System.Linq;
 using TBS.Domain;
 using TBS.Service;
 using TBS.Data;
-using TBS.Util;
 
 namespace TBS.Test
 {
@@ -11,51 +10,66 @@ namespace TBS.Test
     public class ClubServiceTests
     {
         ClubService _service;
-        const string LA_CALA = "LA_CALA_TENIS";
+        const string dummy_name = "Mijas";
 
         [TestInitialize]
         public void Init()
         {
-            var session = new Session(AppSettings.TestDatabaseConnection);
+            var session = new Session(Util.AppSettings.TestDatabaseConnection);
             var database = new Database(session);
 
             _service = new ClubService(database);
         }
 
         [TestMethod]
-        public void get_club_100_from_database()
+        public void club_get_100_from_database()
         {
             var club = _service.GetClub(100);
             Assert.AreEqual(club.Id, 100);
         }
 
         [TestMethod]
-        public void get_club_PTK_via_GetClubs()
+        public void club_get_PTK_via_GetClubs()
         {
-            var clubs = _service.GetClubs().ToList();
-            Club club = clubs.FirstOrDefault(c => c.ShortName == "PTK");
-            Assert.AreEqual(club.ShortName, "PTK");
+            var items = _service.GetClubs().ToList();
+            Club item = items.FirstOrDefault(c => c.ShortName == "PTK");
+            Assert.AreEqual(item.ShortName, "PTK");
         }
 
         [TestMethod]
-        public void add_club_to_database()
+        public void club_add_in_database()
         {
             TBS_Test_Helper.TestPrepareDBToAddClub();
-            Club club = new Club() { ClubName = "Mijas Club de Tenis", ShortName = LA_CALA, Contact = "José" };
-            _service.Save(club);
-            var clubs = _service.GetClubs().Where(c => c.ShortName == LA_CALA);
-            Assert.AreEqual(clubs.Count(), 1);
+            Club item = new Club() { ClubName = dummy_name + " Tenis", ShortName = dummy_name, Contact = "José" };
+            _service.Save(item);
+            var items = _service.GetClubs().Where(c => c.ShortName == dummy_name);
+            Assert.AreEqual(items.Count(), 1);
         }
 
         [TestMethod]
-        public void delete_club_from_database()
+        public void club_update_in_database()
         {
-            TBS_Test_Helper.TestPrepareDBToDeleteClub();
-            var club = _service.GetClubs().Where(c => c.ShortName == LA_CALA).FirstOrDefault();
-            club.Deleted = true;
-            _service.Save(club);
-            var club2 = _service.GetClubs().Where(c => c.ShortName == LA_CALA).FirstOrDefault();
-            Assert.AreEqual(1, 1);
+            TBS_Test_Helper.TestPrepareDBToUpdateClub();
+            var item = _service.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+            item.ClubName  = dummy_name + "club";
+            item.ShortName = dummy_name + "cala";
+            item.Contact   = dummy_name + "contact";
+            _service.Save(item);
+            var item2 = _service.GetClub(item.Id);
+            Assert.AreEqual(item2.ClubName , dummy_name + "club");
+            Assert.AreEqual(item2.ShortName, dummy_name + "cala");
+            Assert.AreEqual(item2.Contact  , dummy_name + "contact");
+        }
+
+        [TestMethod]
+        public void club_delete_in_database()
+        {
+            TBS_Test_Helper.TestPrepareDBToUpdateClub();
+            var item = _service.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+            item.Deleted = true;
+            _service.Save(item);
+            var item2 = _service.GetClub(item.Id);
+            Assert.AreEqual(item2, null);
         }
     }
 }

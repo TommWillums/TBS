@@ -24,7 +24,7 @@ namespace TBS.Test
         }
 
         [TestMethod]
-        public void get_all_clubs()
+        public void club_get_all_moq()
         {
             var entities = new List<Club>
             {
@@ -42,7 +42,7 @@ namespace TBS.Test
         }
 
         [TestMethod]
-        public void save_club()
+        public void club_save_moq()
         {
             var club = new Club
             {
