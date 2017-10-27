@@ -30,5 +30,4 @@ Also, it should not be dependent on the application frameworks used in the other
 -- are injected into Service and Repository objects.
 --
 
-Aspect Oriented Programming?
 
