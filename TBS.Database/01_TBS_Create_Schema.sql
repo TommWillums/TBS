@@ -61,14 +61,14 @@ go
 
 /* VIEWS */
 
-<<<<<<< HEAD
 if (exists(select * from sys.views where name = 'Clubs_v'))
 	drop view Clubs_v;
 go
 
 create view Clubs_v as
 	select * from Clubs where Deleted = 0
-=======
+go
+
 if (exists(select * from sys.views where name = 'Clubs'))
 	drop view Clubs;
 go
@@ -83,7 +83,6 @@ go
 
 create view Courts as 
   select * from Courts_Tbl where Deleted = 0
->>>>>>> 8c4fd0b851e659d08f2a7a212568bef4db219068
 go
 
 if (exists(select * from sys.views where name = 'Courts_v'))
@@ -92,12 +91,8 @@ go
 
 create view Courts_v as 
   select c.Id, c.Name, c.ClubId, k.ShortName Club, c.CourtGroup, c.Active, c.CourtType 
-<<<<<<< HEAD
-  from Courts c 
+  from Courts_Tbl c 
   join Clubs k on c.ClubId = k.Id 
-  where c.Deleted = 0
-=======
-  from Courts_Tbl c join Clubs_Tbl k on c.ClubId = k.Id 
   where c.Deleted = 0
 go
 
@@ -107,6 +102,5 @@ go
 
 create view Users as 
   select * from Users_Tbl where Deleted = 0
->>>>>>> 8c4fd0b851e659d08f2a7a212568bef4db219068
 go
 

@@ -15,11 +15,7 @@ namespace TBS.Data.Commands.Clubs
         {
             if (_club.Id > 0)
             {
-<<<<<<< HEAD
-                session.Execute("update Clubs set ClubName = @ClubName, ShortName = @ShortName, Contact = @Contact, Deleted = @Deleted where Id = @Id", 
-=======
                 session.Execute("update Clubs_Tbl set ClubName = @ClubName, ShortName = @ShortName, Contact = @Contact, Deleted = @Deleted where Id = @Id", 
->>>>>>> 8c4fd0b851e659d08f2a7a212568bef4db219068
                     new { _club.Id, _club.ClubName, _club.ShortName, _club.Contact, _club.Deleted });
                 return;
             }
