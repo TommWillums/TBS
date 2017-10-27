@@ -14,33 +14,23 @@ namespace TBS.Service
         void Save(Court court);
     }
 
-    public class CourtService : ICourtService
+    public class CourtService : ServiceBase, ICourtService
     {
-        private readonly IDatabase _database;
-
-        public CourtService()
-        {
-            _database = new Database();
-        }
-
-        public CourtService(IDatabase database)
-        {
-            _database = database;
-        }
+        public CourtService(IDatabase database = null) : base(database) { }
 
         public Court GetCourt(int id)
         {
-            return _database.Query(new GetCourt(id));
+            return Database.Query(new GetCourt(id));
         }
 
         public IEnumerable<Court> GetCourts(int clubId)
         {
-            return _database.Query(new GetCourtsByClub(clubId)).ToList();
+            return Database.Query(new GetCourtsByClub(clubId)).ToList();
         }
 
         public void Save(Court court)
         {
-            _database.Execute(new SaveCourt(court));
+            Database.Execute(new SaveCourt(court));
         }
 
     }

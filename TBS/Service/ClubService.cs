@@ -15,39 +15,29 @@ namespace TBS.Service
         void Save(Club club);
     }
 
-    public class ClubService : IClubService
+    public class ClubService : ServiceBase, IClubService
     {
-        private readonly IDatabase _database;
-
-        public ClubService()
-        {
-            _database = new Database();
-        }
-
-        public ClubService(IDatabase database)
-        {
-            _database = database;
-        }
+        public ClubService(IDatabase database = null) : base(database) { }
 
         public Club GetClub(int id)
         {
-            return _database.Query(new GetClub(id));
+            return Database.Query(new GetClub(id));
         }
 
         public IEnumerable<Club> GetAllClubs()
         {
-            return _database.Query(new GetAllClubs()).ToList();
+            return Database.Query(new GetAllClubs()).ToList();
         }
 
         public IEnumerable<Club> GetClubs()
         {
-            IEnumerable<Club> list = _database.Query(new GetAllClubs());
+            IEnumerable<Club> list = Database.Query(new GetAllClubs());
             return list.Where(c => !c.Deleted);
         }
 
         public void Save(Club club)
         {
-            _database.Execute(new SaveClub(club));
+            Database.Execute(new SaveClub(club));
         }
 
     }
