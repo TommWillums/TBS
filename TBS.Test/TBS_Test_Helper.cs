@@ -12,21 +12,41 @@ namespace TBS.Test
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
-                conn.Execute("delete from Clubs_Tbl where (Shortname = 'LA_TENIS') or (Deleted = 1)");
+                conn.Execute("delete from Clubs_Tbl where Shortname like 'Mijas%'");
             }
 
         }
 
-        public static void TestPrepareDBToDeleteClub()
+        public static void TestPrepareDBToUpdateClub()
         {
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
-                conn.Execute("delete from Clubs_Tbl where (Shortname = 'LA_TENIS')");
-                conn.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('Mijas Club de Tenis', 'LA_TENIS', 'José')");
+                conn.Execute("delete from Clubs_Tbl where Shortname like 'Mijas%'");
+                conn.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('Mijas Club de Tenis', 'Mijas', 'José')");
+            }
+        }
+
+        public static void TestPrepareDBToAddCourt()
+        {
+            using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
+            {
+                conn.Open();
+                conn.Execute("delete from Courts_Tbl where (ClubId = 100 and Name like 'Mijas%')");
+            }
+        }
+
+        public static void TestPrepareDBToUpdateCourt()
+        {
+            using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
+            {
+                conn.Open();
+                conn.Execute("delete from Courts_Tbl where (ClubId = 100 and Name like 'Mijas%')");
+                conn.Execute("insert into Courts_Tbl (Name, ClubId, Active) values ('Mijas', 100, 1)");
             }
 
         }
+
     }
 
 }

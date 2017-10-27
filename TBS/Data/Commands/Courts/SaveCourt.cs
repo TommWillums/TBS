@@ -20,7 +20,7 @@ namespace TBS.Data.Commands.Courts
                 return;
             }
 
-            session.Execute("insert into Courts_Tbl (Name, ClubId, CourtGroup, Active) values (@Name, @ClubId, @CourtGroup, @Active)",
+            session.Execute("insert into Courts_Tbl (Name, ClubId, CourtGroup, Active, Deleted) values (@Name, @ClubId, @CourtGroup, @Active, @Deleted)",
                 new { _court.Name, _court.ClubId, _court.CourtGroup, _court.Active, _court.Deleted });
         }
     }

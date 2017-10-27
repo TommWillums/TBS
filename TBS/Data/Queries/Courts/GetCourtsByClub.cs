@@ -15,7 +15,7 @@ namespace TBS.Data.Queries.Courts
 
         public IList<Court> Execute(ISession session)
         {
-            return session.Query<Court>("select * from Courts where ClubId = @Id").ToList();
+            return session.Query<Court>("select * from Courts where ClubId = @Id", new { ID = _clubId }).ToList();
         }
     }
 
