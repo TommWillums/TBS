@@ -58,9 +58,22 @@ namespace TBS.Data.Dapper
         }
 
         /// <summary>
-        ///     Perform a transactionless query
         /// </summary>
         public T Transaction<T>(Func<IDbTransaction, T> query)
+        {
+            if (_transaction == null)
+            {
+                return Transactionless(query);
+            }
+            else
+            {
+                return Transactioned(query);
+            }
+        }
+        /// <summary>
+        ///     Perform a transactionless query
+        /// </summary>
+        private T Transactionless<T>(Func<IDbTransaction, T> query)
         {
             using (var connection = Connection)
             {
@@ -78,6 +91,23 @@ namespace TBS.Data.Dapper
                         throw;
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        ///     Perform a transactioned query
+        /// </summary>
+        private T Transactioned<T>(Func<IDbTransaction, T> query)
+        {
+            try
+            {
+                var result = query(_transaction);
+                return result;
+            }
+            catch (Exception)
+            {
+                _transaction.Rollback();
+                throw;
             }
         }
 

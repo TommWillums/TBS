@@ -23,7 +23,7 @@ namespace TBS.Test
             {
                 conn.Open();
                 conn.Execute("delete from Clubs_Tbl where Shortname like 'Mijas%'");
-                conn.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('Mijas Club de Tenis', 'Mijas', 'José')");
+                conn.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('Mijas', 'Mijas', 'José')");
             }
         }
 

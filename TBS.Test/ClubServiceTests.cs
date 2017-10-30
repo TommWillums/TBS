@@ -51,14 +51,14 @@ namespace TBS.Test
         {
             TBS_Test_Helper.TestPrepareDBToUpdateClub();
             var item = _service.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
-            item.ClubName  = dummy_name + "club";
-            item.ShortName = dummy_name + "cala";
-            item.Contact   = dummy_name + "contact";
+            item.ClubName  = dummy_name + " club";
+            item.ShortName = dummy_name + " cala";
+            item.Contact   = dummy_name + " contact";
             _service.Save(item);
             var item2 = _service.GetClub(item.Id);
-            Assert.AreEqual(item2.ClubName , dummy_name + "club");
-            Assert.AreEqual(item2.ShortName, dummy_name + "cala");
-            Assert.AreEqual(item2.Contact  , dummy_name + "contact");
+            Assert.AreEqual(item2.ClubName , dummy_name + " club");
+            Assert.AreEqual(item2.ShortName, dummy_name + " cala");
+            Assert.AreEqual(item2.Contact  , dummy_name + " contact");
         }
 
         [TestMethod]

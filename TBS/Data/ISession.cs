@@ -7,5 +7,8 @@ namespace TBS.Data
     {
         IEnumerable<T> Query<T>(string query, object param = null);
         void Execute(string query, object param = null);
+        void BeginTransaction();
+        void Commit();
+        void Rollback();
     }
 }
