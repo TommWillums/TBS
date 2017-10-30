@@ -31,7 +31,7 @@ insert into Courts_Tbl (ClubId, Name, CourtGroup, Active) values (100, 'Bane 4 U
 delete from Users_Tbl
 DBCC CheckIdent (Users_Tbl, RESEED, 10000);
 
-insert into Users_Tbl (Name) values ('Tomm Willums')
+insert into Users_Tbl (Name, ClubId) values ('Tomm Willums')
 insert into Users_Tbl (Name) values ('Tomas Karell')
 insert into Users_Tbl (Name) values ('Urban')
 insert into Users_Tbl (Name) values ('Martin Kristoffersen')

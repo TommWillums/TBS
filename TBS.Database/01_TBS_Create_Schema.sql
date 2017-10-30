@@ -55,6 +55,7 @@ go
 create table Users_Tbl (
 	Id			int			not null identity primary key,
 	Name		varchar(50)	not null,
+	ClubId		int			null references Clubs_Tbl (Id),
 	Deleted		bit			not null default 0,
 )
 go
