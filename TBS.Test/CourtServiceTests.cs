@@ -10,7 +10,7 @@ namespace TBS.Test
     [TestClass]
     public class CourtServiceTests
     {
-        const string dummy_court = "Mijas";
+        const string dummy_court = "TBSX";
         CourtService _service;
 
         [TestInitialize]
@@ -42,7 +42,7 @@ namespace TBS.Test
         [TestMethod]
         public void court_update_in_database()
         {
-            const string court_name = "Mijas claycourt";
+            const string court_name = "TBSX claycourt";
             TBS_Test_Helper.TestPrepareDBToUpdateCourt();
 
             Court item = _service.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();

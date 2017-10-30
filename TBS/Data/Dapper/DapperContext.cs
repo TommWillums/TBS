@@ -63,17 +63,17 @@ namespace TBS.Data.Dapper
         {
             if (_transaction == null)
             {
-                return Transactionless(query);
+                return AutoTransaction(query);
             }
             else
             {
-                return Transactioned(query);
+                return ExplicitTransaction(query);
             }
         }
         /// <summary>
         ///     Perform a transactionless query
         /// </summary>
-        private T Transactionless<T>(Func<IDbTransaction, T> query)
+        private T AutoTransaction<T>(Func<IDbTransaction, T> query)
         {
             using (var connection = Connection)
             {
@@ -97,7 +97,7 @@ namespace TBS.Data.Dapper
         /// <summary>
         ///     Perform a transactioned query
         /// </summary>
-        private T Transactioned<T>(Func<IDbTransaction, T> query)
+        private T ExplicitTransaction<T>(Func<IDbTransaction, T> query)
         {
             try
             {

@@ -10,7 +10,7 @@ namespace TBS.Test
     public class ClubServiceTests
     {
         ClubService _service;
-        const string dummy_name = "Mijas";
+        const string dummy_name = "TBSX";
 
         [TestInitialize]
         public void Init()
@@ -40,7 +40,7 @@ namespace TBS.Test
         public void club_add_in_database()
         {
             TBS_Test_Helper.TestPrepareDBToAddClub();
-            Club item = new Club() { ClubName = dummy_name + " Tenis", ShortName = dummy_name, Contact = "José" };
+            Club item = new Club() { ClubName = dummy_name + " club", ShortName = dummy_name, Contact = "contact" };
             _service.Save(item);
             var items = _service.GetClubs().Where(c => c.ShortName == dummy_name);
             Assert.AreEqual(items.Count(), 1);
@@ -52,12 +52,12 @@ namespace TBS.Test
             TBS_Test_Helper.TestPrepareDBToUpdateClub();
             var item = _service.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
             item.ClubName  = dummy_name + " club";
-            item.ShortName = dummy_name + " cala";
+            item.ShortName = dummy_name + " tbsx";
             item.Contact   = dummy_name + " contact";
             _service.Save(item);
             var item2 = _service.GetClub(item.Id);
             Assert.AreEqual(item2.ClubName , dummy_name + " club");
-            Assert.AreEqual(item2.ShortName, dummy_name + " cala");
+            Assert.AreEqual(item2.ShortName, dummy_name + " tbsx");
             Assert.AreEqual(item2.Contact  , dummy_name + " contact");
         }
 

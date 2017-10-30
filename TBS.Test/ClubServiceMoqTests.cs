@@ -14,7 +14,7 @@ namespace TBS.Test
         Mock<ISession> _session;
         Database _database;
 
-        const string LA_CALA = "LA_CALA_TENIS";
+        const string TBSX = "TBSX";
 
         [TestInitialize]
         public void Init()
@@ -28,9 +28,9 @@ namespace TBS.Test
         {
             var entities = new List<Club>
             {
-                new Club {Id = 1, ClubName = "Grønli Tennisklubb", ShortName = "GTK", Contact = "Tomm"},
-                new Club {Id = 2, ClubName = "Flåtten Tennisklubb", ShortName = "FTK", Contact = "Ole"},
-                new Club {Id = 2, ClubName = "Stridsklev Tennisklubb", ShortName = "STK", Contact = "Rita"}
+                new Club {Id = 1, ClubName = "TBSX 1 Tennisklubb", ShortName = "TBSX1", Contact = "Tine"},
+                new Club {Id = 2, ClubName = "TBSX 2 Tennisklubb", ShortName = "TBSX2", Contact = "Lisa"},
+                new Club {Id = 2, ClubName = "TBSX 3 Tennisklubb", ShortName = "TBSX3", Contact = "Rita"}
             };
 
             _session.Setup(m => m.Query<Club>(It.IsAny<string>(), null)).Returns(entities);

@@ -16,12 +16,12 @@ namespace TBS.Data.Commands.Users
             if (_user.Id > 0)
             {
                 session.Execute("update Users_Tbl set Name = @Name, ClubId = @ClubId, Deleted = @Deleted where Id = @Id", 
-                    new { _user.Id, _user.Name, _user.Deleted });
+                    new { _user.Id, _user.Name, _user.ClubId, _user.Deleted });
                 return;
             }
 
             session.Execute("insert into Users_Tbl (Name, ClubId) values (@Name, @ClubId)",
-                new { _user.Name });
+                new { _user.Name, _user.ClubId });
         }
     }
 

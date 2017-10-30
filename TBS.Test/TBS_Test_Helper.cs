@@ -12,7 +12,7 @@ namespace TBS.Test
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
-                conn.Execute("delete from Clubs_Tbl where Shortname like 'Mijas%'");
+                conn.Execute("delete from Clubs_Tbl where Shortname like 'TBSX%'");
             }
 
         }
@@ -22,8 +22,8 @@ namespace TBS.Test
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
-                conn.Execute("delete from Clubs_Tbl where Shortname like 'Mijas%'");
-                conn.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('Mijas', 'Mijas', 'José')");
+                conn.Execute("delete from Clubs_Tbl where Shortname like 'TBSX%'");
+                conn.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('TBSX', 'TBSX', 'TBSX')");
             }
         }
 
@@ -32,7 +32,7 @@ namespace TBS.Test
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
-                conn.Execute("delete from Courts_Tbl where (ClubId = 100 and Name like 'Mijas%')");
+                conn.Execute("delete from Courts_Tbl where (ClubId = 100 and Name like 'TBSX%')");
             }
         }
 
@@ -41,12 +41,19 @@ namespace TBS.Test
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
-                conn.Execute("delete from Courts_Tbl where (ClubId = 100 and Name like 'Mijas%')");
-                conn.Execute("insert into Courts_Tbl (Name, ClubId, Active) values ('Mijas', 100, 1)");
+                conn.Execute("delete from Courts_Tbl where (ClubId = 100 and Name like 'TBSX%')");
+                conn.Execute("insert into Courts_Tbl (Name, ClubId, Active) values ('TBSX', 100, 1)");
             }
-
         }
 
+        public static void TestPrepareDBForUsers()
+        {
+            using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
+            {
+                conn.Open();
+                conn.Execute("delete from Users_Tbl where Name like 'TBSX%'");
+            }
+        }
     }
 
 }
