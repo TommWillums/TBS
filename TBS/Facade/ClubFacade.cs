@@ -5,9 +5,9 @@ using TBS.Data.Commands.Clubs;
 using TBS.Data.Queries.Clubs;
 using TBS.Domain;
 
-namespace TBS.Service
+namespace TBS.Facade
 {
-    public interface IClubService
+    public interface IClubFacade
     {
         Club GetClub(int id);
         IEnumerable<Club> GetAllClubs();
@@ -15,9 +15,9 @@ namespace TBS.Service
         void Save(Club club);
     }
 
-    public class ClubService : ServiceBase, IClubService
+    public class ClubFacade : FacadeBase, IClubFacade
     {
-        public ClubService(IDatabase database = null) : base(database) { }
+        public ClubFacade(IDatabase database = null) : base(database) { }
 
         public Club GetClub(int id)
         {

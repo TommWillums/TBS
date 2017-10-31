@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using TBS.Domain;
 using TBS.Data;
-using TBS.Service;
+using TBS.Facade;
 using TBS.Data.Dapper;
 
 namespace TBS.Test
 {
     [TestClass]
-    public class CourtServiceTests
+    public class CourtFacadeTests
     {
         const string dummy_court = "TBSX";
-        CourtService _service;
+        CourtFacade _facade;
 
         [TestInitialize]
         public void Init()
@@ -20,13 +20,13 @@ namespace TBS.Test
             var session = new Session(Util.AppSettings.TestDatabaseConnection);
             var database = new Database(session);
 
-            _service = new CourtService(database);
+            _facade = new CourtFacade(database);
         }
 
         [TestMethod]
         public void court_get_1_from_database()
         {
-            var court = _service.GetCourt(1);
+            var court = _facade.GetCourt(1);
             Assert.AreEqual(court.Id, 1);
         }
 
@@ -35,8 +35,8 @@ namespace TBS.Test
         {
             TBS_Test_Helper.TestPrepareDBToAddCourt();
             Court item = new Court() { Name = dummy_court, ClubId = 100, Active = true };
-            _service.Save(item);
-            var items = _service.GetCourts(100);
+            _facade.Save(item);
+            var items = _facade.GetCourts(100);
             Assert.AreEqual(items.Count(), 9);
         }
 
@@ -46,13 +46,13 @@ namespace TBS.Test
             const string court_name = "TBSX claycourt";
             TBS_Test_Helper.TestPrepareDBToUpdateCourt();
 
-            Court item = _service.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
+            Court item = _facade.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
             item.Name = court_name;
             item.CourtGroup = 2;
             item.Active = false;
-            _service.Save(item);
+            _facade.Save(item);
 
-            Court item2 = _service.GetCourt(item.Id);
+            Court item2 = _facade.GetCourt(item.Id);
             Assert.AreEqual(item2.Name, court_name);
             Assert.AreEqual(item2.CourtGroup, 2);
             Assert.AreEqual(item2.Active, false);
@@ -63,11 +63,11 @@ namespace TBS.Test
         {
             TBS_Test_Helper.TestPrepareDBToUpdateCourt();
 
-            Court item = _service.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
+            Court item = _facade.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
             item.Deleted = true;
-            _service.Save(item);
+            _facade.Save(item);
 
-            Court item2 = _service.GetCourt(item.Id);
+            Court item2 = _facade.GetCourt(item.Id);
             Assert.AreEqual(item2, null);
         }
 

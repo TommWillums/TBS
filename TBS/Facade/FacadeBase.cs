@@ -1,13 +1,13 @@
 ﻿using TBS.Data;
 
-namespace TBS.Service
+namespace TBS.Facade
 {
-    public class ServiceBase
+    public class FacadeBase
     {
         private readonly IDatabase _database;
         protected IDatabase Database => _database;
 
-        protected ServiceBase(IDatabase database)
+        protected FacadeBase(IDatabase database)
         {
             if (database == null)
                 _database = new Database();

@@ -1,4 +1,4 @@
-﻿Namespace: Service
+﻿Namespace: Facade
 
 Used to aggregate the commands and queries in objects that are separated out through CQRS.
 

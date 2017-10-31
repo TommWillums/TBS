@@ -2,14 +2,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using TBS.Domain;
-using TBS.Service;
+using TBS.Facade;
 using TBS.Data;
 using Moq;
 
 namespace TBS.Test
 {
     [TestClass]
-    public class ClubServiceMoqTests
+    public class ClubFacadeMoqTests
     {
         Mock<ISession> _session;
         Database _database;
@@ -35,8 +35,8 @@ namespace TBS.Test
 
             _session.Setup(m => m.Query<Club>(It.IsAny<string>(), null)).Returns(entities);
 
-            ClubService service = new ClubService(_database);
-            var clubs = service.GetAllClubs();
+            ClubFacade facade = new ClubFacade(_database);
+            var clubs = facade.GetAllClubs();
 
             Assert.AreEqual(entities.Count, clubs.Count());
         }
@@ -53,8 +53,8 @@ namespace TBS.Test
 
             _session.Setup(m => m.Execute(It.IsAny<string>(), It.IsAny<object>())).Verifiable();
 
-            var service = new ClubService(_database);
-            service.Save(club);
+            var facade = new ClubFacade(_database);
+            facade.Save(club);
 
             _session.Verify(m => m.Execute(It.IsAny<string>(), It.IsAny<object>()));
         }

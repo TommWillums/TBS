@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TBS.Domain;
-using TBS.Service;
+using TBS.Facade;
 
 namespace TBS.Controllers
 {
@@ -11,25 +11,25 @@ namespace TBS.Controllers
     [Route("api/Clubs")]
     public class ClubsController : Controller
     {
-        private ClubService _service;
+        private ClubFacade _facade;
 
         public ClubsController()
         {
-            _service = new ClubService();
+            _facade = new ClubFacade();
         }
 
         // GET: api/Clubs
         [HttpGet]
         public List<Club> GetClubs()
         {
-            return _service.GetClubs().ToList();
+            return _facade.GetClubs().ToList();
         }
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
         public IActionResult GetClub([FromRoute] int id)
         {
-            Club club = _service.GetClub(id);
+            Club club = _facade.GetClub(id);
             if (club == null)
                 return NotFound();
             return Ok(club);
@@ -43,7 +43,7 @@ namespace TBS.Controllers
                 return BadRequest();
             try
             {
-                _service.Save(club);
+                _facade.Save(club);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -59,7 +59,7 @@ namespace TBS.Controllers
         [HttpPost]
         public IActionResult PostClub([FromBody] Club club)
         {
-            _service.Save(club);
+            _facade.Save(club);
             return CreatedAtAction("GetClub", new { id = club.Id }, club);
         }
 
@@ -67,11 +67,11 @@ namespace TBS.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteClub([FromRoute] int id)
         {
-            Club club = _service.GetClub(id);
+            Club club = _facade.GetClub(id);
             if (club != null)
             {
                 club.Deleted = true;
-                _service.Save(club);
+                _facade.Save(club);
                 return Ok();
             }
             return NotFound();
@@ -79,7 +79,7 @@ namespace TBS.Controllers
 
         private bool ClubExists(int id)
         {
-            return _service.GetClub(id) != null;
+            return _facade.GetClub(id) != null;
         }
     }
 }

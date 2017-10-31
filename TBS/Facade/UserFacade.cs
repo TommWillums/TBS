@@ -5,18 +5,18 @@ using TBS.Data.Commands.Users;
 using TBS.Data.Queries.Users;
 using TBS.Domain;
 
-namespace TBS.Service
+namespace TBS.Facade
 {
-    public interface IUserService
+    public interface IUserFacade
     {
         User GetUser(int id);
         IEnumerable<User> GetUsers(int clubId);
         void Save(User user);
     }
 
-    public class UserService : ServiceBase, IUserService
+    public class UserFacade : FacadeBase, IUserFacade
     {
-        public UserService(IDatabase database = null) : base(database) { }
+        public UserFacade(IDatabase database = null) : base(database) { }
 
         public User GetUser(int id)
         {
