@@ -2,7 +2,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TBS.Data;
 using TBS.Domain;
 using TBS.Service;
 
@@ -16,7 +15,6 @@ namespace TBS.Controllers
 
         public ClubsController()
         {
-            //_service = new ClubService(new Database(new Session(Util.AppSettings.TestDatabaseConnection)));
             _service = new ClubService();
         }
 

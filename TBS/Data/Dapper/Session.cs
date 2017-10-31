@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Dapper;
-using TBS.Data.Dapper;
 
-namespace TBS.Data
+namespace TBS.Data.Dapper
 {
     public class Session : ISession
     {
@@ -32,20 +31,20 @@ namespace TBS.Data
             _context.Transaction(transaction => _context.Connection.Execute(sql, param, transaction));
         }
 
-        public void BeginTransaction()
-        {
-            _context.BeginTransaction();
-        }
+        //public void BeginTransaction()
+        //{
+        //    _context.BeginTransaction();
+        //}
 
-        public void Commit()
-        {
-            _context.Commit();
-        }
+        //public void Commit()
+        //{
+        //    _context.Commit();
+        //}
 
-        public void Rollback()
-        {
-            _context.Rollback();
-        }
+        //public void Rollback()
+        //{
+        //    _context.Rollback();
+        //}
 
     }
 }

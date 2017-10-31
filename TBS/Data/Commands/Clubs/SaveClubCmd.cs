@@ -2,11 +2,11 @@
 
 namespace TBS.Data.Commands.Clubs
 {
-    public class SaveClub : ICommand
+    public class SaveClubCmd : ICommand
     {
         private readonly Club _club;
 
-        public SaveClub(Club club)
+        public SaveClubCmd(Club club)
         {
             _club = club;
         }

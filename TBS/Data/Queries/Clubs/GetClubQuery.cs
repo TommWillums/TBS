@@ -3,11 +3,11 @@ using TBS.Domain;
 
 namespace TBS.Data.Queries.Clubs
 {
-    public class GetClub : IQuery<Club>
+    public class GetClubQuery : IQuery<Club>
     {
         private readonly int _clubId;
 
-        public GetClub(int clubId)
+        public GetClubQuery(int clubId)
         {
             _clubId = clubId;
         }

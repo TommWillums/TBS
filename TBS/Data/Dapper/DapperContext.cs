@@ -17,14 +17,14 @@ namespace TBS.Data.Dapper
     public class DapperContext : IDapperContext
     {
         private readonly string _connectionString;
-        private IDbConnection _connection;
+
+        private IDbConnection   _connection;
+        private IDbTransaction  _transaction { get; set; }
 
         public DapperContext(string connectionString)
         {
             _connectionString = connectionString;
         }
-
-        private IDbTransaction _transaction { get; set; }
 
         /// <summary>
         ///     Get the current connection, or open a new connection

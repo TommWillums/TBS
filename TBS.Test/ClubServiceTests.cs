@@ -3,6 +3,7 @@ using System.Linq;
 using TBS.Domain;
 using TBS.Service;
 using TBS.Data;
+using TBS.Data.Dapper;
 
 namespace TBS.Test
 {

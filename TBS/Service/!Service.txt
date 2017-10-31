@@ -1,3 +1,4 @@
 ﻿Namespace: Service
 
 Used to aggregate the commands and queries in objects that are separated out through CQRS.
+

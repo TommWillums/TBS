@@ -21,7 +21,7 @@ namespace TBS.Service
 
         public Club GetClub(int id)
         {
-            return Database.Query(new GetClub(id));
+            return Database.Query(new GetClubQuery(id));
         }
 
         public IEnumerable<Club> GetAllClubs()
@@ -37,7 +37,7 @@ namespace TBS.Service
 
         public void Save(Club club)
         {
-            Database.Execute(new SaveClub(club));
+            Database.Execute(new SaveClubCmd(club));
         }
 
     }

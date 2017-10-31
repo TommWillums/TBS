@@ -14,20 +14,5 @@ namespace TBS.Service
             else
                 _database = database;
         }
-
-        public void BeginTransaction()
-        {
-            _database.GetSession().BeginTransaction();
-        }
-
-        public void Commit()
-        {
-            _database.GetSession().Commit();
-        }
-
-        public void Rollback()
-        {
-            _database.GetSession().Rollback();
-        }
     }
 }
