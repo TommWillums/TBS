@@ -1,5 +1,4 @@
 ﻿Namespace: TBS.Data
-Lowest layer
 ORM <-> SQL 
-Uses Dapper to call database server
+Uses DapperContext and Dapper to call database server
 
