@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Linq;
 using TBS.Domain;
 using TBS.Data;
@@ -18,7 +17,7 @@ namespace TBS.Test
         public void Init()
         {
             var session = new Session(Util.AppSettings.TestDatabaseConnection);
-            var database = new Database(session);
+            var database = new CQHandler(session);
 
             _facade = new UserFacade(database);
         }

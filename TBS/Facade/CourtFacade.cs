@@ -16,21 +16,21 @@ namespace TBS.Facade
 
     public class CourtFacade : FacadeBase, ICourtFacade
     {
-        public CourtFacade(IDatabase database = null) : base(database) { }
+        public CourtFacade(ICQHandler database = null) : base(database) { }
 
         public Court GetCourt(int id)
         {
-            return Database.Query(new GetCourt(id));
+            return CQHandler.Query(new GetCourt(id));
         }
 
         public IEnumerable<Court> GetCourts(int clubId)
         {
-            return Database.Query(new GetCourtsByClub(clubId)).ToList();
+            return CQHandler.Query(new GetCourtsByClub(clubId)).ToList();
         }
 
         public void Save(Court court)
         {
-            Database.Execute(new SaveCourt(court));
+            CQHandler.Execute(new SaveCourt(court));
         }
 
     }

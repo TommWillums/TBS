@@ -16,21 +16,21 @@ namespace TBS.Facade
 
     public class UserFacade : FacadeBase, IUserFacade
     {
-        public UserFacade(IDatabase database = null) : base(database) { }
+        public UserFacade(ICQHandler database = null) : base(database) { }
 
         public User GetUser(int id)
         {
-            return Database.Query(new GetUser(id));
+            return CQHandler.Query(new GetUser(id));
         }
 
         public IEnumerable<User> GetUsers(int clubId)
         {
-            return Database.Query(new GetUsersByClub(clubId)).ToList();
+            return CQHandler.Query(new GetUsersByClub(clubId)).ToList();
         }
 
         public void Save(User user)
         {
-            Database.Execute(new SaveUser(user));
+            CQHandler.Execute(new SaveUser(user));
         }
 
     }

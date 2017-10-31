@@ -17,7 +17,7 @@ namespace TBS.Test
         public void Init()
         {
             var session = new Session(Util.AppSettings.TestDatabaseConnection);
-            var database = new Database(session);
+            var database = new CQHandler(session);
 
             _facade = new ClubFacade(database);
         }

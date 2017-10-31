@@ -12,7 +12,7 @@ namespace TBS.Test
     public class ClubFacadeMoqTests
     {
         Mock<ISession> _session;
-        Database _database;
+        CQHandler _cqhandler;
 
         const string TBSX = "TBSX";
 
@@ -20,7 +20,7 @@ namespace TBS.Test
         public void Init()
         {
             _session = new Mock<ISession>();
-            _database = new Database(_session.Object);
+            _cqhandler = new CQHandler(_session.Object);
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace TBS.Test
 
             _session.Setup(m => m.Query<Club>(It.IsAny<string>(), null)).Returns(entities);
 
-            ClubFacade facade = new ClubFacade(_database);
+            ClubFacade facade = new ClubFacade(_cqhandler);
             var clubs = facade.GetAllClubs();
 
             Assert.AreEqual(entities.Count, clubs.Count());
@@ -53,7 +53,7 @@ namespace TBS.Test
 
             _session.Setup(m => m.Execute(It.IsAny<string>(), It.IsAny<object>())).Verifiable();
 
-            var facade = new ClubFacade(_database);
+            var facade = new ClubFacade(_cqhandler);
             facade.Save(club);
 
             _session.Verify(m => m.Execute(It.IsAny<string>(), It.IsAny<object>()));

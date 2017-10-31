@@ -17,28 +17,27 @@ namespace TBS.Facade
 
     public class ClubFacade : FacadeBase, IClubFacade
     {
-        public ClubFacade(IDatabase database = null) : base(database) { }
+        public ClubFacade(ICQHandler cqhandler = null) : base(cqhandler) { }
 
         public Club GetClub(int id)
         {
-            return Database.Query(new GetClubQuery(id));
+            return CQHandler.Query(new GetClubQuery(id));
         }
 
         public IEnumerable<Club> GetAllClubs()
         {
-            return Database.Query(new GetAllClubs()).ToList();
+            return CQHandler.Query(new GetAllClubs()).ToList();
         }
 
         public IEnumerable<Club> GetClubs()
         {
-            IEnumerable<Club> list = Database.Query(new GetAllClubs());
+            IEnumerable<Club> list = CQHandler.Query(new GetAllClubs());
             return list.Where(c => !c.Deleted);
         }
 
         public void Save(Club club)
         {
-            Database.Execute(new SaveClubCmd(club));
+            CQHandler.Execute(new SaveClubCmd(club));
         }
-
     }
 }

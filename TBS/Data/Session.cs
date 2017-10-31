@@ -1,8 +1,18 @@
 ﻿using System.Collections.Generic;
+using TBS.Data.Dapper;
 using Dapper;
 
-namespace TBS.Data.Dapper
+namespace TBS.Data
 {
+    public interface ISession
+    {
+        IEnumerable<T> Query<T>(string query, object param = null);
+        void Execute(string query, object param = null);
+        //    void BeginTransaction();
+        //    void Commit();
+        //    void Rollback();
+    }
+
     public class Session : ISession
     {
         private readonly IDapperContext _context;
