@@ -15,6 +15,7 @@ namespace TBS.Data.Commands.Clubs
         {
             if (_club.Id > 0)
             {
+                // Call DapperContext.Execute instead of session?
                 session.Execute("update Clubs_Tbl set ClubName = @ClubName, ShortName = @ShortName, Contact = @Contact, Deleted = @Deleted where Id = @Id", 
                     new { _club.Id, _club.ClubName, _club.ShortName, _club.Contact, _club.Deleted });
                 return;

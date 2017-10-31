@@ -29,6 +29,7 @@
 
         public void Execute(ICommand command)
         {
+            //command.Execute(_context);    // From DapperContext
             command.Execute(_session);
         }
     }
