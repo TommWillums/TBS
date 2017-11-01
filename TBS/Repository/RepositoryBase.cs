@@ -4,15 +4,15 @@ namespace TBS.Repository
 {
     public class RepositoryBase
     {
-        private readonly ICQHandler _database;
-        protected ICQHandler CQHandler => _database;
+        private readonly ICQHandler _cqhandler;
+        protected ICQHandler CQHandler => _cqhandler;
 
-        protected RepositoryBase(ICQHandler database)
+        protected RepositoryBase(UnitOfWork unitOfWork = null)
         {
-            if (database == null)
-                _database = new CQHandler();
+            if (unitOfWork == null)
+                _cqhandler = new CQHandler();
             else
-                _database = database;
+                _cqhandler = new CQHandler(unitOfWork.Session);
         }
     }
 }

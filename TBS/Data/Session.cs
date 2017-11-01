@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using TBS.Data.Dapper;
 
 namespace TBS.Data
@@ -7,9 +8,8 @@ namespace TBS.Data
     {
         IEnumerable<T> Query<T>(string query, object param = null);
         void Execute(string query, object param = null);
-        //void BeginTransaction();
-        //void Commit();
-        //void Rollback();
+        void Commit();
+        void Rollback();
     }
 
     public class Session : ISession
@@ -19,11 +19,6 @@ namespace TBS.Data
         public Session(string connectionString)
         {
             _context = new DapperContext(connectionString);
-        }
-
-        public Session(IDapperContext context)
-        {
-            _context = context;
         }
 
         public virtual IEnumerable<T> Query<T>(string query, object param)
@@ -36,20 +31,15 @@ namespace TBS.Data
             _context.Execute(sql, param);
         }
 
-        //public void BeginTransaction()
-        //{
-        //    _context.BeginTransaction();
-        //}
+        public void Commit()
+        {
+            _context.Commit();
+        }
 
-        //public void Commit()
-        //{
-        //    _context.Commit();
-        //}
-
-        //public void Rollback()
-        //{
-        //    _context.Rollback();
-        //}
+        public void Rollback()
+        {
+            _context.Rollback();
+        }
 
     }
 }

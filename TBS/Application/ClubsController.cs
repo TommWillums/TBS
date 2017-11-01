@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -59,7 +60,19 @@ namespace TBS.Controllers
         [HttpPost]
         public IActionResult PostClub([FromBody] Club club)
         {
-            _repository.Save(club);
+            var uow = new UnitOfWork();
+            var clubrepo1 = new ClubRepository(uow);
+            var courtrepo1 = new CourtRepository(uow);
+            try
+            {
+                clubrepo1.Save(club);
+                courtrepo1.Save(new Court() { Name = "TestCourt" });
+                uow.Commit();
+            }
+            catch (Exception ex)
+            {
+                uow.Rollback();
+            }
             return CreatedAtAction("GetClub", new { id = club.Id }, club);
         }
 

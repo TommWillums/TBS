@@ -16,7 +16,7 @@ namespace TBS.Repository
 
     public class UserRepository : RepositoryBase, IUserRepository
     {
-        public UserRepository(ICQHandler database = null) : base(database) { }
+        public UserRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
 
         public User GetUser(int id)
         {

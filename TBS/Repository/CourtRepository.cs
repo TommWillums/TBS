@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TBS.Data;
 using TBS.Data.Commands.Courts;
 using TBS.Data.Queries.Courts;
 using TBS.Domain;
@@ -16,7 +15,7 @@ namespace TBS.Repository
 
     public class CourtRepository : RepositoryBase, ICourtRepository
     {
-        public CourtRepository(ICQHandler database = null) : base(database) { }
+        public CourtRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
 
         public Court GetCourt(int id)
         {

@@ -13,9 +13,9 @@ namespace TBS.Data.Dapper
         IEnumerable<T> Query<T>(string query, object param);
 
         //T Transaction<T>(Func<IDbTransaction, T> query);
-        //IDbTransaction BeginTransaction();
-        //void Commit();
-        //void Rollback();
+        IDbTransaction BeginTransaction();
+        void Commit();
+        void Rollback();
     }
 
 
@@ -26,9 +26,13 @@ namespace TBS.Data.Dapper
         private IDbConnection   _connection;
         private IDbTransaction  _transaction { get; set; }
 
+
+        private DapperContext() { }
+
         public DapperContext(string connectionString)
         {
             _connectionString = connectionString;
+            BeginTransaction();
         }
 
         /// <summary>
@@ -53,15 +57,14 @@ namespace TBS.Data.Dapper
 
         public IEnumerable<T> Query<T>(string query, object param)
         {
-            return Connection.Query<T>(query, param);
+            return Connection.Query<T>(query, param, _transaction);
         }
 
         public void Execute(string sql, object param)
         {
-            Connection.Execute(sql, param);
+            Connection.Execute(sql, param, _transaction);
         }
 
-#if TRANS
         /// <summary>
         ///     Start a new transaction if one is not already available
         /// </summary>
@@ -69,62 +72,7 @@ namespace TBS.Data.Dapper
         {
             if (_transaction == null || _transaction.Connection == null)
                 _transaction = Connection.BeginTransaction();
-
             return _transaction;
-        }
-
-        /// <summary>
-        /// </summary>
-        public T Transaction<T>(Func<IDbTransaction, T> query)
-        {
-            if (_transaction == null)
-            {
-                return AutoTransaction(query);
-            }
-            else
-            {
-                return ExplicitTransaction(query);
-            }
-        }
-        /// <summary>
-        ///     Perform a transactionless query
-        /// </summary>
-        private T AutoTransaction<T>(Func<IDbTransaction, T> query)
-        {
-            using (var connection = Connection)
-            {
-                using (var transaction = BeginTransaction())
-                {
-                    try
-                    {
-                        var result = query(transaction);
-                        transaction.Commit();
-                        return result;
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Perform a transactioned query
-        /// </summary>
-        private T ExplicitTransaction<T>(Func<IDbTransaction, T> query)
-        {
-            try
-            {
-                var result = query(_transaction);
-                return result;
-            }
-            catch (Exception)
-            {
-                _transaction.Rollback();
-                throw;
-            }
         }
 
         /// <summary>
@@ -163,7 +111,6 @@ namespace TBS.Data.Dapper
                 throw new NullReferenceException("Tried Rollback on closed Transaction", ex);
             }
         }
-#endif
 
         /// <summary>
         ///     Dispose of the transaction and close the connection

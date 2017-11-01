@@ -16,10 +16,7 @@ namespace TBS.Test
         [TestInitialize]
         public void Init()
         {
-            var session = new Session(Util.AppSettings.TestDatabaseConnection);
-            var database = new CQHandler(session);
-
-            _repository = new UserRepository(database);
+            _repository = new UserRepository(new UnitOfWork(Util.AppSettings.TestDatabaseConnection));
         }
 
         [TestMethod]
