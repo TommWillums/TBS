@@ -1,7 +1,6 @@
 ﻿using System;
-using TBS.Data;
 
-namespace TBS.Repository
+namespace TBS.Data
 {
     public interface IUnitOfWork
     {
