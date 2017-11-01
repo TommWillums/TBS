@@ -17,7 +17,8 @@ namespace TBS.Repository
     public class ClubRepository : RepositoryBase, IClubRepository
     {
         public ClubRepository(UnitOfWork unitOfWork = null) : base(unitOfWork)
-        { }
+        {
+        }
 
         public Club GetClub(int id)
         {
