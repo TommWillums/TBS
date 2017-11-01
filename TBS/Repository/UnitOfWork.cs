@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using TBS.Data;
 
 namespace TBS.Repository
@@ -11,17 +7,19 @@ namespace TBS.Repository
     {
         void Commit();
         void Rollback();
+        void Dispose();
     }
 
-    // Implicit BeginTransaction - All entities join the same transaction
-    // All repositories use the same session or the same database context
-    public class UnitOfWork : IUnitOfWork
+    // Implicit BeginTransaction with AutoCommit true
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         Session _session;
         public Session Session => _session;
+        public bool AutoCommit { get; set; }
 
         public UnitOfWork(string connectionString = null)
         {
+            AutoCommit = true;
             if (String.IsNullOrWhiteSpace(connectionString))
                 _session = new Session(Util.AppSettings.DefaultDatabaseConnection);
             else
@@ -36,6 +34,14 @@ namespace TBS.Repository
         public void Rollback()
         {
             _session.Rollback();
+        }
+
+        public void Dispose()
+        {
+            if (AutoCommit)
+                _session.Commit();
+            else
+                _session.Rollback();
         }
     }
 }

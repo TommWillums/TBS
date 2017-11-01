@@ -1,4 +1,6 @@
-﻿namespace TBS.Data
+﻿using System;
+
+namespace TBS.Data
 {
     public interface ICQHandler
     {

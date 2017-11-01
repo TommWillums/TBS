@@ -12,7 +12,6 @@ namespace TBS.Data.Dapper
         void Execute(string query, object param);
         IEnumerable<T> Query<T>(string query, object param);
 
-        //T Transaction<T>(Func<IDbTransaction, T> query);
         IDbTransaction BeginTransaction();
         void Commit();
         void Rollback();
@@ -76,15 +75,17 @@ namespace TBS.Data.Dapper
         }
 
         /// <summary>
-        ///     Commit and dispose of the transaction
+        ///     Commit, dispose and start a new transaction
         /// </summary>
         public void Commit()
         {
+            if (_transaction == null)
+                return;
             try
             {
                 _transaction.Commit();
                 _transaction.Dispose();
-                _transaction = null;
+                BeginTransaction();
             }
             catch (Exception ex)
             {
@@ -96,15 +97,17 @@ namespace TBS.Data.Dapper
         }
 
         /// <summary>
-        ///     Rollback and dispose of the transaction
+        ///     Rollback, dispose and start a new transaction
         /// </summary>
         public void Rollback()
         {
+            if (_transaction == null)
+                return;
             try
             {
                 _transaction.Rollback();
                 _transaction.Dispose();
-                _transaction = null;
+                BeginTransaction();
             }
             catch (Exception ex)
             {

@@ -1,9 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using TBS.Domain;
-using TBS.Data;
 using TBS.Repository;
-using TBS.Data.Dapper;
 
 namespace TBS.Test
 {
@@ -11,12 +9,20 @@ namespace TBS.Test
     public class UserRepositoryTests
     {
         const string dummy_user = "TBSX";
+        UnitOfWork _unitOfWork;
         UserRepository _repository;
 
         [TestInitialize]
         public void Init()
         {
-            _repository = new UserRepository(new UnitOfWork(Util.AppSettings.TestDatabaseConnection));
+            _unitOfWork = new UnitOfWork(Util.AppSettings.TestDatabaseConnection);
+            _repository = new UserRepository(_unitOfWork);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _unitOfWork.Dispose();
         }
 
         [TestMethod]
@@ -44,7 +50,6 @@ namespace TBS.Test
             // Delete
             user3.Deleted = true;
             _repository.Save(user3);
-
             User noUser = _repository.GetUser(user3.Id);
             Assert.AreEqual(noUser, null);
         }

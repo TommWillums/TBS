@@ -1,4 +1,5 @@
-﻿using TBS.Data;
+﻿using System;
+using TBS.Data;
 
 namespace TBS.Repository
 {
@@ -14,5 +15,6 @@ namespace TBS.Repository
             else
                 _cqhandler = new CQHandler(unitOfWork.Session);
         }
+
     }
 }

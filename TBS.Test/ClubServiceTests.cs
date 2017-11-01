@@ -2,36 +2,34 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using TBS.Domain;
 using TBS.Repository;
-using TBS.Data;
-using TBS.Data.Dapper;
 
 namespace TBS.Test
 {
     [TestClass]
     public class ClubRepositoryTests
     {
-        ClubRepository _repository;
         const string dummy_name = "TBSX";
-
-        [TestInitialize]
-        public void Init()
-        {
-            _repository = new ClubRepository(new UnitOfWork(Util.AppSettings.TestDatabaseConnection));
-        }
 
         [TestMethod]
         public void club_get_100_from_database()
         {
-            var club = _repository.GetClub(100);
-            Assert.AreEqual(club.Id, 100);
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                var club = new ClubRepository(uow).GetClub(100);
+                Assert.AreEqual(club.Id, 100);
+            }
         }
 
         [TestMethod]
         public void club_get_PTK_via_GetClubs()
         {
-            var items = _repository.GetClubs().ToList();
-            Club item = items.FirstOrDefault(c => c.ShortName == "PTK");
-            Assert.AreEqual(item.ShortName, "PTK");
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                var repository = new ClubRepository(uow);
+                var items = repository.GetClubs().ToList();
+                Club item = items.FirstOrDefault(c => c.ShortName == "PTK");
+                Assert.AreEqual(item.ShortName, "PTK");
+            }
         }
 
         [TestMethod]
@@ -39,35 +37,54 @@ namespace TBS.Test
         {
             TBS_Test_Helper.TestPrepareDBToAddClub();
             Club item = new Club() { ClubName = dummy_name + " club", ShortName = dummy_name, Contact = "contact" };
-            _repository.Save(item);
-            var items = _repository.GetClubs().Where(c => c.ShortName == dummy_name);
-            Assert.AreEqual(items.Count(), 1);
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                var repository = new ClubRepository(uow);
+                repository.Save(item);
+                var items = repository.GetClubs().Where(c => c.ShortName == dummy_name);
+                Assert.AreEqual(items.Count(), 1);
+            }
         }
 
         [TestMethod]
         public void club_update_in_database()
         {
             TBS_Test_Helper.TestPrepareDBToUpdateClub();
-            var item = _repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
-            item.ClubName  = dummy_name + " club";
-            item.ShortName = dummy_name + " tbsx";
-            item.Contact   = dummy_name + " contact";
-            _repository.Save(item);
-            var item2 = _repository.GetClub(item.Id);
-            Assert.AreEqual(item2.ClubName , dummy_name + " club");
-            Assert.AreEqual(item2.ShortName, dummy_name + " tbsx");
-            Assert.AreEqual(item2.Contact  , dummy_name + " contact");
+            int itemId;
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                var repository = new ClubRepository(uow);
+                var item = repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                itemId = item.Id;
+                item.ClubName = dummy_name + " club";
+                item.ShortName = dummy_name + " tbsx";
+                item.Contact = dummy_name + " contact";
+                repository.Save(item);
+            }
+
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                var repository = new ClubRepository(uow);
+                var item2 = repository.GetClub(itemId);
+                Assert.AreEqual(item2.ClubName, dummy_name + " club");
+                Assert.AreEqual(item2.ShortName, dummy_name + " tbsx");
+                Assert.AreEqual(item2.Contact, dummy_name + " contact");
+            }
         }
 
         [TestMethod]
         public void club_delete_in_database()
         {
             TBS_Test_Helper.TestPrepareDBToUpdateClub();
-            var item = _repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
-            item.Deleted = true;
-            _repository.Save(item);
-            var item2 = _repository.GetClub(item.Id);
-            Assert.AreEqual(item2, null);
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                var repository = new ClubRepository(uow);
+                var item = repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                item.Deleted = true;
+                repository.Save(item);
+                var item2 = repository.GetClub(item.Id);
+                Assert.AreEqual(item2, null);
+            }
         }
     }
 }

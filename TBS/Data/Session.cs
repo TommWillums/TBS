@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using TBS.Data.Dapper;
 
 namespace TBS.Data
@@ -40,6 +39,5 @@ namespace TBS.Data
         {
             _context.Rollback();
         }
-
     }
 }
