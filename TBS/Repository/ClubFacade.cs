@@ -5,9 +5,9 @@ using TBS.Data.Commands.Clubs;
 using TBS.Data.Queries.Clubs;
 using TBS.Domain;
 
-namespace TBS.Facade
+namespace TBS.Repository
 {
-    public interface IClubFacade
+    public interface IClubRepository
     {
         Club GetClub(int id);
         IEnumerable<Club> GetAllClubs();
@@ -15,9 +15,9 @@ namespace TBS.Facade
         void Save(Club club);
     }
 
-    public class ClubFacade : FacadeBase, IClubFacade
+    public class ClubRepository : RepositoryBase, IClubRepository
     {
-        public ClubFacade(ICQHandler cqhandler = null) : base(cqhandler) { }
+        public ClubRepository(ICQHandler cqhandler = null) : base(cqhandler) { }
 
         public Club GetClub(int id)
         {

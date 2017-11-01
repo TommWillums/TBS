@@ -5,18 +5,18 @@ using TBS.Data.Commands.Courts;
 using TBS.Data.Queries.Courts;
 using TBS.Domain;
 
-namespace TBS.Facade
+namespace TBS.Repository
 {
-    public interface ICourtFacade
+    public interface ICourtRepository
     {
         Court GetCourt(int id);
         IEnumerable<Court> GetCourts(int clubId);
         void Save(Court court);
     }
 
-    public class CourtFacade : FacadeBase, ICourtFacade
+    public class CourtRepository : RepositoryBase, ICourtRepository
     {
-        public CourtFacade(ICQHandler database = null) : base(database) { }
+        public CourtRepository(ICQHandler database = null) : base(database) { }
 
         public Court GetCourt(int id)
         {

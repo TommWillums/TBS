@@ -1,13 +1,13 @@
 ﻿using TBS.Data;
 
-namespace TBS.Facade
+namespace TBS.Repository
 {
-    public class FacadeBase
+    public class RepositoryBase
     {
         private readonly ICQHandler _database;
         protected ICQHandler CQHandler => _database;
 
-        protected FacadeBase(ICQHandler database)
+        protected RepositoryBase(ICQHandler database)
         {
             if (database == null)
                 _database = new CQHandler();

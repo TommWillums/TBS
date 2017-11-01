@@ -1,4 +1,6 @@
 ﻿Namespace: Facade
+Might be Alternative name: Repository
 
 Used to aggregate the commands and queries in objects that are separated out through CQRS.
+
 
