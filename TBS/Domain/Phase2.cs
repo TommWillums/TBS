@@ -12,7 +12,7 @@ namespace TBS.Domain
 
     public class OpeningHours
     {
-        // TODO:
+        // TODO: Flesh out OpeningHours
     }
 
     // Søk på: Navn, Kursgruppe, Ansvarlig

@@ -13,12 +13,9 @@ namespace TBS.Test
         [TestMethod]
         public void court_get_1_from_database()
         {
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new CourtRepository(uow);
-                var court = repository.GetCourt(1);
-                Assert.AreEqual(court.Id, 1);
-            }
+            var repository = new CourtRepository();
+            var court = repository.GetCourt(1);
+            Assert.AreEqual(court.Id, 1);
         }
 
         [TestMethod]

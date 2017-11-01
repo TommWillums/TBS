@@ -21,16 +21,18 @@ namespace TBS.Data.Dapper
     public class DapperContext : IDapperContext
     {
         private readonly string _connectionString;
-
         private IDbConnection   _connection;
+
+        private readonly bool _useTransaction;
         private IDbTransaction  _transaction { get; set; }
 
 
         private DapperContext() { }
 
-        public DapperContext(string connectionString)
+        public DapperContext(string connectionString, bool useTransaction)
         {
             _connectionString = connectionString;
+            _useTransaction = useTransaction;
             BeginTransaction();
         }
 
@@ -56,12 +58,18 @@ namespace TBS.Data.Dapper
 
         public IEnumerable<T> Query<T>(string query, object param)
         {
-            return Connection.Query<T>(query, param, _transaction);
+            if (_useTransaction)
+                return Connection.Query<T>(query, param, _transaction);
+            else
+                return Connection.Query<T>(query, param);
         }
 
         public void Execute(string sql, object param)
         {
-            Connection.Execute(sql, param, _transaction);
+            if (_useTransaction)
+                Connection.Execute(sql, param, _transaction);
+            else
+                Connection.Execute(sql, param);
         }
 
         /// <summary>
@@ -69,6 +77,8 @@ namespace TBS.Data.Dapper
         /// </summary>
         public IDbTransaction BeginTransaction()
         {
+            if (!_useTransaction)
+                return null;
             if (_transaction == null || _transaction.Connection == null)
                 _transaction = Connection.BeginTransaction();
             return _transaction;

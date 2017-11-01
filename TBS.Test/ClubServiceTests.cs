@@ -13,23 +13,17 @@ namespace TBS.Test
         [TestMethod]
         public void club_get_100_from_database()
         {
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var club = new ClubRepository(uow).GetClub(100);
-                Assert.AreEqual(club.Id, 100);
-            }
+            var club = new ClubRepository().GetClub(100);
+            Assert.AreEqual(club.Id, 100);
         }
 
         [TestMethod]
         public void club_get_PTK_via_GetClubs()
         {
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new ClubRepository(uow);
-                var items = repository.GetClubs().ToList();
-                Club item = items.FirstOrDefault(c => c.ShortName == "PTK");
-                Assert.AreEqual(item.ShortName, "PTK");
-            }
+            var repository = new ClubRepository();
+            var items = repository.GetClubs().ToList();
+            Club item = items.FirstOrDefault(c => c.ShortName == "PTK");
+            Assert.AreEqual(item.ShortName, "PTK");
         }
 
         [TestMethod]

@@ -16,7 +16,7 @@ namespace TBS.Data
 
         public CQHandler()
         {
-            _session = new Session(Util.AppSettings.DefaultDatabaseConnection);
+            _session = new Session(Util.AppSettings.DefaultDatabaseConnection, useTransaction: false);
         }
 
         public CQHandler(ISession session)

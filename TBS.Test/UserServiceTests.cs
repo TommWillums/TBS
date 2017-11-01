@@ -15,14 +15,14 @@ namespace TBS.Test
         [TestInitialize]
         public void Init()
         {
-            _unitOfWork = new UnitOfWork(Util.AppSettings.TestDatabaseConnection);
-            _repository = new UserRepository(_unitOfWork);
+            //_unitOfWork = new UnitOfWork(Util.AppSettings.TestDatabaseConnection);
+            _repository = new UserRepository();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            _unitOfWork.Dispose();
+            //_unitOfWork.Dispose();
         }
 
         [TestMethod]
