@@ -58,18 +58,34 @@ namespace TBS.Data.Dapper
 
         public IEnumerable<T> Query<T>(string query, object param)
         {
-            if (_useTransaction)
-                return Connection.Query<T>(query, param, _transaction);
-            else
-                return Connection.Query<T>(query, param);
+            try
+            {
+                if (_useTransaction)
+                    return Connection.Query<T>(query, param, _transaction);
+                else
+                    return Connection.Query<T>(query, param);
+            }
+            catch (SqlException)
+            {
+                Rollback();
+                throw;
+            }
         }
 
         public void Execute(string sql, object param)
         {
+            try
+            { 
             if (_useTransaction)
                 Connection.Execute(sql, param, _transaction);
             else
                 Connection.Execute(sql, param);
+            }
+            catch (SqlException)
+            {
+                Rollback();
+                throw;
+            }
         }
 
         /// <summary>

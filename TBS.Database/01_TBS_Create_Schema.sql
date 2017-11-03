@@ -4,6 +4,9 @@
 use TBS
 go
 
+if (exists(select * from sys.tables where name = 'Bookings_Tbl'))
+	drop table Bookings_Tbl;
+
 if (exists(select * from sys.tables where name = 'Users_Tbl'))
 	drop table Users_Tbl;
 
@@ -65,7 +68,6 @@ go
 if (exists(select * from sys.views where name = 'Clubs_v'))
 	drop view Clubs_v;
 go
-
 create view Clubs_v as
 	select * from Clubs where Deleted = 0
 go
@@ -73,7 +75,6 @@ go
 if (exists(select * from sys.views where name = 'Clubs'))
 	drop view Clubs;
 go
-
 create view Clubs as 
   select * from Clubs_Tbl where Deleted = 0
 go
@@ -81,7 +82,6 @@ go
 if (exists(select * from sys.views where name = 'Courts'))
 	drop view Courts;
 go
-
 create view Courts as 
   select * from Courts_Tbl where Deleted = 0
 go
@@ -89,7 +89,6 @@ go
 if (exists(select * from sys.views where name = 'Courts_v'))
 	drop view Courts_v;
 go
-
 create view Courts_v as 
   select c.Id, c.Name, c.ClubId, k.ShortName Club, c.CourtGroup, c.Active, c.CourtType 
   from Courts_Tbl c 
@@ -103,5 +102,12 @@ go
 
 create view Users as 
   select * from Users_Tbl where Deleted = 0
+go
+
+if (exists(select * from sys.views where name = 'Bookings'))
+	drop view Bookings;
+go
+create view Bookings as 
+  select * from Bookings_Tbl where Deleted = 0
 go
 
