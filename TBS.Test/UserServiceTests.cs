@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 using TBS.Data;
 using TBS.Domain;
@@ -16,14 +17,14 @@ namespace TBS.Test
         [TestInitialize]
         public void Init()
         {
-            //_unitOfWork = new UnitOfWork(Util.AppSettings.TestDatabaseConnection);
-            _repository = new UserRepository();
+            _unitOfWork = new UnitOfWork(Util.AppSettings.TestDatabaseConnection);
+            _repository = new UserRepository(_unitOfWork);
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            //_unitOfWork.Dispose();
+            _unitOfWork.Dispose();
         }
 
         [TestMethod]
