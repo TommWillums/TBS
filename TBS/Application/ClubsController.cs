@@ -13,20 +13,25 @@ namespace TBS.Controllers
     [Route("api/Clubs")]
     public class ClubsController : Controller
     {
+        private readonly IRepository<Club> _repository;
+
+        public ClubsController(IRepository<Club> repository)
+        {
+            _repository = repository;
+        }
+
         // GET: api/Clubs
         [HttpGet]
         public List<Club> GetClubs()
         {
-            var repository = new ClubRepository();
-            return repository.GetClubs().ToList();
+            return _repository.GetAll().ToList();
         }
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
         public IActionResult GetClub([FromRoute] int id)
         {
-            var repository = new ClubRepository();
-            Club club = repository.GetClub(id);
+            Club club = _repository.Get(id);
             if (club == null)
                 return NotFound();
             return Ok(club);
@@ -41,14 +46,14 @@ namespace TBS.Controllers
 
             using (var uow = new UnitOfWork())
             {
-                var repository = new ClubRepository(uow);
+                _repository.SetUnitOfWork(uow);
                 try
                 {
-                    repository.Save(club);
+                    _repository.Save(club);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (repository.GetClub(id) == null)
+                    if (_repository.Get(id) == null)
                         return NotFound();
                     else
                         throw;
@@ -63,7 +68,8 @@ namespace TBS.Controllers
         {
             using (var uow = new UnitOfWork())
             {
-                new ClubRepository(uow).Save(club);
+                _repository.SetUnitOfWork(uow);
+                _repository.Save(club);
                 return CreatedAtAction("GetClub", new { id = club.Id }, club);
             }
         }
@@ -74,12 +80,12 @@ namespace TBS.Controllers
         {
             using (var uow = new UnitOfWork())
             {
-                var repository = new ClubRepository(uow);
-                Club club = repository.GetClub(id);
+                _repository.SetUnitOfWork(uow);
+                Club club = _repository.Get(id);
                 if (club != null)
                 {
                     club.Deleted = true;
-                    repository.Save(club);
+                    _repository.Save(club);
                     return Ok();
                 }
                 return NotFound();

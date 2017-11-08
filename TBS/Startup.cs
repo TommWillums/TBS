@@ -8,7 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
+using TBS.Repository;
+using TBS.Domain;
+using TBS.Data;
 
 namespace TBS
 {
@@ -24,10 +26,8 @@ namespace TBS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRepository<Club>, ClubRepository>();
             services.AddMvc();
-
-            //services.AddDbContext<TBSContext>(options =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("TBSContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

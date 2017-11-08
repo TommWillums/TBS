@@ -3,6 +3,7 @@ using TBS.Data;
 
 namespace TBS.Repository
 {
+    interface IRepository
     public class RepositoryBase
     {
         private readonly ICQHandler _cqhandler;

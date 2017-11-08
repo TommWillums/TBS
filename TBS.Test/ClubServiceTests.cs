@@ -14,7 +14,7 @@ namespace TBS.Test
         [TestMethod]
         public void club_get_100_from_database()
         {
-            var club = new ClubRepository().GetClub(100);
+            var club = new ClubRepository().Get(100);
             Assert.AreEqual(club.Id, 100);
         }
 
@@ -22,7 +22,7 @@ namespace TBS.Test
         public void club_get_PTK_via_GetClubs()
         {
             var repository = new ClubRepository();
-            var items = repository.GetClubs().ToList();
+            var items = repository.GetAll().ToList();
             Club item = items.FirstOrDefault(c => c.ShortName == "PTK");
             Assert.AreEqual(item.ShortName, "PTK");
         }
@@ -36,7 +36,7 @@ namespace TBS.Test
             {
                 var repository = new ClubRepository(uow);
                 repository.Save(item);
-                var items = repository.GetClubs().Where(c => c.ShortName == dummy_name);
+                var items = repository.GetAll().Where(c => c.ShortName == dummy_name);
                 Assert.AreEqual(items.Count(), 1);
             }
         }
@@ -49,7 +49,7 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new ClubRepository(uow);
-                var item = repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                var item = repository.GetAll().Where(c => c.ShortName == dummy_name).FirstOrDefault();
                 itemId = item.Id;
                 item.ClubName = dummy_name + " club";
                 item.ShortName = dummy_name + " tbsx";
@@ -60,7 +60,7 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new ClubRepository(uow);
-                var item2 = repository.GetClub(itemId);
+                var item2 = repository.Get(itemId);
                 Assert.AreEqual(item2.ClubName, dummy_name + " club");
                 Assert.AreEqual(item2.ShortName, dummy_name + " tbsx");
                 Assert.AreEqual(item2.Contact, dummy_name + " contact");
@@ -74,10 +74,10 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new ClubRepository(uow);
-                var item = repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                var item = repository.GetAll().Where(c => c.ShortName == dummy_name).FirstOrDefault();
                 item.Deleted = true;
                 repository.Save(item);
-                var item2 = repository.GetClub(item.Id);
+                var item2 = repository.Get(item.Id);
                 Assert.AreEqual(item2, null);
             }
         }

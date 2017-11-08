@@ -15,7 +15,7 @@ namespace TBS.Util
             {
                 if (_defaultDBConnection == null)
                 {
-                    _defaultDBConnection = GetConnectionString("Data:DefaultDatabaseConnection:ConnectionString");
+                    _defaultDBConnection = GetConnectionString("ConnectionStrings:DefaultConnection");
                 }
                 return _defaultDBConnection;
             }
@@ -27,7 +27,7 @@ namespace TBS.Util
             {
                 if (_testDBConnection == null)
                 {
-                    _testDBConnection = GetConnectionString("Data:TestDatabaseConnection:ConnectionString");
+                    _testDBConnection = GetConnectionString("ConnectionStrings:TestConnection");
                 }
                 return _testDBConnection;
             }
