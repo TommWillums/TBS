@@ -26,7 +26,7 @@ namespace TBS
             services.AddTransient<ISession, Session>();
 
             services.AddTransient<IDapperContext, DapperContext>(c => 
-                new DapperContext(Configuration.GetConnectionString("DefaultConnection"), true) );
+                new DapperContext(Configuration.GetConnectionString("DefaultConnection")) );
 
             services.AddScoped<IRepository<Club>, ClubRepository>();
             services.AddScoped<IRepository<Court>, CourtRepository>();

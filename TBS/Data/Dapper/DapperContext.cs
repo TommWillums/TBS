@@ -21,18 +21,14 @@ namespace TBS.Data.Dapper
     {
         private readonly string _connectionString;
         private IDbConnection   _connection;
-
-        private readonly bool _useTransaction;
         private IDbTransaction  _transaction { get; set; }
 
 
         private DapperContext() { }
 
-        public DapperContext(string connectionString, bool useTransaction = true)
+        public DapperContext(string connectionString)
         {
             _connectionString = connectionString;
-            _useTransaction = useTransaction;
-            BeginTransaction();
         }
 
         /// <summary>
@@ -59,7 +55,7 @@ namespace TBS.Data.Dapper
         {
             try
             {
-                if (_useTransaction)
+                if (_transaction != null)
                     return Connection.Query<T>(query, param, _transaction);
                 else
                     return Connection.Query<T>(query, param);
@@ -75,7 +71,7 @@ namespace TBS.Data.Dapper
         {
             try
             { 
-            if (_useTransaction)
+            if (_transaction != null)
                 Connection.Execute(sql, param, _transaction);
             else
                 Connection.Execute(sql, param);
@@ -92,8 +88,6 @@ namespace TBS.Data.Dapper
         /// </summary>
         public IDbTransaction BeginTransaction()
         {
-            if (!_useTransaction)
-                return null;
             if (_transaction == null || _transaction.Connection == null)
                 _transaction = Connection.BeginTransaction();
             return _transaction;
@@ -110,7 +104,7 @@ namespace TBS.Data.Dapper
             {
                 _transaction.Commit();
                 _transaction.Dispose();
-                BeginTransaction();
+                _transaction = null;
             }
             catch (Exception ex)
             {
@@ -132,7 +126,7 @@ namespace TBS.Data.Dapper
             {
                 _transaction.Rollback();
                 _transaction.Dispose();
-                BeginTransaction();
+                _transaction = null;
             }
             catch (Exception ex)
             {

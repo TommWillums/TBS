@@ -33,10 +33,7 @@ namespace TBS.Repository
                 _cqhandler.Session.Commit();
 
             _cqhandler.Session = uow.Session;
-
-            uow.AutoCommit = false;
         }
-
 
     }
 }

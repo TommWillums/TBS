@@ -8,20 +8,18 @@ namespace TBS.Data
         void Rollback();
         void Dispose();
         ISession Session { get; set; }
-        bool AutoCommit { get; set; }
     }
 
-    // Implicit BeginTransaction with AutoCommit true
+    // Call BeginTransaction and set _UseTransaction = true 
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         ISession _session;
         public ISession Session { get { return _session; } set { _session = value; } }
-        public bool AutoCommit { get; set; }
 
         public UnitOfWork(ISession session)
         {
             _session = session;
-            AutoCommit = true;
+            _session.BeginTransaction();
         }
 
         public void Commit()
@@ -36,10 +34,7 @@ namespace TBS.Data
 
         public void Dispose()
         {
-            if (AutoCommit)
-                _session.Commit();
-            else
-                _session.Rollback();
+            _session.Commit();
         }
     }
 }
