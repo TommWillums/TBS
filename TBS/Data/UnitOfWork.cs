@@ -6,12 +6,10 @@ namespace TBS.Data
     {
         void Commit();
         void Rollback();
-        void Dispose();
         ISession Session { get; set; }
     }
 
-    // Call BeginTransaction and set _UseTransaction = true 
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         ISession _session;
         public ISession Session { get { return _session; } set { _session = value; } }
@@ -32,9 +30,5 @@ namespace TBS.Data
             _session.Rollback();
         }
 
-        public void Dispose()
-        {
-            _session.Commit();
-        }
     }
 }
