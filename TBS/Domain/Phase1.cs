@@ -40,18 +40,6 @@ namespace TBS.Domain
      * GROUP: Only collection of users
      */
 
-    public class Booking
-    {
-        public int Id { get; set; }
-        public BookingType Type { get; set; }   // Fast(grønn), Medlem(gul), Mesterskap(blå), Annet(rød)
-        public User User { get; set; }      
-        public Court Court { get; set; }        // Or only the Court Id?
-        public DateTime StartTime { get; set; }
-        public int Duration { get; set; }       // Minutes
-        public string DisplayAs { get; set; }
-        public DateTime Created { get; set; }
-    }
-
     public class User
     {
         public int Id { get; set; }

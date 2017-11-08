@@ -63,7 +63,27 @@ create table Users_Tbl (
 )
 go
 
+create table Bookings_Tbl (
+	Id			int			not null identity primary key,
+	BookingType	char(1)		not null default 'S', -- T,S,M,X // Fast-time/trening(blå), Standard,Medlem/Ikke-medlem(grønn), Mesterskap(gul), Annet/utleie/sperret(rød) 
+	UserId		int			not null references Users_Tbl (Id),
+	CourtId		int			not null references Courts_Tbl (Id),
+	StartTime	datetime2	not null,
+	Duration	int			not null default 60,
+	DisplayName varchar(20) null,
+	Created		datetime2	not null default GetDate(),
+
+)
+go
+
 /* VIEWS */
+
+if (exists(select * from sys.views where name = 'Bookings'))
+	drop view Bookings;
+go
+create view Bookings as 
+  select * from Bookings_Tbl
+go
 
 if (exists(select * from sys.views where name = 'Clubs_v'))
 	drop view Clubs_v;
@@ -99,15 +119,7 @@ go
 if (exists(select * from sys.views where name = 'Users'))
 	drop view Users;
 go
-
 create view Users as 
   select * from Users_Tbl where Deleted = 0
-go
-
-if (exists(select * from sys.views where name = 'Bookings'))
-	drop view Bookings;
-go
-create view Bookings as 
-  select * from Bookings_Tbl where Deleted = 0
 go
 

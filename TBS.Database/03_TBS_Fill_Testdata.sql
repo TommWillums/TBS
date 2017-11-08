@@ -43,6 +43,19 @@ insert into Users_Tbl (Name, ClubId) values ('Martin Kristoffersen', 100)
 insert into Users_Tbl (Name, ClubId) values ('Lise Larsen', 101)
 go
 
+delete from Bookings_Tbl
+DBCC CheckIdent (Bookings_Tbl, RESEED, 0);
+insert into Bookings_Tbl (BookingType, UserId, CourtId, StartTime, DisplayName) values ('S', 10000, 1, '2017-11-04 11:00', '')
+insert into Bookings_Tbl (BookingType, UserId, CourtId, StartTime, DisplayName) values ('S', 10001, 1, '2017-11-04 14:00', '')
+insert into Bookings_Tbl (BookingType, UserId, CourtId, StartTime, DisplayName) values ('T', 10002, 1, '2017-11-04 15:00', 'PTK Trening')
+insert into Bookings_Tbl (BookingType, UserId, CourtId, StartTime, DisplayName) values ('S', 10003, 1, '2017-11-04 18:00', '')
+
+insert into Bookings_Tbl (BookingType, UserId, CourtId, StartTime, DisplayName) values ('T', 10002, 2, '2017-11-04 17:00', 'Gruppe 4')
+insert into Bookings_Tbl (BookingType, UserId, CourtId, StartTime, DisplayName) values ('T', 10002, 2, '2017-11-04 18:00', 'Gruppe 1')
+insert into Bookings_Tbl (BookingType, UserId, CourtId, StartTime, DisplayName) values ('T', 10002, 2, '2017-11-04 19:00', 'Junior')
+
+
+
 /*
 select * from Clubs
 select * from Courts
