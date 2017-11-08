@@ -11,7 +11,6 @@ namespace TBS.Data.Dapper
         IDbConnection Connection { get; }
         void Execute(string query, object param);
         IEnumerable<T> Query<T>(string query, object param);
-
         IDbTransaction BeginTransaction();
         void Commit();
         void Rollback();

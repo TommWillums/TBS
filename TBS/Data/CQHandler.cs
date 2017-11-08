@@ -6,33 +6,26 @@ namespace TBS.Data
     {
         T Query<T>(IQuery<T> query);
         void Execute(ICommand command);
-        ISession GetSession();
+        ISession Session { get; set; }
     }
 
     public class CQHandler : ICQHandler
     {
-        private ISession _session { get; set; }
-        public ISession GetSession() { return _session; }
-
-        //public CQHandler()
-        //{
-        //    _session = new Session(Util.AppSettings.DefaultDatabaseConnection, useTransaction: false);
-        //}
+        public ISession Session { get; set; }
 
         public CQHandler(ISession session)
         {
-            _session = session;
+            Session = session;
         }
 
         public T Query<T>(IQuery<T> query)
         {
-            return query.Execute(_session);
+            return query.Execute(Session);
         }
 
         public void Execute(ICommand command)
         {
-            command.Execute(_session);
+            command.Execute(Session);
         }
     }
 }
-

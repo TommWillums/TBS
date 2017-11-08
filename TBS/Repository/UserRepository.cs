@@ -10,14 +10,21 @@ namespace TBS.Repository
     public class UserRepository : IRepository<User>
     {
         private readonly ICQHandler _cqhandler;
-        ICQHandler CQHandler => _cqhandler;
+        private ICQHandler CQHandler => _cqhandler;
+        public ISession Session => _cqhandler.Session;
 
         public UserRepository(ICQHandler cqhandler)
         {
             _cqhandler = cqhandler;
         }
 
-        //public UserRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
+        public void JoinUnitOfWork(IUnitOfWork uow, bool saveUncommitted = true)
+        {
+            if (saveUncommitted)
+                _cqhandler.Session.Commit();
+            _cqhandler.Session = uow.Session;
+            uow.AutoCommit = false;
+        }
 
         public User Get(int id)
         {

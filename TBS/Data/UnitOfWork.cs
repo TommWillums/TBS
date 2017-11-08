@@ -7,22 +7,21 @@ namespace TBS.Data
         void Commit();
         void Rollback();
         void Dispose();
+        ISession Session { get; set; }
+        bool AutoCommit { get; set; }
     }
 
     // Implicit BeginTransaction with AutoCommit true
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        Session _session = null;
-        public Session Session => _session;
+        ISession _session;
+        public ISession Session { get { return _session; } set { _session = value; } }
         public bool AutoCommit { get; set; }
 
-        public UnitOfWork(string connectionString = null)
+        public UnitOfWork(ISession session)
         {
+            _session = session;
             AutoCommit = true;
-            //if (String.IsNullOrWhiteSpace(connectionString))
-            //    _session = new Session(Util.AppSettings.DefaultDatabaseConnection);
-            //else
-            //    _session = new Session(connectionString);
         }
 
         public void Commit()

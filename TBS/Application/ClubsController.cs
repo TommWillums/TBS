@@ -34,6 +34,26 @@ namespace TBS.Controllers
             Club club = _repository.Get(id);
             if (club == null)
                 return NotFound();
+
+            //TEST START
+            if (club.Id == 101)
+            {
+                var uow = new UnitOfWork(_repository.Session);
+                var userRepo = new UserRepository(new CQHandler(_repository.Session));
+
+                club.Contact = "CONTACT NAME 1";
+
+                userRepo.JoinUnitOfWork(uow);
+                _repository.JoinUnitOfWork(uow);
+
+                club.Contact = "CONTACT NAME 2";
+                userRepo.Save(new User { Name = "IS THIS POSSIBLE?", ClubId = 101 });
+                _repository.Save(club);
+
+                uow.Rollback();
+            }
+            //TEST END
+
             return Ok(club);
         }
 
@@ -43,19 +63,18 @@ namespace TBS.Controllers
         {
             if (id != club.Id)
                 return BadRequest();
-                try
-                {
-                    _repository.Save(club);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (_repository.Get(id) == null)
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return NoContent();
-
+            try
+            {
+                _repository.Save(club);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (_repository.Get(id) == null)
+                    return NotFound();
+                else
+                    throw;
+            }
+            return NoContent();
         }
 
         // POST: api/Clubs
