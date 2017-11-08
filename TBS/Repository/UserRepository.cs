@@ -31,5 +31,10 @@ namespace TBS.Repository
             CQHandler.Execute(new SaveUser(user));
         }
 
+        public void Delete(User entity)
+        {
+            entity.Deleted = true;
+            Save(entity);
+        }
     }
 }

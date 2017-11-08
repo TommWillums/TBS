@@ -26,5 +26,10 @@ namespace TBS.Repository
             CQHandler.Execute(new SaveCourt(court));
         }
 
+        public void Delete(Court entity)
+        {
+            entity.Deleted = true;
+            Save(entity);
+        }
     }
 }
