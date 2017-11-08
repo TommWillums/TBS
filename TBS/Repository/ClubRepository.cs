@@ -7,10 +7,14 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public class ClubRepository : RepositoryBase, IRepository<Club>
+    public class ClubRepository : IRepository<Club>
     {
-        public ClubRepository(UnitOfWork unitOfWork = null) : base(unitOfWork)
+        private readonly ICQHandler _cqhandler;
+        ICQHandler CQHandler => _cqhandler;
+
+        public ClubRepository(ICQHandler cqhandler)
         {
+            _cqhandler = cqhandler;
         }
 
         public Club Get(int id)

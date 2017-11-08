@@ -15,9 +15,9 @@ namespace TBS.Data
     {
         private readonly IDapperContext _context;
 
-        public Session(string connectionString, bool useTransaction = true)
+        public Session(IDapperContext context)
         {
-            _context = new DapperContext(connectionString, useTransaction);
+            _context = context;
         }
 
         public virtual IEnumerable<T> Query<T>(string query, object param)

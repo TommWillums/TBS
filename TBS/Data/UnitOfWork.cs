@@ -12,17 +12,17 @@ namespace TBS.Data
     // Implicit BeginTransaction with AutoCommit true
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        Session _session;
+        Session _session = null;
         public Session Session => _session;
         public bool AutoCommit { get; set; }
 
         public UnitOfWork(string connectionString = null)
         {
             AutoCommit = true;
-            if (String.IsNullOrWhiteSpace(connectionString))
-                _session = new Session(Util.AppSettings.DefaultDatabaseConnection);
-            else
-                _session = new Session(connectionString);
+            //if (String.IsNullOrWhiteSpace(connectionString))
+            //    _session = new Session(Util.AppSettings.DefaultDatabaseConnection);
+            //else
+            //    _session = new Session(connectionString);
         }
 
         public void Commit()

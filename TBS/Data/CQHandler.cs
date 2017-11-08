@@ -14,10 +14,10 @@ namespace TBS.Data
         private ISession _session { get; set; }
         public ISession GetSession() { return _session; }
 
-        public CQHandler()
-        {
-            _session = new Session(Util.AppSettings.DefaultDatabaseConnection, useTransaction: false);
-        }
+        //public CQHandler()
+        //{
+        //    _session = new Session(Util.AppSettings.DefaultDatabaseConnection, useTransaction: false);
+        //}
 
         public CQHandler(ISession session)
         {

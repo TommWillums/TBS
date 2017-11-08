@@ -7,9 +7,17 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public class CourtRepository : RepositoryBase, IRepository<Court>
+    public class CourtRepository : IRepository<Court>
     {
-        public CourtRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
+        private readonly ICQHandler _cqhandler;
+        ICQHandler CQHandler => _cqhandler;
+
+        public CourtRepository(ICQHandler cqhandler)
+        {
+            _cqhandler = cqhandler;
+        }
+
+        //public CourtRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
 
         public Court Get(int id)
         {

@@ -7,9 +7,17 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public class UserRepository : RepositoryBase, IRepository<User>
+    public class UserRepository : IRepository<User>
     {
-        public UserRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
+        private readonly ICQHandler _cqhandler;
+        ICQHandler CQHandler => _cqhandler;
+
+        public UserRepository(ICQHandler cqhandler)
+        {
+            _cqhandler = cqhandler;
+        }
+
+        //public UserRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
 
         public User Get(int id)
         {
