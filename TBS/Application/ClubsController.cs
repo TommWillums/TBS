@@ -43,10 +43,6 @@ namespace TBS.Controllers
         {
             if (id != club.Id)
                 return BadRequest();
-
-            using (var uow = new UnitOfWork())
-            {
-                _repository.SetUnitOfWork(uow);
                 try
                 {
                     _repository.Save(club);
@@ -59,28 +55,21 @@ namespace TBS.Controllers
                         throw;
                 }
                 return NoContent();
-            }
+
         }
 
         // POST: api/Clubs
         [HttpPost]
         public IActionResult PostClub([FromBody] Club club)
         {
-            using (var uow = new UnitOfWork())
-            {
-                _repository.SetUnitOfWork(uow);
-                _repository.Save(club);
-                return CreatedAtAction("GetClub", new { id = club.Id }, club);
-            }
+            _repository.Save(club);
+            return CreatedAtAction("GetClub", new { id = club.Id }, club);
         }
 
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
         public IActionResult DeleteClub([FromRoute] int id)
         {
-            using (var uow = new UnitOfWork())
-            {
-                _repository.SetUnitOfWork(uow);
                 Club club = _repository.Get(id);
                 if (club != null)
                 {
@@ -89,7 +78,7 @@ namespace TBS.Controllers
                     return Ok();
                 }
                 return NotFound();
-            }
+
         }
     }
 }

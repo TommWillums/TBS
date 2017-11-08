@@ -7,31 +7,18 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public interface IClubRepository
-    {
-        Club GetClub(int id);
-        IEnumerable<Club> GetAllClubs();
-        IEnumerable<Club> GetClubs();
-        void Save(Club club);
-    }
-
-    public class ClubRepository : RepositoryBase, IClubRepository
+    public class ClubRepository : RepositoryBase, IRepository<Club>
     {
         public ClubRepository(UnitOfWork unitOfWork = null) : base(unitOfWork)
         {
         }
 
-        public Club GetClub(int id)
+        public Club Get(int id)
         {
             return CQHandler.Query(new GetClubQuery(id));
         }
 
-        public IEnumerable<Club> GetAllClubs()
-        {
-            return CQHandler.Query(new GetAllClubs()).ToList();
-        }
-
-        public IEnumerable<Club> GetClubs()
+        public IEnumerable<Club> GetAll()
         {
             IEnumerable<Club> list = CQHandler.Query(new GetAllClubs());
             return list.Where(c => !c.Deleted);

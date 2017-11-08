@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using TBS.Data;
 
 namespace TBS.Repository
 {
-    interface IRepository
+    public interface IRepository<T>
+    {
+        T Get(int id);
+        IEnumerable<T> GetAll();
+        void Save(T entity);
+    }
+
     public class RepositoryBase
     {
         private readonly ICQHandler _cqhandler;
