@@ -24,7 +24,7 @@ namespace TBS.Controllers
         [HttpGet]
         public List<Club> GetClubs()
         {
-            return _repository.GetAll().ToList();
+            return _repository.GetList().ToList();
         }
 
         // GET: api/Clubs/5

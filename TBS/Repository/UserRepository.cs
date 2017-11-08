@@ -7,25 +7,23 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public interface IUserRepository
-    {
-        User GetUser(int id);
-        IEnumerable<User> GetUsers(int clubId);
-        void Save(User user);
-    }
-
-    public class UserRepository : RepositoryBase, IUserRepository
+    public class UserRepository : RepositoryBase, IRepository<User>
     {
         public UserRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
 
-        public User GetUser(int id)
+        public User Get(int id)
         {
             return CQHandler.Query(new GetUser(id));
         }
 
-        public IEnumerable<User> GetUsers(int clubId)
+        public IEnumerable<User> GetAll()
         {
-            return CQHandler.Query(new GetUsersByClub(clubId)).ToList();
+            return null;
+        }
+
+        public IEnumerable<User> GetList(int id)
+        {
+            return CQHandler.Query(new GetUsersByClub(id)).ToList();
         }
 
         public void Save(User user)

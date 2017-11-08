@@ -18,7 +18,7 @@ namespace TBS.Repository
             return CQHandler.Query(new GetClubQuery(id));
         }
 
-        public IEnumerable<Club> GetAll()
+        public IEnumerable<Club> GetList(int id = -1)
         {
             IEnumerable<Club> list = CQHandler.Query(new GetAllClubs());
             return list.Where(c => !c.Deleted);

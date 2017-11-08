@@ -15,7 +15,7 @@ namespace TBS.Test
         public void court_get_1_from_database()
         {
             var repository = new CourtRepository();
-            var court = repository.GetCourt(1);
+            var court = repository.Get(1);
             Assert.AreEqual(court.Id, 1);
         }
 
@@ -28,7 +28,7 @@ namespace TBS.Test
             {
                 var repository = new CourtRepository(uow);
                 repository.Save(item);
-                var items = repository.GetCourts(100);
+                var items = repository.GetList(100);
                 Assert.AreEqual(items.Count(), 9);
             }
         }
@@ -43,13 +43,13 @@ namespace TBS.Test
             {
                 var repository = new CourtRepository(uow);
 
-                Court item = repository.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
+                Court item = repository.GetList(100).Where(c => c.Name == dummy_court).SingleOrDefault();
                 item.Name = court_name;
                 item.CourtGroup = 2;
                 item.Active = false;
                 repository.Save(item);
 
-                Court item2 = repository.GetCourt(item.Id);
+                Court item2 = repository.Get(item.Id);
                 Assert.AreEqual(item2.Name, court_name);
                 Assert.AreEqual(item2.CourtGroup, 2);
                 Assert.AreEqual(item2.Active, false);
@@ -64,10 +64,10 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new CourtRepository(uow);
-                Court item = repository.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
+                Court item = repository.GetList(100).Where(c => c.Name == dummy_court).SingleOrDefault();
                 item.Deleted = true;
                 repository.Save(item);
-                Court item2 = repository.GetCourt(item.Id);
+                Court item2 = repository.Get(item.Id);
                 Assert.AreEqual(item2, null);
             }
         }

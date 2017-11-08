@@ -33,26 +33,26 @@ namespace TBS.Test
             TBS_Test_Helper.TestPrepareDBForUsers();
 
             // Create, ReadMany
-            var count = _repository.GetUsers(100).Count();
+            var count = _repository.GetList(100).Count();
             User item = new User() { Name = dummy_user, ClubId = 100 };
             _repository.Save(item);
-            var count2 = _repository.GetUsers(100).Count();
+            var count2 = _repository.GetList(100).Count();
             Assert.AreEqual(count+1, count2);
 
             // Read 1
-            User user2 = _repository.GetUsers(100).Where(c => c.Name == dummy_user).SingleOrDefault();
+            User user2 = _repository.GetList(100).Where(c => c.Name == dummy_user).SingleOrDefault();
             Assert.AreEqual(user2.Name, dummy_user);
 
             // Update
             user2.Name = "TBSX user";
             _repository.Save(user2);
-            User user3 = _repository.GetUser(user2.Id);
+            User user3 = _repository.Get(user2.Id);
             Assert.AreEqual(user2.Name, user3.Name);
 
             // Delete
             user3.Deleted = true;
             _repository.Save(user3);
-            User noUser = _repository.GetUser(user3.Id);
+            User noUser = _repository.Get(user3.Id);
             Assert.AreEqual(noUser, null);
         }
 

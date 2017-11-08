@@ -22,7 +22,7 @@ namespace TBS.Test
         public void club_get_PTK_via_GetClubs()
         {
             var repository = new ClubRepository();
-            var items = repository.GetAll().ToList();
+            var items = repository.GetList().ToList();
             Club item = items.FirstOrDefault(c => c.ShortName == "PTK");
             Assert.AreEqual(item.ShortName, "PTK");
         }
@@ -36,7 +36,7 @@ namespace TBS.Test
             {
                 var repository = new ClubRepository(uow);
                 repository.Save(item);
-                var items = repository.GetAll().Where(c => c.ShortName == dummy_name);
+                var items = repository.GetList().Where(c => c.ShortName == dummy_name);
                 Assert.AreEqual(items.Count(), 1);
             }
         }
@@ -49,7 +49,7 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new ClubRepository(uow);
-                var item = repository.GetAll().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                var item = repository.GetList().Where(c => c.ShortName == dummy_name).FirstOrDefault();
                 itemId = item.Id;
                 item.ClubName = dummy_name + " club";
                 item.ShortName = dummy_name + " tbsx";
@@ -74,7 +74,7 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new ClubRepository(uow);
-                var item = repository.GetAll().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                var item = repository.GetList().Where(c => c.ShortName == dummy_name).FirstOrDefault();
                 item.Deleted = true;
                 repository.Save(item);
                 var item2 = repository.Get(item.Id);

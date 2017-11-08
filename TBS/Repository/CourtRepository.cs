@@ -7,25 +7,18 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public interface ICourtRepository
-    {
-        Court GetCourt(int id);
-        IEnumerable<Court> GetCourts(int clubId);
-        void Save(Court court);
-    }
-
-    public class CourtRepository : RepositoryBase, ICourtRepository
+    public class CourtRepository : RepositoryBase, IRepository<Court>
     {
         public CourtRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
 
-        public Court GetCourt(int id)
+        public Court Get(int id)
         {
             return CQHandler.Query(new GetCourt(id));
         }
 
-        public IEnumerable<Court> GetCourts(int clubId)
+        public IEnumerable<Court> GetList(int id)
         {
-            return CQHandler.Query(new GetCourtsByClub(clubId)).ToList();
+            return CQHandler.Query(new GetCourtsByClub(id)).ToList();
         }
 
         public void Save(Court court)
