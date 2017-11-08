@@ -7,23 +7,10 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public class ClubRepository : IRepository<Club>
+    public class ClubRepository : RepositoryBase, IRepository<Club>
     {
-        private readonly ICQHandler _cqhandler;
-        private ICQHandler CQHandler => _cqhandler;
-        public ISession Session => _cqhandler.Session;
-
-        public ClubRepository(ICQHandler cqhandler)
+        public ClubRepository(ICQHandler cqhandler) : base(cqhandler)
         {
-            _cqhandler = cqhandler;
-        }
-
-        public void JoinUnitOfWork(IUnitOfWork uow, bool saveUncommitted = true)
-        {
-            if (saveUncommitted)
-                _cqhandler.Session.Commit();
-            _cqhandler.Session = uow.Session;
-            uow.AutoCommit = false;
         }
 
         public Club Get(int id)

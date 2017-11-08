@@ -39,18 +39,21 @@ namespace TBS.Controllers
             if (club.Id == 101)
             {
                 var uow = new UnitOfWork(_repository.Session);
-                var userRepo = new UserRepository(new CQHandler(_repository.Session));
+                var userRepo = new UserRepository(new CQHandler(new Session(new Data.Dapper.DapperContext(Util.AppSettings.DefaultDatabaseConnection))));
 
-                club.Contact = "CONTACT NAME 1";
+                User user1 = userRepo.Get(10003);
+                user1.Name = "USER NAME 2";
+                //userRepo.Save(user1);
 
                 userRepo.JoinUnitOfWork(uow);
                 _repository.JoinUnitOfWork(uow);
 
-                club.Contact = "CONTACT NAME 2";
+                club.Contact = "CONTACT NAME 1";
                 userRepo.Save(new User { Name = "IS THIS POSSIBLE?", ClubId = 101 });
+                userRepo.Save(user1);
                 _repository.Save(club);
 
-                uow.Rollback();
+                uow.Commit();
             }
             //TEST END
 

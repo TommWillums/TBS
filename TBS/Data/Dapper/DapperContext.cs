@@ -28,7 +28,7 @@ namespace TBS.Data.Dapper
 
         private DapperContext() { }
 
-        public DapperContext(string connectionString, bool useTransaction = false)
+        public DapperContext(string connectionString, bool useTransaction = true)
         {
             _connectionString = connectionString;
             _useTransaction = useTransaction;

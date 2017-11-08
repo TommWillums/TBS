@@ -7,33 +7,15 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : RepositoryBase, IRepository<User>
     {
-        private readonly ICQHandler _cqhandler;
-        private ICQHandler CQHandler => _cqhandler;
-        public ISession Session => _cqhandler.Session;
-
-        public UserRepository(ICQHandler cqhandler)
+        public UserRepository(ICQHandler cqhandler) : base(cqhandler)
         {
-            _cqhandler = cqhandler;
-        }
-
-        public void JoinUnitOfWork(IUnitOfWork uow, bool saveUncommitted = true)
-        {
-            if (saveUncommitted)
-                _cqhandler.Session.Commit();
-            _cqhandler.Session = uow.Session;
-            uow.AutoCommit = false;
         }
 
         public User Get(int id)
         {
             return CQHandler.Query(new GetUser(id));
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            return null;
         }
 
         public IEnumerable<User> GetList(int id)

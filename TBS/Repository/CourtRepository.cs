@@ -7,23 +7,10 @@ using TBS.Domain;
 
 namespace TBS.Repository
 {
-    public class CourtRepository : IRepository<Court>
+    public class CourtRepository : RepositoryBase, IRepository<Court>
     {
-        private readonly ICQHandler _cqhandler;
-        private ICQHandler CQHandler => _cqhandler;
-        public ISession Session => _cqhandler.Session;
-
-        public CourtRepository(ICQHandler cqhandler)
+        public CourtRepository(ICQHandler cqhandler) : base(cqhandler)
         {
-            _cqhandler = cqhandler;
-        }
-
-        public void JoinUnitOfWork(IUnitOfWork uow, bool saveUncommitted = true)
-        {
-            if (saveUncommitted)
-                _cqhandler.Session.Commit();
-            _cqhandler.Session = uow.Session;
-            uow.AutoCommit = false;
         }
 
         public Court Get(int id)

@@ -16,7 +16,27 @@ namespace TBS.Repository
         void JoinUnitOfWork(IUnitOfWork uow, bool saveUncommitted = true);
     }
 
-    //public class RepositoryBase
-    //{
-    //}
+    public class RepositoryBase
+    {
+        private ICQHandler _cqhandler;
+        public ICQHandler CQHandler => _cqhandler;
+        public ISession Session => _cqhandler.Session;
+
+        protected RepositoryBase(ICQHandler cqhandler)
+        {
+            _cqhandler = cqhandler;
+        }
+
+        public void JoinUnitOfWork(IUnitOfWork uow, bool saveUncommitted = true)
+        {
+            if (saveUncommitted && _cqhandler.Session != uow.Session)
+                _cqhandler.Session.Commit();
+
+            _cqhandler.Session = uow.Session;
+
+            uow.AutoCommit = false;
+        }
+
+
+    }
 }
