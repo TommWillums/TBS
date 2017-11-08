@@ -29,7 +29,7 @@ namespace TBS.Repository
             CQHandler.Execute(new SaveClubCmd(club));
         }
 
-        public void Delete(Club entity)
+        public void Remove(Club entity)
         {
             entity.Deleted = true;
             Save(entity);

@@ -73,7 +73,7 @@ namespace TBS.Controllers
                 Club club = _repository.Get(id);
                 if (club != null)
                 {
-                    _repository.Delete(club);
+                    _repository.Remove(club);
                     return Ok();
                 }
                 return NotFound();

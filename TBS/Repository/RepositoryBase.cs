@@ -10,7 +10,7 @@ namespace TBS.Repository
         T Get(int id);
         IEnumerable<T> GetList(int id = -1);
         void Save(T entity);
-        void Delete(T entity);
+        void Remove(T entity);
     }
 
     public class RepositoryBase
