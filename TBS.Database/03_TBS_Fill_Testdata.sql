@@ -4,10 +4,15 @@
 use TBS
 go
 
+/* All */
+delete from Users_Tbl
+delete from Courts_Tbl
+delete from Clubs_Tbl
+
 /* Clubs */
 
 delete from Clubs_Tbl
-DBCC CheckIdent (Clubs_Tbl, RESEED, 100);
+DBCC CheckIdent (Clubs_Tbl, RESEED, 99);
 insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('Porsgrunn Tennisklubb', 'PTK', 'Tomm W')
 insert into Clubs_Tbl (ClubName, ShortName, Contact) values ('Kristiansand Tennisklubb', 'KTK', 'Lise')
 go
@@ -33,7 +38,7 @@ insert into Courts_Tbl (ClubId, Name) values (101, 'Innebane 3')
 /* Users */
 
 delete from Users_Tbl
-DBCC CheckIdent (Users_Tbl, RESEED, 10000);
+DBCC CheckIdent (Users_Tbl, RESEED, 9999);
 
 insert into Users_Tbl (Name, ClubId) values ('Tomm Willums', 100)
 insert into Users_Tbl (Name, ClubId) values ('Tomas Karell', 100)
