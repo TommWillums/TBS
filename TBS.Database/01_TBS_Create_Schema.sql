@@ -67,7 +67,7 @@ if (exists(select * from sys.views where name = 'Clubs_v'))
 go
 
 create view Clubs_v as
-	select * from Clubs where Deleted = 0
+	select * from Clubs_Tbl where Deleted = 0
 go
 
 if (exists(select * from sys.views where name = 'Clubs'))
