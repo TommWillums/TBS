@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBS", "TBS\TBS.csproj", "{7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TBS.Test", "TBS.Test\TBS.Test.csproj", "{598935EE-3089-447B-92AD-960A2D4CA27B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clean Architecture", "Clean Architecture", "{1121DB89-E6B5-4580-ABB5-40493AEE177F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,5 +1,4 @@
-﻿using System;
-using TBS.Data;
+﻿using TBS.Data;
 
 namespace TBS.Repository
 {

@@ -37,7 +37,7 @@ namespace TBS.Test
             _session.Setup(m => m.Query<Club>(It.IsAny<string>(), null)).Returns(entities);
 
             ClubRepository repository = new ClubRepository(_cqhandler);
-            var clubs = repository.GetAllClubs();
+            var clubs = repository.GetClubs();
 
             Assert.AreEqual(entities.Count, clubs.Count());
         }
