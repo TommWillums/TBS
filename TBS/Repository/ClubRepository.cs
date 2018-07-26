@@ -3,7 +3,7 @@ using System.Linq;
 using TBS.Data;
 using TBS.Data.Commands.Clubs;
 using TBS.Data.Queries.Clubs;
-using TBS.Domain;
+using TBS.Entities;
 
 namespace TBS.Repository
 {
@@ -23,23 +23,23 @@ namespace TBS.Repository
 
         public Club GetClub(int id)
         {
-            return CQHandler.Query(new GetClubQuery(id));
+            return QueryCmdHandler.Query(new GetClubQuery(id));
         }
 
         public IEnumerable<Club> GetAllClubs()
         {
-            return CQHandler.Query(new GetAllClubs()).ToList();
+            return QueryCmdHandler.Query(new GetAllClubs()).ToList();
         }
 
         public IEnumerable<Club> GetClubs()
         {
-            IEnumerable<Club> list = CQHandler.Query(new GetAllClubs());
+            IEnumerable<Club> list = QueryCmdHandler.Query(new GetAllClubs());
             return list.Where(c => !c.Deleted);
         }
 
         public void Save(Club club)
         {
-            CQHandler.Execute(new SaveClubCmd(club));
+            QueryCmdHandler.Execute(new SaveClubCmd(club));
         }
     }
 }

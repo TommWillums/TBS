@@ -3,7 +3,7 @@ using System.Linq;
 using TBS.Data;
 using TBS.Data.Commands.Users;
 using TBS.Data.Queries.Users;
-using TBS.Domain;
+using TBS.Entities;
 
 namespace TBS.Repository
 {
@@ -20,17 +20,17 @@ namespace TBS.Repository
 
         public User GetUser(int id)
         {
-            return CQHandler.Query(new GetUser(id));
+            return QueryCmdHandler.Query(new GetUser(id));
         }
 
         public IEnumerable<User> GetUsers(int clubId)
         {
-            return CQHandler.Query(new GetUsersByClub(clubId)).ToList();
+            return QueryCmdHandler.Query(new GetUsersByClub(clubId)).ToList();
         }
 
         public void Save(User user)
         {
-            CQHandler.Execute(new SaveUser(user));
+            QueryCmdHandler.Execute(new SaveUser(user));
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TBS.Domain
+namespace TBS.Entities
 {
     public class ClubPayment
     {

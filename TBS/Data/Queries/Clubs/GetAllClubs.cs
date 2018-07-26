@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TBS.Domain;
+using TBS.Entities;
 
 namespace TBS.Data.Queries.Clubs
 {

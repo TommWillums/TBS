@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using TBS.Data;
-using TBS.Domain;
+using TBS.Entities;
 using TBS.Repository;
 
 namespace TBS.Test
@@ -49,7 +49,7 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new ClubRepository(uow);
-                var item = repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                var item = repository.GetClubs().FirstOrDefault(c => c.ShortName == dummy_name);
                 itemId = item.Id;
                 item.ClubName = dummy_name + " club";
                 item.ShortName = dummy_name + " tbsx";
@@ -74,7 +74,7 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new ClubRepository(uow);
-                var item = repository.GetClubs().Where(c => c.ShortName == dummy_name).FirstOrDefault();
+                var item = repository.GetClubs().FirstOrDefault(c => c.ShortName == dummy_name);
                 item.Deleted = true;
                 repository.Save(item);
                 var item2 = repository.GetClub(item.Id);

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TBS.Domain
+namespace TBS.Entities
 {
     public enum Weekday { Mon, Tue, Wed, Thu, Fri, Sat, Sun }
     public enum Sex { Male, Female }

@@ -1,4 +1,4 @@
-﻿using TBS.Domain;
+﻿using TBS.Entities;
 
 namespace TBS.Data.Commands.Courts
 {

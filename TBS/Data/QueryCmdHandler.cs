@@ -2,24 +2,24 @@
 
 namespace TBS.Data
 {
-    public interface ICQHandler
+    public interface IQueryCmdHandler
     {
         T Query<T>(IQuery<T> query);
         void Execute(ICommand command);
         ISession GetSession();
     }
 
-    public class CQHandler : ICQHandler
+    public class QueryCmdHandler : IQueryCmdHandler
     {
         private ISession _session { get; set; }
         public ISession GetSession() { return _session; }
 
-        public CQHandler()
+        public QueryCmdHandler()
         {
             _session = new Session(Util.AppSettings.DefaultDatabaseConnection, useTransaction: false);
         }
 
-        public CQHandler(ISession session)
+        public QueryCmdHandler(ISession session)
         {
             _session = session;
         }

@@ -1,4 +1,0 @@
-﻿Namespace: TBS.Data
-ORM <-> SQL 
-Uses DapperContext and Dapper to call database server
-

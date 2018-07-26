@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using TBS.Data;
-using TBS.Domain;
+using TBS.Entities;
 using TBS.Repository;
 
 namespace TBS.Test

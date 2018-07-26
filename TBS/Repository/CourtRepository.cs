@@ -3,7 +3,7 @@ using System.Linq;
 using TBS.Data;
 using TBS.Data.Commands.Courts;
 using TBS.Data.Queries.Courts;
-using TBS.Domain;
+using TBS.Entities;
 
 namespace TBS.Repository
 {
@@ -20,17 +20,17 @@ namespace TBS.Repository
 
         public Court GetCourt(int id)
         {
-            return CQHandler.Query(new GetCourt(id));
+            return QueryCmdHandler.Query(new GetCourt(id));
         }
 
         public IEnumerable<Court> GetCourts(int clubId)
         {
-            return CQHandler.Query(new GetCourtsByClub(clubId)).ToList();
+            return QueryCmdHandler.Query(new GetCourtsByClub(clubId)).ToList();
         }
 
         public void Save(Court court)
         {
-            CQHandler.Execute(new SaveCourt(court));
+            QueryCmdHandler.Execute(new SaveCourt(court));
         }
 
     }
