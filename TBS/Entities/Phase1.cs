@@ -1,5 +1,9 @@
 ﻿using System;
 
+/*
+TODO: Separate into WriteModel and ReadModel  (Model.Write, Model.Read)?
+*/
+
 namespace TBS.Entities
 {
     public enum Weekday { Mon, Tue, Wed, Thu, Fri, Sat, Sun }
@@ -11,13 +15,16 @@ namespace TBS.Entities
         public string ClubName { get; set; }
         public string ShortName { get; set; }
         public string Contact { get; set; }
+        public  int CustomerId { get; set; }
+
         //public string Address { get; set; }
         //public int CourtCount { get; set; }
         //public string Subscription { get; set; }
         //public decimal Price { get; set; }
         //public bool AutoRenewal { get; set; }
         //public DateTime NextRenewalDate { get; set; }
-        //public bool Active { get; set; }
+
+        public bool Active { get; set; }
         public DateTime Created { get; set; }
         public bool Deleted { get; set; }
     }
@@ -26,7 +33,7 @@ namespace TBS.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }        // Bane 2 Ute
-        public int ClubId { get; set; }         // 100-PTK
+        public int ClubId { get; set; }         // 1-Prod, 2-Test
         public int CourtGroup { get; set; }     // Ute, Inne
         public bool Active { get; set; }
         public string CourtType { get; set; }   // Hardcourt

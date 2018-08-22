@@ -12,14 +12,6 @@ namespace TBS.Controllers
     [Route("api/Clubs")]
     public class ClubsController : Controller
     {
-        // GET: api/Clubs
-        [HttpGet]
-        public List<Club> GetClubs()
-        {
-            var repository = new ClubRepository();
-            return repository.GetClubs().ToList();
-        }
-
         // GET: api/Clubs/5
         [HttpGet("{id}")]
         public IActionResult GetClub([FromRoute] int id)

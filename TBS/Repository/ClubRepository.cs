@@ -10,7 +10,6 @@ namespace TBS.Repository
     public interface IClubRepository
     {
         Club GetClub(int id);
-        IEnumerable<Club> GetClubs();
         void Save(Club club);
     }
 
@@ -21,11 +20,6 @@ namespace TBS.Repository
         public Club GetClub(int id)
         {
             return QueryCmdHandler.Query(new GetClub(id));
-        }
-
-        public IEnumerable<Club> GetClubs()
-        {
-            return QueryCmdHandler.Query(new GetClubs());
         }
 
         public void Save(Club club)

@@ -15,13 +15,13 @@ namespace TBS.Data.Commands.Clubs
         {
             if (_club.Id > 0)
             {
-                session.Execute("update Clubs_Tbl set ClubName = @ClubName, ShortName = @ShortName, Contact = @Contact, Deleted = @Deleted where Id = @Id", 
-                    new { _club.Id, _club.ClubName, _club.ShortName, _club.Contact, _club.Deleted });
+                session.Execute("update Clubs_Tbl set ClubName = @ClubName, ShortName = @ShortName, Contact = @Contact, CustomerId = @CustomerId, Active = @Active where Id = @Id", 
+                    new { _club.Id, _club.ClubName, _club.ShortName, _club.Contact, _club.CustomerId, _club.Active });
                 return;
             }
 
-            session.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact) values (@ClubName, @ShortName, @Contact)",
-                new { _club.ClubName, _club.ShortName, _club.Contact });
+            session.Execute("insert into Clubs_Tbl (ClubName, ShortName, Contact, CustomerId) values (@ClubName, @ShortName, @Contact, @CustomerId)",
+                new { _club.ClubName, _club.ShortName, _club.Contact, _club.CustomerId });
         }
     }
 

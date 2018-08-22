@@ -26,7 +26,7 @@ create table Clubs_Tbl (
 	ClubName		varchar(100) not null,
 	ShortName		varchar(20)  not null,
 	Contact			varchar(50)	 not null,
-	CustomerId		int			 not null,
+	CustomerId		int			 null,
 --	Address			varchar(100) null,
 --	CourtCount		int			 not null default 0,
 --	Subscription	varchar(20)	 null,

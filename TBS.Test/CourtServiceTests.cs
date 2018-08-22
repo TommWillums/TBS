@@ -23,13 +23,13 @@ namespace TBS.Test
         public void court_add_to_database()
         {
             TBS_Test_Helper.TestPrepareDBToAddCourt();
-            Court item = new Court() { Name = dummy_court, ClubId = 100, Active = true };
+            Court item = new Court() { Name = dummy_court, ClubId = 2, Active = true };
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new CourtRepository(uow);
                 repository.Save(item);
-                var items = repository.GetCourts(100);
-                Assert.AreEqual(items.Count(), 9);
+                var items = repository.GetCourts(2);
+                Assert.AreEqual(items.Count(), 1);
             }
         }
 
@@ -43,7 +43,7 @@ namespace TBS.Test
             {
                 var repository = new CourtRepository(uow);
 
-                Court item = repository.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
+                Court item = repository.GetCourts(2).SingleOrDefault(c => c.Name == dummy_court);
                 item.Name = court_name;
                 item.CourtGroup = 2;
                 item.Active = false;
@@ -64,7 +64,7 @@ namespace TBS.Test
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
                 var repository = new CourtRepository(uow);
-                Court item = repository.GetCourts(100).Where(c => c.Name == dummy_court).SingleOrDefault();
+                Court item = repository.GetCourts(2).SingleOrDefault(c => c.Name == dummy_court);
                 item.Deleted = true;
                 repository.Save(item);
                 Court item2 = repository.GetCourt(item.Id);
