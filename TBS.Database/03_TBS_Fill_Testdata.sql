@@ -15,6 +15,13 @@ delete from Clubs_Tbl
 insert into Clubs_Tbl (Id, ClubName, ShortName, Contact, CustomerId) values (1, 'Porsgrunn Tennisklubb', 'PTK', 'Tomm W', 1540)
 go
 
+/* BookingTypes */
+
+insert into BookingTypes (Id, Description, Colour) values (1, 'Fast', 'Grønn') 
+insert into BookingTypes (Id, Description, Colour) values (2, 'Medlem', 'Gul') 
+insert into BookingTypes (Id, Description, Colour) values (3, 'Mesterskap', 'Blå') 
+insert into BookingTypes (Id, Description, Colour) values (4, 'Annet', 'Rød') 
+
 /* Courts */
 
 truncate table Courts_Tbl
@@ -40,8 +47,24 @@ insert into Users_Tbl (Name, ClubId) values ('Martin Kristoffersen', 1)
 insert into Users_Tbl (Name, ClubId) values ('Lise', 1)
 go
 
+/* Bookings */
+
+truncate table Bookings_Tbl
+DBCC CheckIdent (Bookings_Tbl, RESEED, 1001);
+
+insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 1, 10000, GetDate(), 60)
+insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 2, 10000, GetDate(), 60)
+insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 3, 10001, GetDate(), 60)
+insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 4, 10001, GetDate(), 60)
+
+update Bookings_Tbl set StartTime = dateadd(hour, 1, GetDate()) where Id = 1
+update Bookings_Tbl set StartTime = dateadd(hour, 2, GetDate()) where Id = 2
+update Bookings_Tbl set StartTime = dateadd(hour, 3, GetDate()) where Id = 3
+update Bookings_Tbl set StartTime = dateadd(hour, 4, GetDate()) where Id = 4
+
 /*
 select * from Clubs
+select * from BookingTypes
 select * from Courts
 select * from Courts_v
 select * from Users

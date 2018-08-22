@@ -8,6 +8,12 @@ go
 use TBS
 go
 
+if (exists(select * from sys.tables where name = 'Bookings_Tbl'))
+	drop table Bookings_Tbl;
+
+if (exists(select * from sys.tables where name = 'BookingTypes'))
+	drop table BookingTypes;
+
 if (exists(select * from sys.tables where name = 'Users_Tbl'))
 	drop table Users_Tbl;
 
@@ -28,7 +34,7 @@ create table Clubs_Tbl (
 	Contact			varchar(50)	 not null,
 	CustomerId		int			 null,
 --	Address			varchar(100) null,
---	CourtCount		int			 not null default 0,
+--	MaxCourts		int			 not null default 0,
 --	Subscription	varchar(20)	 null,
 --	Price			money		 not null default 0.0,
 --	AutoRenewal		bit			 not null default 0,
@@ -66,6 +72,30 @@ create table Users_Tbl (
 )
 go
 
+/* BookingTypes -- 1-Fast(grønn), 2-Medlem(gul), 3-Mesterskap(blå), 4-Annet(rød) */
+
+create table BookingTypes (
+	Id			int			not null primary key,
+	Description	varchar(50)	not null,
+	Colour		varchar(10) not null  
+)
+go
+
+/* Booking */
+
+create table Bookings_Tbl (
+	Id			int			not null identity primary key,
+	CourtId		int			null references Courts_Tbl (Id),
+    BookingType int			not null references BookingTypes (Id),
+    UserId		int			not null references Users_Tbl (Id),
+    StartTime	datetime2	not null,
+    Duration	int			not null, -- Minutes
+    DisplayAs	varchar(99) null,
+	Created		datetime2	not null default GetDate(),
+	Deleted		bit			not null default 0,
+)
+go
+
 /* VIEWS */
 
 if (exists(select * from sys.views where name = 'Clubs'))
@@ -75,6 +105,8 @@ go
 create view Clubs as 
   select * from Clubs_Tbl
 go
+
+----------------
 
 if (exists(select * from sys.views where name = 'Courts'))
 	drop view Courts;
@@ -87,6 +119,8 @@ go
 if (exists(select * from sys.views where name = 'Courts_v'))
 	drop view Courts_v;
 go
+
+----------------
 
 create view Courts_v as 
   select c.Id, c.Name, c.ClubId, k.ShortName Club, c.CourtGroup, c.Active, c.CourtType 
@@ -101,5 +135,15 @@ go
 
 create view Users as 
   select * from Users_Tbl where Deleted = 0
+go
+
+----------------
+
+if (exists(select * from sys.views where name = 'Bookings'))
+	drop view Bookings;
+go
+
+create view Bookings as 
+  select * from Bookings_Tbl where Deleted = 0
 go
 

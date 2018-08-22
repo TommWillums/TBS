@@ -18,7 +18,7 @@ namespace TBS.Entities
         public  int CustomerId { get; set; }
 
         //public string Address { get; set; }
-        //public int CourtCount { get; set; }
+        //public int MaxCourts { get; set; }
         //public string Subscription { get; set; }
         //public decimal Price { get; set; }
         //public bool AutoRenewal { get; set; }
@@ -50,9 +50,9 @@ namespace TBS.Entities
     public class Booking
     {
         public int Id { get; set; }
-        public BookingType Type { get; set; }   // Fast(grønn), Medlem(gul), Mesterskap(blå), Annet(rød)
+        public BookingType Type { get; set; }   // Use only Id in write-model 
         public User User { get; set; }      
-        public Court Court { get; set; }        // Or only the Court Id?
+        public Court Court { get; set; }        // Use only CourtId in Write model
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }       // Minutes
         public string DisplayAs { get; set; }

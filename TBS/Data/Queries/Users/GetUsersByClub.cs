@@ -4,11 +4,11 @@ using TBS.Entities;
 
 namespace TBS.Data.Queries.Users
 {
-    public class GetUsersByClub : IQuery<IList<User>>
+    public class GetBookings : IQuery<IList<User>>
     {
         private readonly int _clubId;
 
-        public GetUsersByClub(int clubId)
+        public GetBookings(int clubId)
         {
             _clubId = clubId;
         }

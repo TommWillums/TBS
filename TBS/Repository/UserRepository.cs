@@ -25,7 +25,7 @@ namespace TBS.Repository
 
         public IEnumerable<User> GetUsers(int clubId)
         {
-            return QueryCmdHandler.Query(new GetUsersByClub(clubId)).ToList();
+            return QueryCmdHandler.Query(new GetBookings(clubId)).ToList();
         }
 
         public void Save(User user)
