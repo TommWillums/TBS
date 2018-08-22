@@ -1,6 +1,10 @@
 ﻿--=============================================================================
 -- 01_TBS_Create_Schema.sql
 --=============================================================================
+if (not exists(select name from sys.databases where name = 'TBS'))
+	create database TBS;
+go
+
 use TBS
 go
 
@@ -13,22 +17,24 @@ if (exists(select * from sys.tables where name = 'Courts_Tbl'))
 if (exists(select * from sys.tables where name = 'Clubs_Tbl'))
 	drop table Clubs_Tbl;
 
-/* Club */
-
+/* 
+   Club -- Only one club per database is allowed.
+   Use separate databases for each club due to security, scalability and simpler restore on the expense of maintainability. 
+*/
 create table Clubs_Tbl (
-	Id				int			 not null identity primary key,
+	Id				int			 not null primary key check (Id = 1),
 	ClubName		varchar(100) not null,
 	ShortName		varchar(20)  not null,
 	Contact			varchar(50)	 not null,
+	CustomerId		int			 not null,
 --	Address			varchar(100) null,
 --	CourtCount		int			 not null default 0,
 --	Subscription	varchar(20)	 null,
 --	Price			money		 not null default 0.0,
 --	AutoRenewal		bit			 not null default 0,
 --	NextRenewalDate	datetime2	 null,
---	Active			bit			 not null default 1,
-	Created			datetime2	 not null default GetDate(),
-	Deleted			bit			 not null default 0,
+	Active			bit			 not null default 1,
+	Created			datetime2	 not null default GetDate()
 )
 create unique index ix_ShortName on Clubs_Tbl (ShortName)
 go
@@ -62,20 +68,12 @@ go
 
 /* VIEWS */
 
-if (exists(select * from sys.views where name = 'Clubs_v'))
-	drop view Clubs_v;
-go
-
-create view Clubs_v as
-	select * from Clubs_Tbl where Deleted = 0
-go
-
 if (exists(select * from sys.views where name = 'Clubs'))
 	drop view Clubs;
 go
 
 create view Clubs as 
-  select * from Clubs_Tbl where Deleted = 0
+  select * from Clubs_Tbl
 go
 
 if (exists(select * from sys.views where name = 'Courts'))
