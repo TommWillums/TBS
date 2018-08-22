@@ -5,13 +5,13 @@ use TBS
 go
 
 /* All */
+delete from Bookings_Tbl
 delete from Users_Tbl
 delete from Courts_Tbl
+delete from BookingTypes
 delete from Clubs_Tbl
 
 /* Clubs */
-
-delete from Clubs_Tbl
 insert into Clubs_Tbl (Id, ClubName, ShortName, Contact, CustomerId) values (1, 'Porsgrunn Tennisklubb', 'PTK', 'Tomm W', 1540)
 go
 
@@ -24,8 +24,9 @@ insert into BookingTypes (Id, Description, Colour) values (4, 'Annet', 'Rød')
 
 /* Courts */
 
-truncate table Courts_Tbl
-DBCC CheckIdent (Courts_Tbl, RESEED, 1);
+insert into Courts_Tbl (ClubId, Name) values (1, '?')
+delete from Courts_Tbl
+DBCC CheckIdent (Courts_Tbl, RESEED, 0);
 insert into Courts_Tbl (ClubId, Name) values (1, 'Bane 1 Hall')
 insert into Courts_Tbl (ClubId, Name) values (1, 'Bane 2 Hall')
 insert into Courts_Tbl (ClubId, Name) values (1, 'Bane 3 Hall')
@@ -37,8 +38,9 @@ insert into Courts_Tbl (ClubId, Name, CourtGroup, Active) values (1, 'Bane 4 Ute
 
 /* Users */
 
-truncate table Users_Tbl
-DBCC CheckIdent (Users_Tbl, RESEED, 10000);
+insert into Users_Tbl (Name, ClubId) values ('?', 1)
+delete from Users_Tbl
+DBCC CheckIdent (Users_Tbl, RESEED, 9999);
 
 insert into Users_Tbl (Name, ClubId) values ('Tomm Willums', 1)
 insert into Users_Tbl (Name, ClubId) values ('Tomas Karell', 1)
@@ -50,22 +52,22 @@ go
 /* Bookings */
 
 truncate table Bookings_Tbl
-DBCC CheckIdent (Bookings_Tbl, RESEED, 1001);
+DBCC CheckIdent (Bookings_Tbl, RESEED, 1000);
 
 insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 1, 10000, GetDate(), 60)
 insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 2, 10000, GetDate(), 60)
 insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 3, 10001, GetDate(), 60)
 insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 4, 10001, GetDate(), 60)
 
-update Bookings_Tbl set StartTime = dateadd(hour, 1, GetDate()) where Id = 1
-update Bookings_Tbl set StartTime = dateadd(hour, 2, GetDate()) where Id = 2
-update Bookings_Tbl set StartTime = dateadd(hour, 3, GetDate()) where Id = 3
-update Bookings_Tbl set StartTime = dateadd(hour, 4, GetDate()) where Id = 4
+--update Bookings_Tbl set StartTime = dateadd(hour, 1, GetDate()) where Id = 1000
+--update Bookings_Tbl set StartTime = dateadd(hour, 2, GetDate()) where Id = 1001
+--update Bookings_Tbl set StartTime = dateadd(hour, 3, GetDate()) where Id = 1002
+--update Bookings_Tbl set StartTime = dateadd(hour, 4, GetDate()) where Id = 1003
 
 /*
 select * from Clubs
 select * from BookingTypes
+select * from Bookings
 select * from Courts
-select * from Courts_v
 select * from Users
 */
