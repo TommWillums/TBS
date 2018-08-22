@@ -7,24 +7,25 @@ namespace TBS.Data.Queries.Bookings
 {
     public class GetBookings : IQuery<IList<Booking>>
     {
-        private readonly DateTime _date;
+        private readonly DateTime _fromdate;
+        private readonly DateTime _todate;
 
-        public GetBookings(DateTime fromdate, DateTime? todate = null)
+        public GetBookings(DateTime fromdate, DateTime todate)
         {
-            _date = new DateTime(fromdate.Year, fromdate.Month, fromdate.Day);
+            _fromdate = new DateTime(fromdate.Year, fromdate.Month, fromdate.Day);
             if (todate == null)
             {
-                todate = _date.AddDays(1);
+                _todate = _fromdate.AddDays(1);
             }
             else
             {
-                todate = new DateTime(todate.Year, toate.Month, todate.Day);
+                _todate = new DateTime(todate.Year, todate.Month, todate.Day);
             }
         }
 
         public IList<Booking> Execute(ISession session)
         {
-            return session.Query<Booking>("select * from Bookings where StartTime >= @FromDate and StartTime < @ToDate", new { FromDate = _date, ToDate = todate }).ToList();
+            return session.Query<Booking>("select * from Bookings where StartTime >= @FromDate and StartTime < @ToDate", new { FromDate = _fromdate, ToDate = _todate }).ToList();
         }
     }
 
