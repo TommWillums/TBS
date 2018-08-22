@@ -22,7 +22,7 @@ if (exists(select * from sys.tables where name = 'Clubs_Tbl'))
    Use separate databases for each club due to security, scalability and simpler restore on the expense of maintainability. 
 */
 create table Clubs_Tbl (
-	Id				int			 not null primary key check (Id = 1),
+	Id				int			 not null primary key check (Id in (1,2)),	-- 1 is prod, 2 is for test
 	ClubName		varchar(100) not null,
 	ShortName		varchar(20)  not null,
 	Contact			varchar(50)	 not null,

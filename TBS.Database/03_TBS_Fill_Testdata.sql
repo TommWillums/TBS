@@ -17,8 +17,8 @@ go
 
 /* Courts */
 
-delete from Courts_Tbl
-DBCC CheckIdent (Courts_Tbl, RESEED, 0);
+truncate table Courts_Tbl
+DBCC CheckIdent (Courts_Tbl, RESEED, 1);
 insert into Courts_Tbl (ClubId, Name) values (1, 'Bane 1 Hall')
 insert into Courts_Tbl (ClubId, Name) values (1, 'Bane 2 Hall')
 insert into Courts_Tbl (ClubId, Name) values (1, 'Bane 3 Hall')
@@ -30,8 +30,8 @@ insert into Courts_Tbl (ClubId, Name, CourtGroup, Active) values (1, 'Bane 4 Ute
 
 /* Users */
 
-delete from Users_Tbl
-DBCC CheckIdent (Users_Tbl, RESEED, 9999);
+truncate table Users_Tbl
+DBCC CheckIdent (Users_Tbl, RESEED, 10000);
 
 insert into Users_Tbl (Name, ClubId) values ('Tomm Willums', 1)
 insert into Users_Tbl (Name, ClubId) values ('Tomas Karell', 1)
