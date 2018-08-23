@@ -84,15 +84,15 @@ go
 /* Booking */
 
 create table Bookings_Tbl (
-	Id			int			not null identity primary key,
-	CourtId		int			null references Courts_Tbl (Id),
-    BookingType int			not null references BookingTypes (Id),
-    UserId		int			not null references Users_Tbl (Id),
-    StartTime	datetime2	not null,
-    Duration	int			not null, -- Minutes
-    DisplayAs	varchar(99) null,
-	Created		datetime2	not null default GetDate(),
-	Deleted		bit			not null default 0,
+	Id				int			not null identity primary key,
+	CourtId			int			null references Courts_Tbl (Id),
+    BookingTypeId	int			not null references BookingTypes (Id),
+    UserId			int			not null references Users_Tbl (Id),
+    StartTime		datetime2	not null,
+    Duration		int			not null, -- Minutes
+    DisplayAs		varchar(99) null,
+	Created			datetime2	not null default GetDate(),
+	Deleted			bit			not null default 0,
 )
 go
 
@@ -146,4 +146,22 @@ go
 create view Bookings as 
   select * from Bookings_Tbl where Deleted = 0
 go
+
+if (exists(select * from sys.views where name = 'Bookings_v'))
+	drop view Bookings_v;
+go
+
+create view Bookings_v as
+  select 
+	b.Id,  b.CourtId, c.Name CourtName, 
+	b.BookingTypeId, t.Description BookingType, 
+	b.UserId, u.Name UserName, b.DisplayAs,
+	b.StartTime, b.Duration,
+	b.Created, b.Deleted
+  from Bookings b
+  join Courts c on c.Id = b.CourtId
+  join Users u on u.Id = b.UserId
+  join BookingTypes t on t.Id = b.BookingTypeId
+
+----------------
 

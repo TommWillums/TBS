@@ -10,17 +10,10 @@ namespace TBS.Data.Queries.Bookings
         private readonly DateTime _fromdate;
         private readonly DateTime _todate;
 
-        public GetBookings(DateTime fromdate, DateTime todate)
+        public GetBookings(DateTime fromdate)
         {
             _fromdate = new DateTime(fromdate.Year, fromdate.Month, fromdate.Day);
-            if (todate == null)
-            {
-                _todate = _fromdate.AddDays(1);
-            }
-            else
-            {
-                _todate = new DateTime(todate.Year, todate.Month, todate.Day);
-            }
+            _todate = _fromdate.AddDays(1);
         }
 
         public IList<Booking> Execute(ISession session)

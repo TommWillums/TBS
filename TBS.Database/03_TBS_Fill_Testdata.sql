@@ -54,15 +54,15 @@ go
 truncate table Bookings_Tbl
 DBCC CheckIdent (Bookings_Tbl, RESEED, 1000);
 
-insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 1, 10000, GetDate(), 60)
-insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 2, 10000, GetDate(), 60)
-insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 3, 10001, GetDate(), 60)
-insert into Bookings_Tbl (CourtId, BookingType, UserId, StartTime, Duration) values (1, 4, 10001, GetDate(), 60)
+insert into Bookings_Tbl (CourtId, BookingTypeId, UserId, StartTime, Duration) values (1, 1, 10000, GetDate(), 60)
+insert into Bookings_Tbl (CourtId, BookingTypeId, UserId, StartTime, Duration) values (1, 2, 10000, GetDate(), 60)
+insert into Bookings_Tbl (CourtId, BookingTypeId, UserId, StartTime, Duration) values (1, 3, 10001, GetDate(), 60)
+insert into Bookings_Tbl (CourtId, BookingTypeId, UserId, StartTime, Duration) values (1, 4, 10001, GetDate(), 60)
 
---update Bookings_Tbl set StartTime = dateadd(hour, 1, GetDate()) where Id = 1000
---update Bookings_Tbl set StartTime = dateadd(hour, 2, GetDate()) where Id = 1001
---update Bookings_Tbl set StartTime = dateadd(hour, 3, GetDate()) where Id = 1002
---update Bookings_Tbl set StartTime = dateadd(hour, 4, GetDate()) where Id = 1003
+update Bookings_Tbl set StartTime = dateadd(hour, 1, GetDate()) where Id = 1000
+update Bookings_Tbl set StartTime = dateadd(hour, 2, GetDate()) where Id = 1001
+update Bookings_Tbl set StartTime = dateadd(hour, 3, GetDate()) where Id = 1002
+update Bookings_Tbl set StartTime = dateadd(hour, 4, GetDate()) where Id = 1003
 
 /*
 select * from Clubs

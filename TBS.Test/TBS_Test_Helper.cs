@@ -12,6 +12,7 @@ namespace TBS.Test
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
+                conn.Execute("delete b from Bookings_Tbl b join Courts c on c.Id = b.CourtId where c.ClubId = 2");
                 conn.Execute("delete from Users_Tbl where ClubId = 2");
                 conn.Execute("delete from Courts_Tbl where ClubId = 2");
                 conn.Execute("delete from Clubs_Tbl where Id = 2");
@@ -32,6 +33,17 @@ namespace TBS.Test
                 conn.Open();
                 conn.Execute("insert into Clubs_Tbl (Id, ClubName, ShortName, Contact, CustomerId) " +
                              "values (2, 'TBSX', 'TBSX', 'TBSX', 9999)");
+            }
+        }
+
+        public static void TestPrepareDBToAddBooking()
+        {
+            TestPrepareDBDeleteTestdata();
+            TestPrepareDBAddClub2();
+            using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
+            {
+                conn.Open();
+                conn.Execute("insert into Courts_Tbl (ClubId, Name) values (2, 'Testbane')");
             }
         }
 
@@ -60,6 +72,7 @@ namespace TBS.Test
             TestPrepareDBDeleteTestdata();
             TestPrepareDBAddClub2();
         }
+
     }
 
 }

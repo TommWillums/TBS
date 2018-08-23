@@ -5,16 +5,16 @@ namespace TBS.Data.Queries.Users
 {
     public class GetUser : IQuery<User>
     {
-        private readonly int _userId;
+        private readonly int _id;
 
-        public GetUser(int userId)
+        public GetUser(int id)
         {
-            _userId = userId;
+            _id = id;
         }
 
         public User Execute(ISession session)
         {
-            return session.Query<User>("select * from Users where Id = @Id", new { Id = _userId }).SingleOrDefault();
+            return session.Query<User>("select * from Users where Id = @Id", new { Id = _id }).SingleOrDefault();
         }
     }
 

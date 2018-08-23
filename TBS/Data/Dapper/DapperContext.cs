@@ -11,6 +11,7 @@ namespace TBS.Data.Dapper
         IDbConnection Connection { get; }
         void Execute(string query, object param);
         IEnumerable<T> Query<T>(string query, object param);
+        IEnumerable<TReturn> Query<TFirst, TSecond, TThird, TReturn>(string query, Func<TFirst, TSecond, TThird, TReturn> map, object param);
 
         IDbTransaction BeginTransaction();
         void Commit();
@@ -62,6 +63,14 @@ namespace TBS.Data.Dapper
                 return Connection.Query<T>(query, param, _transaction);
             else
                 return Connection.Query<T>(query, param);
+        }
+
+        public IEnumerable<TReturn> Query<TFirst, TSecond, TThird, TReturn>(string query, Func<TFirst, TSecond, TThird, TReturn> map, object param)
+        {
+            if (_useTransaction)
+                return Connection.Query<TFirst, TSecond, TThird, TReturn>(query, map, param, _transaction);
+            else
+                return Connection.Query<TFirst, TSecond, TThird, TReturn>(query, map, param);
         }
 
         public void Execute(string sql, object param)
