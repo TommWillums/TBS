@@ -18,7 +18,35 @@ namespace TBS.Data.Queries.Bookings
 
         public IList<Booking> Execute(ISession session)
         {
-            return session.Query<Booking>("select * from Bookings where StartTime >= @FromDate and StartTime < @ToDate", new { FromDate = _fromdate, ToDate = _todate }).ToList();
+            const string sql = @"
+            select 
+                b.Id, 
+                b.CourtId, 
+                b.BookingTypeId, 
+                b.UserId, 
+                b.DisplayAs,
+                b.StartTime, 
+                b.Duration,
+                b.Created, 
+                c.Name,
+                u.Name, 
+                t.Description
+            from Bookings b
+                join Courts c on c.Id = b.CourtId
+                join Users u on u.Id = b.UserId
+                join BookingTypes t on t.Id = b.BookingTypeId
+            where StartTime >= @FromDate and StartTime < @ToDate";
+
+            return session.Query<Booking, Court, User, BookingType, Booking>(
+                sql,
+                (booking, court, user, type) =>
+                {
+                    booking.Court = court;
+                    booking.User = user;
+                    booking.Type = type;
+                    return booking;
+                },
+                new { FromDate = _fromdate, ToDate = _todate }).ToList();
         }
     }
 

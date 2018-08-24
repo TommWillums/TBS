@@ -18,25 +18,31 @@ namespace TBS.Data.Queries.Bookings
         {
             const string sql = @"
             select 
-                b.Id, b.CourtId, c.Name,
-                b.BookingTypeId, t.Description,
-                b.UserId, u.Name, b.DisplayAs,
-                b.StartTime, b.Duration,
-                b.Created, b.Deleted
+                b.Id, 
+                b.CourtId, 
+                b.BookingTypeId, 
+                b.UserId, 
+                b.DisplayAs,
+                b.StartTime, 
+                b.Duration,
+                b.Created, 
+                c.Name,
+                u.Name, 
+                t.Description
             from Bookings b
                 join Courts c on c.Id = b.CourtId
                 join Users u on u.Id = b.UserId
                 join BookingTypes t on t.Id = b.BookingTypeId
             where Id = @Id";
 
-            Booking item = new Booking();
-            session.Query<Court, User, BookingType, Booking>(sql,
-                (court, user, bookingtype) =>
+            Booking item = session.Query<Booking, Court, User, BookingType, Booking>(
+                sql,
+                (booking, court, user, type) =>
                 {
-                    item.Court = court;
-                    item.User = user;
-                    //item.BookingType = bookingtype;
-                    return item;
+                    booking.Court = court;
+                    booking.User = user;
+                    booking.Type = type;
+                    return booking;
                 },
                 new { Id = _id }).SingleOrDefault();
 
