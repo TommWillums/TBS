@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using Dapper;
 using TBS.Entities;
 
 namespace TBS.Data.Queries.Courts
@@ -13,7 +15,7 @@ namespace TBS.Data.Queries.Courts
             _clubId = clubId;
         }
 
-        public IList<Court> Execute(ISession session)
+        public IList<Court> Execute(IDbConnection session)
         {
             return session.Query<Court>("select * from Courts where ClubId = @Id", new { ID = _clubId }).ToList();
         }

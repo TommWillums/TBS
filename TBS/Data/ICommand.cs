@@ -1,8 +1,10 @@
-﻿namespace TBS.Data
+﻿using System.Data;
+
+namespace TBS.Data
 {
     public interface ICommand
     {
-        void Execute(ISession db);
+        void Execute(IDbConnection db);
     }
 }
 

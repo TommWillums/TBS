@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data;
+using System.Linq;
+using Dapper;
 using TBS.Entities;
 
 namespace TBS.Data.Queries.Clubs
@@ -12,7 +14,7 @@ namespace TBS.Data.Queries.Clubs
             _clubId = clubId;
         }
 
-        public Club Execute(ISession session)
+        public Club Execute(IDbConnection session)
         {
             return session.Query<Club>("select * from Clubs where Id = @Id", new { Id = _clubId }).SingleOrDefault();
         }

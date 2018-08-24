@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace TBS.Data
 {
@@ -12,35 +14,36 @@ namespace TBS.Data
     // Implicit BeginTransaction with AutoCommit true
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        Session _session;
-        public Session Session => _session;
+        readonly IDbConnection _context;
+
+        public IDbConnection Context => _context;
         public bool AutoCommit { get; set; }
 
         public UnitOfWork(string connectionString = null)
         {
             AutoCommit = true;
             if (String.IsNullOrWhiteSpace(connectionString))
-                _session = new Session(Util.AppSettings.DefaultDatabaseConnection);
+                _context = new SqlConnection(Util.AppSettings.DefaultDatabaseConnection);
             else
-                _session = new Session(connectionString);
+                _context = new SqlConnection(connectionString);
         }
 
         public void Commit()
         {
-            _session.Commit();
+//            _context.Commit();
         }
 
         public void Rollback()
         {
-            _session.Rollback();
+ //           _context.Rollback();
         }
 
         public void Dispose()
         {
-            if (AutoCommit)
-                _session.Commit();
-            else
-                _session.Rollback();
+   //         if (AutoCommit)
+   //             _context.Commit();
+   //         else
+   //             _context.Rollback();
         }
     }
 }

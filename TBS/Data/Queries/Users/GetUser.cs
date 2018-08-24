@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data;
+using System.Linq;
+using Dapper;
 using TBS.Entities;
 
 namespace TBS.Data.Queries.Users
@@ -12,7 +14,7 @@ namespace TBS.Data.Queries.Users
             _id = id;
         }
 
-        public User Execute(ISession session)
+        public User Execute(IDbConnection session)
         {
             return session.Query<User>("select * from Users where Id = @Id", new { Id = _id }).SingleOrDefault();
         }

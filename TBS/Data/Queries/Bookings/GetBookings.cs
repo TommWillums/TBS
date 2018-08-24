@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using Dapper;
 using TBS.Entities;
 
 namespace TBS.Data.Queries.Bookings
@@ -16,7 +18,7 @@ namespace TBS.Data.Queries.Bookings
             _todate = _fromdate.AddDays(1);
         }
 
-        public IList<Booking> Execute(ISession session)
+        public IList<Booking> Execute(IDbConnection session)
         {
             const string sql = @"
             select 

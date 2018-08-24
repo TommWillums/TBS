@@ -1,4 +1,6 @@
-﻿using TBS.Entities;
+﻿using System.Data;
+using Dapper;
+using TBS.Entities;
 
 namespace TBS.Data.Commands.Users
 {
@@ -11,7 +13,7 @@ namespace TBS.Data.Commands.Users
             _user = user;
         }
 
-        public void Execute(ISession session)
+        public void Execute(IDbConnection session)
         {
             if (_user.Id > 0)
             {

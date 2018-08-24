@@ -1,4 +1,6 @@
-﻿using TBS.Entities;
+﻿using System.Data;
+using Dapper;
+using TBS.Entities;
 
 namespace TBS.Data.Commands.Bookings
 {
@@ -11,7 +13,7 @@ namespace TBS.Data.Commands.Bookings
             _booking = booking;
         }
 
-        public void Execute(ISession session)
+        public void Execute(IDbConnection session)
         {
             if (_booking.Id > 0)
             {

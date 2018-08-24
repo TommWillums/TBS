@@ -12,7 +12,7 @@ namespace TBS.Test
     [TestClass]
     public class ClubRepositoryMoqTests
     {
-        Mock<ISession> _session;
+        Mock<IDbConnection> _session;
         QueryCmdHandler _cqhandler;
 
         const string TBSX = "TBSX";
@@ -20,7 +20,7 @@ namespace TBS.Test
         [TestInitialize]
         public void Init()
         {
-            _session = new Mock<ISession>();
+            _session = new Mock<IDbConnection>();
             _cqhandler = new QueryCmdHandler(_session.Object);
         }
 

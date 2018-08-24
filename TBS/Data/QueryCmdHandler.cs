@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Data;
+using System.Data.SqlClient;
 
 namespace TBS.Data
 {
@@ -6,32 +7,30 @@ namespace TBS.Data
     {
         T Query<T>(IQuery<T> query);
         void Execute(ICommand command);
-        ISession GetSession();
     }
 
     public class QueryCmdHandler : IQueryCmdHandler
     {
-        private ISession _session { get; set; }
-        public ISession GetSession() { return _session; }
+        private IDbConnection _context { get; }
 
         public QueryCmdHandler()
         {
-            _session = new Session(Util.AppSettings.DefaultDatabaseConnection, useTransaction: false);
+            _context = new SqlConnection(Util.AppSettings.DefaultDatabaseConnection);
         }
 
-        public QueryCmdHandler(ISession session)
+        public QueryCmdHandler(IDbConnection context)
         {
-            _session = session;
+            _context = context;
         }
 
         public T Query<T>(IQuery<T> query)
         {
-            return query.Execute(_session);
+            return query.Execute(_context);
         }
 
         public void Execute(ICommand command)
         {
-            command.Execute(_session);
+            command.Execute(_context);
         }
     }
 }

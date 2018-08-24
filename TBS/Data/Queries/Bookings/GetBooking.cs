@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data;
 using System.Linq;
 using TBS.Entities;
+using Dapper;
 
 namespace TBS.Data.Queries.Bookings
 {
@@ -14,7 +14,7 @@ namespace TBS.Data.Queries.Bookings
             _id = id;
         }
 
-        public Booking Execute(ISession session)
+        public Booking Execute(IDbConnection session)
         {
             const string sql = @"
             select 

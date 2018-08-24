@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data;
+using System.Linq;
+using Dapper;
 using TBS.Entities;
 
 namespace TBS.Data.Queries.Courts
@@ -12,7 +14,7 @@ namespace TBS.Data.Queries.Courts
             _courtId = courtId;
         }
 
-        public Court Execute(ISession session)
+        public Court Execute(IDbConnection session)
         {
             return session.Query<Court>("select * from Courts where Id = @Id", new { Id = _courtId }).SingleOrDefault();
         }

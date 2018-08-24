@@ -1,7 +1,9 @@
-﻿namespace TBS.Data
+﻿using System.Data;
+
+namespace TBS.Data
 {
     public interface IQuery<T>
     {
-        T Execute(ISession db);
+        T Execute(IDbConnection db);
     }
 }

@@ -1,4 +1,6 @@
-﻿using TBS.Entities;
+﻿using System.Data;
+using Dapper;
+using TBS.Entities;
 
 namespace TBS.Data.Commands.Courts
 {
@@ -11,7 +13,7 @@ namespace TBS.Data.Commands.Courts
             _court = court;
         }
 
-        public void Execute(ISession session)
+        public void Execute(IDbConnection session)
         {
             if (_court.Id > 0)
             {
