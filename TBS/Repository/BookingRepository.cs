@@ -11,11 +11,11 @@ namespace TBS.Repository
     public interface IBookingRepository
     {
         Booking GetBooking(int id);
-        IEnumerable<Booking> GetBookings(int clubId);
-        void Save(Booking user);
+        IEnumerable<Booking> GetBookings(DateTime date);
+        void Save(BookingDTO item);
     }
 
-    public class BookingRepository : RepositoryBase //, IBookingRepository
+    public class BookingRepository : RepositoryBase, IBookingRepository
     {
         public BookingRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
 
@@ -26,6 +26,7 @@ namespace TBS.Repository
 
         public IEnumerable<Booking> GetBookings(DateTime date)
         {
+            date = new DateTime(date.Year, date.Month, date.Day);
             return QueryCmdHandler.Query(new GetBookings(date)).ToList();
         }
 

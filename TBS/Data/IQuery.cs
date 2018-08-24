@@ -4,6 +4,6 @@ namespace TBS.Data
 {
     public interface IQuery<T>
     {
-        T Execute(IDbConnection db);
+        T Execute(IDbConnection conn);
     }
 }

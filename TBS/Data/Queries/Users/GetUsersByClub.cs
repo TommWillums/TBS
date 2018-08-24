@@ -15,9 +15,9 @@ namespace TBS.Data.Queries.Users
             _clubId = clubId;
         }
 
-        public IList<User> Execute(IDbConnection session)
+        public IList<User> Execute(IDbConnection conn)
         {
-            return session.Query<User>("select * from Users where ClubId = @Id", new { ID = _clubId }).ToList();
+            return conn.Query<User>("select * from Users where ClubId = @Id", new { ID = _clubId }).ToList();
         }
     }
 

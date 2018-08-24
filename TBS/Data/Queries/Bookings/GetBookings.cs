@@ -14,41 +14,18 @@ namespace TBS.Data.Queries.Bookings
 
         public GetBookings(DateTime fromdate)
         {
-            _fromdate = new DateTime(fromdate.Year, fromdate.Month, fromdate.Day);
+            _fromdate = fromdate;
             _todate = _fromdate.AddDays(1);
         }
 
-        public IList<Booking> Execute(IDbConnection session)
+        public IList<Booking> Execute(IDbConnection conn)
         {
             const string sql = @"
-            select 
-                b.Id, 
-                b.CourtId, 
-                b.BookingTypeId, 
-                b.UserId, 
-                b.DisplayAs,
-                b.StartTime, 
-                b.Duration,
-                b.Created, 
-                c.Name,
-                u.Name, 
-                t.Description
-            from Bookings b
-                join Courts c on c.Id = b.CourtId
-                join Users u on u.Id = b.UserId
-                join BookingTypes t on t.Id = b.BookingTypeId
+            select Id, CourtId, CourtName, BookingTypeId, BookingType, UserId, UserName, DisplayAs, StartTime, Duration
+            from Bookings_v
             where StartTime >= @FromDate and StartTime < @ToDate";
 
-            return session.Query<Booking, Court, User, BookingType, Booking>(
-                sql,
-                (booking, court, user, type) =>
-                {
-                    booking.Court = court;
-                    booking.User = user;
-                    booking.Type = type;
-                    return booking;
-                },
-                new { FromDate = _fromdate, ToDate = _todate }).ToList();
+            return conn.Query<Booking>(sql, new { FromDate = _fromdate, ToDate = _todate }).ToList();
         }
     }
 

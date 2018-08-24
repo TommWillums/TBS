@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Linq;
-using TBS.Entities;
 using Dapper;
+using TBS.Entities;
 
 namespace TBS.Data.Queries.Bookings
 {
@@ -14,7 +14,7 @@ namespace TBS.Data.Queries.Bookings
             _id = id;
         }
 
-        public Booking Execute(IDbConnection session)
+        public Booking Execute(IDbConnection conn)
         {
             const string sql = @"
             select 
@@ -35,13 +35,11 @@ namespace TBS.Data.Queries.Bookings
                 join BookingTypes t on t.Id = b.BookingTypeId
             where Id = @Id";
 
-            Booking item = session.Query<Booking, Court, User, BookingType, Booking>(
+            Booking item = conn.Query<Booking, Court, User, BookingType, Booking>(
                 sql,
                 (booking, court, user, type) =>
                 {
-                    booking.Court = court;
-                    booking.User = user;
-                    booking.Type = type;
+                    booking = null;
                     return booking;
                 },
                 new { Id = _id }).SingleOrDefault();

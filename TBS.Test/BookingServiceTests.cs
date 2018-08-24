@@ -39,8 +39,8 @@ namespace TBS.Test
 
             // Read
             Booking booking = _repository.GetBookings(DateTime.Today).First();
-            Assert.AreEqual(booking.Court.Name, "Testbane");
-            Assert.AreEqual(booking.Type.Description, "Fast");
+            Assert.AreEqual(booking.CourtName, "Testbane");
+            Assert.AreEqual(booking.BookingType, "Fast");
             Assert.AreEqual(booking.StartTime.Second, 0);
 /*
             // Update

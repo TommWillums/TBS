@@ -14,9 +14,9 @@ namespace TBS.Data.Queries.Courts
             _courtId = courtId;
         }
 
-        public Court Execute(IDbConnection session)
+        public Court Execute(IDbConnection conn)
         {
-            return session.Query<Court>("select * from Courts where Id = @Id", new { Id = _courtId }).SingleOrDefault();
+            return conn.QuerySingle<Court>("select * from Courts where Id = @Id", new { Id = _courtId });
         }
     }
 

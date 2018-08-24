@@ -63,14 +63,15 @@ namespace TBS.Entities
     public class Booking
     {
         public int Id { get; set; }
-        public Court Court { get; set; }        // Use only CourtId in Write model
-        public BookingType Type { get; set; }   // Use only Id in write-model 
-        public User User { get; set; }
+        public int CourtId { get; set; }
+        public string CourtName { get; set; }
+        public int BookingTypeId { get; set; }
+        public string BookingType { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }       // Minutes
         public string DisplayAs { get; set; }
-        public DateTime Created { get; set; }
-        public bool Deleted { get; set; }
     }
 
     public class User
