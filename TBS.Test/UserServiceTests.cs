@@ -10,7 +10,6 @@ namespace TBS.Test
     public class UserRepositoryTests
     {
         const string dummy_user = "TBSX";
-        UnitOfWork _unitOfWork;
         UserRepository _repository;
 
         [TestInitialize]

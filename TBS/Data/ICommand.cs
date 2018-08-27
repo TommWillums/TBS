@@ -4,7 +4,7 @@ namespace TBS.Data
 {
     public interface ICommand
     {
-        void Execute(IDbConnection db);
+        void Execute(IDbConnection connection);
     }
 }
 

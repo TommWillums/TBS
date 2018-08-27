@@ -30,51 +30,42 @@ namespace TBS.Controllers
             if (id != club.Id)
                 return BadRequest();
 
-            using (var uow = new UnitOfWork())
+            var repository = new ClubRepository();
+            try
             {
-                var repository = new ClubRepository(uow);
-                try
-                {
-                    repository.Save(club);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (repository.GetClub(id) == null)
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return NoContent();
+                repository.Save(club);
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (repository.GetClub(id) == null)
+                    return NotFound();
+                else
+                    throw;
+            }
+            return NoContent();
         }
 
         // POST: api/Clubs
         [HttpPost]
         public IActionResult PostClub([FromBody] Club club)
         {
-            using (var uow = new UnitOfWork())
-            {
-                new ClubRepository(uow).Save(club);
-                return CreatedAtAction("GetClub", new { id = club.Id }, club);
-            }
+            new ClubRepository().Save(club);
+            return CreatedAtAction("GetClub", new { id = club.Id }, club);
         }
 
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
         public IActionResult DeleteClub([FromRoute] int id)
         {
-            using (var uow = new UnitOfWork())
+            var repository = new ClubRepository();
+            Club club = repository.GetClub(id);
+            if (club != null)
             {
-                var repository = new ClubRepository(uow);
-                Club club = repository.GetClub(id);
-                if (club != null)
-                {
-                    club.Deleted = true;
-                    repository.Save(club);
-                    return Ok();
-                }
-                return NotFound();
+                club.Deleted = true;
+                repository.Save(club);
+                return Ok();
             }
+            return NotFound();
         }
     }
 }

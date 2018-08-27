@@ -17,34 +17,11 @@ namespace TBS.Data.Queries.Bookings
         public Booking Execute(IDbConnection conn)
         {
             const string sql = @"
-            select 
-                b.Id, 
-                b.CourtId, 
-                b.BookingTypeId, 
-                b.UserId, 
-                b.DisplayAs,
-                b.StartTime, 
-                b.Duration,
-                b.Created, 
-                c.Name,
-                u.Name, 
-                t.Description
-            from Bookings b
-                join Courts c on c.Id = b.CourtId
-                join Users u on u.Id = b.UserId
-                join BookingTypes t on t.Id = b.BookingTypeId
+            select Id, CourtId, CourtName, BookingTypeId, BookingType, UserId, UserName, DisplayAs, StartTime, Duration
+            from Bookings_v
             where Id = @Id";
 
-            Booking item = conn.Query<Booking, Court, User, BookingType, Booking>(
-                sql,
-                (booking, court, user, type) =>
-                {
-                    booking = null;
-                    return booking;
-                },
-                new { Id = _id }).SingleOrDefault();
-
-            return item;
+            return conn.QuerySingleOrDefault<Booking>(sql, new { Id = _id });
         }
     }
 }

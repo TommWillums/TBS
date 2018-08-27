@@ -23,27 +23,21 @@ namespace TBS.Test
         {
             TBS_Test_Helper.TestPrepareDBAddClub2();
             int itemId;
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new ClubRepository(uow);
-                var item = repository.GetClub(2);
-                itemId = item.Id;
-                item.ClubName = dummy_name + " club";
-                item.ShortName = dummy_name + " tbsx";
-                item.Contact = dummy_name + " contact";
-                item.CustomerId = 1234;
-                repository.Save(item);
-            }
+            var repository = new ClubRepository();
+            var item = repository.GetClub(2);
+            itemId = item.Id;
+            item.ClubName = dummy_name + " club";
+            item.ShortName = dummy_name + " tbsx";
+            item.Contact = dummy_name + " contact";
+            item.CustomerId = 1234;
+            repository.Save(item);
 
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new ClubRepository(uow);
-                var item2 = repository.GetClub(itemId);
-                Assert.AreEqual(item2.ClubName, dummy_name + " club");
-                Assert.AreEqual(item2.ShortName, dummy_name + " tbsx");
-                Assert.AreEqual(item2.Contact, dummy_name + " contact");
-                Assert.AreEqual(item2.CustomerId, 1234);
-            }
+            var repository2 = new ClubRepository();
+            var item2 = repository2.GetClub(itemId);
+            Assert.AreEqual(item2.ClubName, dummy_name + " club");
+            Assert.AreEqual(item2.ShortName, dummy_name + " tbsx");
+            Assert.AreEqual(item2.Contact, dummy_name + " contact");
+            Assert.AreEqual(item2.CustomerId, 1234);
         }
 
     }

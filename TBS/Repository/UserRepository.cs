@@ -16,8 +16,6 @@ namespace TBS.Repository
 
     public class UserRepository : RepositoryBase, IUserRepository
     {
-        public UserRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
-
         public User GetUser(int id)
         {
             return QueryCmdHandler.Query(new GetUser(id));

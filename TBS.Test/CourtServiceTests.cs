@@ -24,13 +24,10 @@ namespace TBS.Test
         {
             TBS_Test_Helper.TestPrepareDBToAddCourt();
             Court item = new Court() { Name = dummy_court, ClubId = 2, Active = true };
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new CourtRepository(uow);
-                repository.Save(item);
-                var items = repository.GetCourts(2);
-                Assert.AreEqual(items.Count(), 1);
-            }
+            var repository = new CourtRepository();
+            repository.Save(item);
+            var items = repository.GetCourts(2);
+            Assert.AreEqual(items.Count(), 1);
         }
 
         [TestMethod]
@@ -39,21 +36,18 @@ namespace TBS.Test
             const string court_name = "TBSX claycourt";
             TBS_Test_Helper.TestPrepareDBToUpdateCourt();
 
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new CourtRepository(uow);
+            var repository = new CourtRepository();
 
-                Court item = repository.GetCourts(2).SingleOrDefault(c => c.Name == dummy_court);
-                item.Name = court_name;
-                item.CourtGroup = 2;
-                item.Active = false;
-                repository.Save(item);
+            Court item = repository.GetCourts(2).SingleOrDefault(c => c.Name == dummy_court);
+            item.Name = court_name;
+            item.CourtGroup = 2;
+            item.Active = false;
+            repository.Save(item);
 
-                Court item2 = repository.GetCourt(item.Id);
-                Assert.AreEqual(item2.Name, court_name);
-                Assert.AreEqual(item2.CourtGroup, 2);
-                Assert.AreEqual(item2.Active, false);
-            }
+            Court item2 = repository.GetCourt(item.Id);
+            Assert.AreEqual(item2.Name, court_name);
+            Assert.AreEqual(item2.CourtGroup, 2);
+            Assert.AreEqual(item2.Active, false);
         }
 
         [TestMethod]
@@ -61,15 +55,12 @@ namespace TBS.Test
         {
             TBS_Test_Helper.TestPrepareDBToUpdateCourt();
 
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new CourtRepository(uow);
-                Court item = repository.GetCourts(2).SingleOrDefault(c => c.Name == dummy_court);
-                item.Deleted = true;
-                repository.Save(item);
-                Court item2 = repository.GetCourt(item.Id);
-                Assert.AreEqual(item2, null);
-            }
+            var repository = new CourtRepository();
+            Court item = repository.GetCourts(2).SingleOrDefault(c => c.Name == dummy_court);
+            item.Deleted = true;
+            repository.Save(item);
+            Court item2 = repository.GetCourt(item.Id);
+            Assert.AreEqual(item2, null);
         }
 
     }

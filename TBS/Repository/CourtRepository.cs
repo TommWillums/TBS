@@ -16,8 +16,6 @@ namespace TBS.Repository
 
     public class CourtRepository : RepositoryBase, ICourtRepository
     {
-        public CourtRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
-
         public Court GetCourt(int id)
         {
             return QueryCmdHandler.Query(new GetCourt(id));

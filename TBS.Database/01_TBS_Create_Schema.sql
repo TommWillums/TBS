@@ -165,3 +165,7 @@ create view Bookings_v as
 
 ----------------
 
+
+select * from Bookings_v 
+
+

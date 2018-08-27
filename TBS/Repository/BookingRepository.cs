@@ -17,8 +17,6 @@ namespace TBS.Repository
 
     public class BookingRepository : RepositoryBase, IBookingRepository
     {
-        public BookingRepository(UnitOfWork unitOfWork = null) : base(unitOfWork) { }
-
         public Booking GetBooking(int id)
         {
             return QueryCmdHandler.Query(new GetBooking(id));
@@ -28,6 +26,17 @@ namespace TBS.Repository
         {
             date = new DateTime(date.Year, date.Month, date.Day);
             return QueryCmdHandler.Query(new GetBookings(date)).ToList();
+        }
+
+        public void Delete(int id)
+        {
+            QueryCmdHandler.Execute(new DeleteBooking(id));
+        }
+
+        public void Save(Booking bk)
+        {
+            var item = new BookingDTO() { Id = bk.Id, CourtId = bk.CourtId, BookingTypeId = bk.BookingTypeId, UserId = bk.UserId, StartTime = bk.StartTime, Duration = bk.Duration };
+            Save(item);
         }
 
         public void Save(BookingDTO dto)

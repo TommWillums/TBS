@@ -6,10 +6,9 @@ namespace TBS.Repository
     {
         protected IQueryCmdHandler QueryCmdHandler { get; }
 
-        protected RepositoryBase(UnitOfWork unitOfWork = null)
+        protected RepositoryBase()
         {
-            QueryCmdHandler = (unitOfWork == null) ? new QueryCmdHandler() : new QueryCmdHandler(unitOfWork.Context);
+            QueryCmdHandler = new QueryCmdHandler();
         }
-
     }
 }

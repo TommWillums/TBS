@@ -15,7 +15,7 @@ namespace TBS.Data.Queries.Users
 
         public User Execute(IDbConnection conn)
         {
-            return conn.QuerySingle<User>("select * from Users where Id = @Id", new { Id = _id });
+            return conn.QuerySingleOrDefault<User>("select * from Users where Id = @Id", new { Id = _id });
         }
     }
 
