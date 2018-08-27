@@ -20,12 +20,7 @@ namespace TBS.Test
 
         }
 
-        public static void TestPrepareDBToAddClub()
-        {
-            TestPrepareDBDeleteTestdata();
-        }
-
-        public static void TestPrepareDBAddClub2()
+        public static void TestPrepareDBAddClub()
         {
             TestPrepareDBDeleteTestdata();
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
@@ -39,7 +34,7 @@ namespace TBS.Test
         public static void TestPrepareDBToAddBooking()
         {
             TestPrepareDBDeleteTestdata();
-            TestPrepareDBAddClub2();
+            TestPrepareDBAddClub();
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
@@ -53,7 +48,7 @@ namespace TBS.Test
             using (DbConnection conn = new SqlConnection(AppSettings.TestDatabaseConnection))
             {
                 conn.Open();
-                TestPrepareDBAddClub2();
+                TestPrepareDBAddClub();
             }
         }
 
@@ -70,7 +65,7 @@ namespace TBS.Test
         public static void TestPrepareDBForUsers()
         {
             TestPrepareDBDeleteTestdata();
-            TestPrepareDBAddClub2();
+            TestPrepareDBAddClub();
         }
 
     }

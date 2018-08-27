@@ -21,7 +21,7 @@ namespace TBS.Test
         [TestMethod]
         public void club_update_in_database()
         {
-            TBS_Test_Helper.TestPrepareDBAddClub2();
+            TBS_Test_Helper.TestPrepareDBAddClub();
             int itemId;
             var repository = new ClubRepository();
             var item = repository.GetClub(2);
