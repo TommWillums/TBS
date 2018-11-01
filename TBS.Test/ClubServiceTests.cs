@@ -1,7 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using TBS.Data;
-using TBS.Entities;
 using TBS.Repository;
 
 namespace TBS.Test
@@ -9,40 +7,43 @@ namespace TBS.Test
     [TestClass]
     public class ClubRepositoryTests
     {
-        const string dummy_name = "TBSX";
-
         [TestMethod]
-        public void club_get_2_from_database()
+        public void club_get_1_from_database()
         {
-            var club = new ClubRepository().GetClub(2);
-            Assert.AreEqual(club.Id, 2);
+            var club = new ClubRepository().GetClub(1);
+            Assert.AreEqual(club.Id, 1);
         }
 
         [TestMethod]
         public void club_update_in_database()
         {
-            TBS_Test_Helper.TestPrepareDBAddClub2();
-            int itemId;
             using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
             {
-                var repository = new ClubRepository(uow);
-                var item = repository.GetClub(2);
-                itemId = item.Id;
-                item.ClubName = dummy_name + " club";
-                item.ShortName = dummy_name + " tbsx";
-                item.Contact = dummy_name + " contact";
-                item.CustomerId = 1234;
-                repository.Save(item);
-            }
+                int clubId = 2;
+                TBS_Test_Helper.AddClub(uow.Session);
 
-            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
-            {
-                var repository = new ClubRepository(uow);
-                var item2 = repository.GetClub(itemId);
-                Assert.AreEqual(item2.ClubName, dummy_name + " club");
-                Assert.AreEqual(item2.ShortName, dummy_name + " tbsx");
-                Assert.AreEqual(item2.Contact, dummy_name + " contact");
-                Assert.AreEqual(item2.CustomerId, 1234);
+                var repository = new ClubRepository(uow);            
+                var club = repository.GetClub(clubId);
+
+                Assert.AreEqual(club.ClubName, "TBSX");
+                Assert.AreEqual(club.ShortName, "TBSX");
+                Assert.AreEqual(club.Contact, "TBSX");
+                Assert.AreEqual(club.CustomerId, 9999);
+
+                club.ClubName = "club";
+                club.ShortName = "short name";
+                club.Contact = "contact";
+                club.CustomerId = 1233;
+
+                repository.Save(club);
+
+                var club2 = repository.GetClub(clubId);
+                Assert.AreEqual(club2.ClubName, "club");
+                Assert.AreEqual(club2.ShortName, "short name");
+                Assert.AreEqual(club2.Contact, "contact");
+                Assert.AreEqual(club2.CustomerId, 1233);
+
+                uow.Rollback();
             }
         }
 

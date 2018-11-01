@@ -9,51 +9,91 @@ namespace TBS.Test
     [TestClass]
     public class UserRepositoryTests
     {
-        const string dummy_user = "TBSX";
-        UnitOfWork _unitOfWork;
-        UserRepository _repository;
+        int clubId2 = 2;
+        string dummy_user = "dummy user";
 
-        [TestInitialize]
-        public void Init()
+        [TestMethod]
+        public void user_create_user_in_db()
         {
-            //_unitOfWork = new UnitOfWork(Util.AppSettings.TestDatabaseConnection);
-            _repository = new UserRepository();
-        }
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                TBS_Test_Helper.AddClub(uow.Session);
+                UserRepository _repository = new UserRepository(uow);
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            //_unitOfWork.Dispose();
+                User user1 = new User() { Name = dummy_user, ClubId = clubId2 };
+                _repository.Save(user1);
+
+                int usercount = _repository.GetUsers(clubId2).Count();
+                Assert.AreEqual(usercount, 1);
+
+                uow.Rollback();
+            }
         }
 
         [TestMethod]
-        public void user_test_crud_on_database()
+        public void user_read_user_by_name_in_db()
         {
-            TBS_Test_Helper.TestPrepareDBForUsers();
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                TBS_Test_Helper.AddClub(uow.Session);
+                UserRepository _repository = new UserRepository(uow);
 
-            // Create, ReadMany
-            var count = _repository.GetUsers(2).Count();
-            User item = new User() { Name = dummy_user, ClubId = 2 };
-            _repository.Save(item);
-            var count2 = _repository.GetUsers(2).Count();
-            Assert.AreEqual(count+1, count2);
+                var user = _repository.GetUsers(clubId: 1).SingleOrDefault(c => c.Name == "Urban");
+                Assert.AreEqual(user.Name, "Urban");
 
-            // Read 1
-            User user2 = _repository.GetUsers(2).SingleOrDefault(c => c.Name == dummy_user);
-            Assert.AreEqual(user2.Name, dummy_user);
-
-            // Update
-            user2.Name = "TBSX user";
-            _repository.Save(user2);
-            User user3 = _repository.GetUser(user2.Id);
-            Assert.AreEqual(user2.Name, user3.Name);
-
-            // Delete
-            user3.Deleted = true;
-            _repository.Save(user3);
-            User noUser = _repository.GetUser(user3.Id);
-            Assert.AreEqual(noUser, null);
+                uow.Rollback();
+            }
         }
 
+        [TestMethod]
+        public void user_read_all_club1_users_in_db()
+        {
+            UserRepository _repository = new UserRepository();
+            int usercount = _repository.GetUsers(clubId: 1).Count();
+            Assert.IsTrue(usercount > 1);
+        }
+
+        [TestMethod]
+        public void user_update_user_by_id_in_db()
+        {
+            string new_user_name = "new user name";
+
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                UserRepository _repository = new UserRepository(uow);
+
+                var user = _repository.GetUser(10002);
+                Assert.AreNotEqual(user.Name, new_user_name);
+                user.Name = new_user_name;
+                _repository.Save(user);
+
+                var user2 = _repository.GetUser(user.Id);
+                Assert.AreEqual(user2.Name, new_user_name);
+
+                uow.Rollback();
+            }
+        }
+
+        [TestMethod]
+        public void user_delete_user_by_id_in_db()
+        {
+            using (var uow = new UnitOfWork(Util.AppSettings.TestDatabaseConnection))
+            {
+                TBS_Test_Helper.AddClub(uow.Session);
+                TBS_Test_Helper.AddUser(uow.Session);
+                UserRepository _repository = new UserRepository(uow);
+
+                var users = _repository.GetUsers(clubId2).ToList();
+                Assert.AreEqual(users.Count, 1);
+                User user = users[0];
+                user.Deleted = true;
+                _repository.Save(user);
+
+                var noUser = _repository.GetUser(user.Id);
+                Assert.AreEqual(noUser, null);
+
+                uow.Rollback();
+            }
+        }
     }
 }
